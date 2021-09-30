@@ -402,7 +402,7 @@ nnoremap <S-Left> :vertical resize -5<CR>
 nnoremap <S-Right> :vertical resize +5<CR>
 
 "" Telescope
-nnoremap <leader>F <cmd>lua require('telescope.builtin').find_files()<cr>
+nnoremap <leader>F <cmd>lua require('telescope.builtin').git_files()<cr>
 nnoremap <leader>G <cmd>lua require('telescope.builtin').live_grep()<cr>
 
 lua << EOF
