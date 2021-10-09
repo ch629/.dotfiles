@@ -37,26 +37,39 @@ call plug#begin(expand('~/.config/nvim/plugged'))
 Plug 'scrooloose/nerdtree'
 Plug 'jistr/vim-nerdtree-tabs'
 Plug 'tpope/vim-commentary'
-Plug 'tpope/vim-fugitive'
 Plug 'vim-airline/vim-airline'
 Plug 'vim-airline/vim-airline-themes'
-Plug 'airblade/vim-gitgutter'
 Plug 'vim-scripts/grep.vim'
 Plug 'vim-scripts/CSApprox'
 Plug 'majutsushi/tagbar'
-Plug 'dense-analysis/ale'
 Plug 'Yggdroot/indentLine'
 Plug 'editor-bootstrap/vim-bootstrap-updater'
-Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
 Plug 'dracula/vim', { 'as': 'dracula' }
-Plug 'neoclide/coc.nvim', {'branch': 'release'}
-Plug 'sebdah/vim-delve'
 Plug 'fladson/vim-kitty'
 Plug 'nvim-lua/plenary.nvim'
 Plug 'nvim-treesitter/nvim-treesitter'
-Plug 'nvim-telescope/telescope.nvim'
-Plug 'nvim-telescope/telescope-fzf-native.nvim', { 'do': 'make' }
 Plug 'jiangmiao/auto-pairs'
+Plug 'dense-analysis/ale'
+
+"" Git
+Plug 'tpope/vim-rhubarb' " required by fugitive to :Gbrowse
+Plug 'tpope/vim-fugitive'
+Plug 'airblade/vim-gitgutter'
+
+"" Telescope
+Plug 'nvim-telescope/telescope.nvim'
+Plug 'nvim-telescope/telescope-fzy-native.nvim'
+
+"" LSP
+Plug 'neovim/nvim-lspconfig'
+Plug 'hrsh7th/cmp-nvim-lsp'
+Plug 'hrsh7th/cmp-buffer'
+Plug 'hrsh7th/nvim-cmp'
+Plug 'hrsh7th/cmp-vsnip'
+Plug 'hrsh7th/vim-vsnip'
+Plug 'kyazdani42/nvim-web-devicons'
+Plug 'folke/trouble.nvim'
+Plug 'folke/todo-comments.nvim'
 
 let g:make = 'gmake'
 if exists('make')
@@ -64,16 +77,8 @@ if exists('make')
 endif
 Plug 'Shougo/vimproc.vim', {'do': g:make}
 
-"" Vim-Session
-Plug 'xolox/vim-misc'
-Plug 'xolox/vim-session'
-
-"*****************************************************************************
-"" Custom bundles
-"*****************************************************************************
-
-" go
-"" Go Lang Bundle
+"" Go 
+Plug 'sebdah/vim-delve'
 Plug 'fatih/vim-go', {'do': ':GoInstallBinaries'}
 
 :verbose setlocal omnifunc?
@@ -130,12 +135,6 @@ else
     set shell=/bin/sh
 endif
 
-" session management
-let g:session_directory = "~/.config/nvim/session"
-let g:session_autoload = "no"
-let g:session_autosave = "no"
-let g:session_command_aliases = 1
-
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
@@ -151,32 +150,6 @@ set mousemodel=popup
 set t_Co=256
 set guioptions=egmrti
 set gfn=Monospace\ 10
-
-if has("gui_running")
-  if has("gui_mac") || has("gui_macvim")
-    set guifont=Menlo:h12
-    set transparency=7
-  endif
-else
-  let g:CSApprox_loaded = 1
-
-  " IndentLine
-  let g:indentLine_enabled = 1
-  let g:indentLine_concealcursor = 0
-  let g:indentLine_char = '┆'
-  let g:indentLine_faster = 1
-
-  
-  if $COLORTERM == 'gnome-terminal'
-    set term=gnome-256color
-  else
-    if $TERM == 'xterm'
-      set term=xterm-256color
-    endif
-  endif
-  
-endif
-
 
 if &term =~ '256color'
   set t_ut=
@@ -401,14 +374,6 @@ nnoremap <S-Down> :res -5<CR>
 nnoremap <S-Left> :vertical resize -5<CR>
 nnoremap <S-Right> :vertical resize +5<CR>
 
-"" Telescope
-nnoremap <leader>F <cmd>lua require('telescope.builtin').git_files()<cr>
-nnoremap <leader>G <cmd>lua require('telescope.builtin').live_grep()<cr>
-
-lua << EOF
-require('telescope').load_extension('fzf')
-EOF
-
 "" Treesitter
 lua <<EOF
 require('nvim-treesitter.configs').setup {
@@ -452,6 +417,7 @@ let g:go_list_type = "quickfix"
 let g:go_fmt_command = "gopls"
 let g:go_gopls_gofumpt = 1
 let g:go_fmt_fail_silently = 1
+let g:go_metalinter_command = "golangci-lint"
 
 let g:go_def_mode = "gopls"
 let go_def_mod_mode = "godef"
