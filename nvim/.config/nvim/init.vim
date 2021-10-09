@@ -417,6 +417,7 @@ let g:go_list_type = "quickfix"
 let g:go_fmt_command = "gopls"
 let g:go_gopls_gofumpt = 1
 let g:go_fmt_fail_silently = 1
+let g:go_metalinter_command = "golangci-lint"
 
 let g:go_def_mode = "gopls"
 let go_def_mod_mode = "godef"
