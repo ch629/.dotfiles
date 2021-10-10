@@ -96,6 +96,7 @@ call plug#end()
 " Required:
 filetype plugin indent on
 
+lua require("charlie")
 
 "*****************************************************************************
 "" Basic Setup
@@ -522,3 +523,4 @@ else
   let g:airline_symbols.readonly = ''
   let g:airline_symbols.linenr = ''
 endif
+
