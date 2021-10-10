@@ -318,8 +318,6 @@ noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-nnoremap <silent> <leader>b :Buffers<CR>
-nnoremap <silent> <leader>e :FZF -m<CR>
 "Recovery commands from history through FZF
 nmap <leader>y :History:<CR>
 
@@ -374,15 +372,6 @@ nnoremap <S-Up> :res +5<CR>
 nnoremap <S-Down> :res -5<CR>
 nnoremap <S-Left> :vertical resize -5<CR>
 nnoremap <S-Right> :vertical resize +5<CR>
-
-"" Treesitter
-lua <<EOF
-require('nvim-treesitter.configs').setup {
-    highlight = {
-        enable = true
-    }
-}
-EOF
 
 "" Terminal
 :tnoremap <Esc> <C-\><C-n>
