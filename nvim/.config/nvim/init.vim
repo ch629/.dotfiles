@@ -129,7 +129,6 @@ endif
 "*****************************************************************************
 "" Visual Settings
 "*****************************************************************************
-syntax on
 set ruler
 set number
 
@@ -238,12 +237,6 @@ endif
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
-"" The PC is fast enough, do syntax highlight syncing from start unless 200 lines
-augroup vimrc-sync-fromstart
-  autocmd!
-  autocmd BufEnter * :syntax sync maxlines=200
-augroup END
-
 "" Remember cursor position
 augroup vimrc-remember-cursor-position
   autocmd!
@@ -391,19 +384,6 @@ let g:go_metalinter_command = "golangci-lint"
 
 let g:go_def_mode = "gopls"
 let go_def_mod_mode = "godef"
-
-let g:go_highlight_types = 1
-let g:go_highlight_fields = 1
-let g:go_highlight_functions = 1
-let g:go_highlight_methods = 1
-let g:go_highlight_operators = 1
-let g:go_highlight_build_constraints = 1
-let g:go_highlight_structs = 1
-let g:go_highlight_generate_tags = 1
-let g:go_highlight_space_tab_error = 0
-let g:go_highlight_array_whitespace_error = 0
-let g:go_highlight_trailing_whitespace_error = 0
-let g:go_highlight_extra_types = 1
 
 autocmd BufNewFile,BufRead *.go setlocal noexpandtab tabstop=4 shiftwidth=4 softtabstop=4
 
