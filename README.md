@@ -7,6 +7,7 @@
 ```bash
 git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:-~/.oh-my-zsh/custom}/plugins/zsh-syntax-highlighting
 ```
+* [Delta](https://github.com/dandavison/delta) for git diff
 
 ## Usage
 Run the install file to create symlinks to each folder in this repo.
