@@ -1,6 +1,12 @@
+#!/usr/bin/env zsh
+
+DOTFILES=$HOME/.dotfiles
+
+pushd $DOTFILES
 for dir in ./*/
 do
     dir="$(basename "$dir")"
     stow -D "$dir" -t ~
     stow "$dir" -t ~
 done
+popd
