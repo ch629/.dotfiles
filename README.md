@@ -2,7 +2,6 @@
 
 ## Prerequisites
 * Install relies on [GNU Stow](https://www.gnu.org/software/stow/)
-* [Homebrew](https://brew.sh) for either Mac or Linux
 * [JetBrains Mono](https://www.jetbrains.com/lp/mono/)
 * zsh-syntax-highlighting:
 ```bash
