@@ -86,6 +86,7 @@ call plug#end()
 " Required:
 filetype plugin indent on
 
+" Load custom lua
 lua require("charlie")
 
 "*****************************************************************************
@@ -179,7 +180,6 @@ let g:airline_theme = 'powerlineish'
 let g:airline#extensions#branch#enabled = 1
 let g:airline#extensions#ale#enabled = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline#extensions#tagbar#enabled = 1
 let g:airline_skip_empty_sections = 1
 
 "*****************************************************************************
@@ -222,6 +222,11 @@ nnoremap <silent> <leader>sh :terminal<CR>
 command! FixWhitespace :%s/\s\+$//e
 " Format JSON using jq
 command! JsonFmt :%!jq '.'
+
+" LSP
+command! Implements :lua require("telescope.builtin").lsp_implementations()<CR>
+command! References :lua require("telescope.builtin").lsp_references()<CR>
+command! Rename :lua vim.lsp.buf.rename()<CR>
 
 "*****************************************************************************
 "" Functions
@@ -267,14 +272,12 @@ noremap <Leader>h :<C-u>split<CR>
 noremap <Leader>v :<C-u>vsplit<CR>
 
 "" Git
-noremap <Leader>ga :Gwrite<CR>
 noremap <Leader>gc :Git commit --verbose<CR>
 noremap <Leader>gsh :Git push<CR>
 noremap <Leader>gll :Git pull<CR>
 noremap <Leader>gs :Git<CR>
-noremap <Leader>gb :Gblame<CR>
+noremap <Leader>gb :Git blame<CR>
 noremap <Leader>gd :Git diff<CR>
-noremap <Leader>gr :Gremove<CR>
 
 "" Tabs
 nnoremap <Tab> gt
@@ -291,15 +294,9 @@ noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
 noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
 
 cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-"Recovery commands from history through FZF
-nmap <leader>y :History:<CR>
 
 " ale
 let g:ale_linters = {}
-
-" Tagbar
-nmap <silent> <F4> :TagbarToggle<CR>
-let g:tagbar_autofocus = 1
 
 " Disable visualbell
 set noerrorbells visualbell t_vb=
@@ -421,8 +418,9 @@ augroup END
 
 " ale
 :call extend(g:ale_linters, {
-    \"go": ['golint', 'go vet'], })
+    \"go": ['golangci-lint'], })
 
+let g:ale_go_golangci_lint_options = "-E bodyclose -E gosec -E whitespace -E unconvert -E wrapcheck -E revive"
 
 
 "*****************************************************************************
