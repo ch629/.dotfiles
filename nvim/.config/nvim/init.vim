@@ -421,7 +421,10 @@ augroup END
     \"go": ['golangci-lint'], })
 
 let g:ale_go_golangci_lint_options = "-E bodyclose -E gosec -E whitespace -E unconvert -E wrapcheck -E revive"
+let g:ale_go_golangci_lint_package = 1
 
+" Auto pairs
+let g:AutoPairsMultilineClose = 0
 
 "*****************************************************************************
 "*****************************************************************************
