@@ -1,8 +1,6 @@
-local telescope = require'telescope'
+require'telescope'.load_extension('fzy_native')
 
-telescope.load_extension('fzy_native')
-
-telescope.setup {
+require'telescope'.setup {
     pickers = {
         buffers = {
             show_all_buffers = true,
@@ -16,4 +14,11 @@ telescope.setup {
             }
         }
     }
+}
+
+return {
+    project_files = function()
+        local ok = pcall(require'telescope.builtin'.git_files)
+        if not ok then require'telescope.builtin'.find_files() end
+    end,
 }
