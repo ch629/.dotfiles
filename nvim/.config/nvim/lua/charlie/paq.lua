@@ -45,6 +45,7 @@ require'paq'{
 
     -- Util
     'tpope/vim-commentary';
+    'tpope/vim-surround';
 
     -- LSP
     'neovim/nvim-lspconfig';

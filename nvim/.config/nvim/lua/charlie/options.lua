@@ -75,3 +75,5 @@ local function status_line()
 end
 opt.statusline = status_line()
 
+opt.completeopt = {'menu', 'menuone', 'noselect'}
+opt.wildignore = {'*/tmp/*', '*.so', '*.swp', '*.zip', '*.pyc', '*.db', '*.sqlite'}
