@@ -1,4 +1,6 @@
 require'charlie.paq'
+require'charlie.options'
+require'charlie.bindings'
 require'charlie.lsp'
 require'charlie.telescope'
 require'charlie.treesitter'

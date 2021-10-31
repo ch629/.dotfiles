@@ -1,97 +1,11 @@
-:verbose setlocal omnifunc?
-
-" Required:
-filetype plugin indent on
-
 " Load custom lua
+" TODO: Temp until this is fully replaced with lua
 lua require("charlie")
-
-"*****************************************************************************
-"" Basic Setup
-"*****************************************************************************"
-"" Encoding
-set encoding=utf-8
-set fileencoding=utf-8
-set fileencodings=utf-8
-set ttyfast
-
-"" Fix backspace indent
-set backspace=indent,eol,start
-
-"" Tabs. May be overridden by autocmd rules
-set tabstop=4
-set softtabstop=0
-set shiftwidth=4
-set expandtab
-
-"" Map leader to ,
-let mapleader=','
-
-"" Enable hidden buffers
-set hidden
-
-"" Searching
-set hlsearch
-set incsearch
-set ignorecase
-set smartcase
-
-set fileformats=unix,dos,mac
-
-if exists('$SHELL')
-    set shell=$SHELL
-else
-    set shell=/bin/sh
-endif
-
-"*****************************************************************************
-"" Visual Settings
-"*****************************************************************************
-set ruler
-set number
-
-let no_buffers_menu=1
-colorscheme dracula
-
-
-set mousemodel=popup
-set t_Co=256
-set guioptions=egmrti
-set gfn=Monospace\ 10
-
-if &term =~ '256color'
-  set t_ut=
-endif
-
-
-"" Disable the blinking cursor.
-set gcr=a:blinkon0
-
-set scrolloff=3
-
-
-"" Status bar
-set laststatus=2
-
-"" Use modeline overrides
-set modeline
-set modelines=10
-
-set title
-set titleold="Terminal"
-set titlestring=%F
-
-set statusline=%F%m%r%h%w%=(%{&ff}/%Y)\ (line\ %l\/%L,\ col\ %c)\
 
 " Search mappings: These will make it so that going to the next one in a
 " search will center on the line it's found in.
 nnoremap n nzzzv
 nnoremap N Nzzzv
-
-if exists("*fugitive#statusline")
-  set statusline+=%{fugitive#statusline()}
-endif
-
 
 "*****************************************************************************
 "" Abbreviations
@@ -129,17 +43,6 @@ command! Callers :References
 command! Rename :lua vim.lsp.buf.rename()<CR>
 
 "*****************************************************************************
-"" Functions
-"*****************************************************************************
-if !exists('*s:setupWrapping')
-  function s:setupWrapping()
-    set wrap
-    set wm=2
-    set textwidth=79
-  endfunction
-endif
-
-"*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
 "" Remember cursor position
@@ -160,8 +63,6 @@ augroup vimrc-make-cmake
   autocmd FileType make setlocal noexpandtab
   autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
 augroup END
-
-set autoread
 
 "*****************************************************************************
 "" Mappings
@@ -189,17 +90,6 @@ cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
 
 " ale
 let g:ale_linters = {}
-
-" Disable visualbell
-set noerrorbells visualbell t_vb=
-if has('autocmd')
-  autocmd GUIEnter * set visualbell t_vb=
-endif
-
-"" Copy/Paste/Cut
-if has('unnamedplus')
-  set clipboard=unnamed,unnamedplus
-endif
 
 noremap YY "+y<CR>
 noremap <leader>p "+gP<CR>
@@ -246,20 +136,9 @@ vmap > >gv
 vnoremap J :m '>+1<CR>gv=gv
 vnoremap K :m '<-2<CR>gv=gv
 
-"" Open current line on GitHub
-nnoremap <Leader>o :.Gbrowse<CR>
-
 "*****************************************************************************
 "" Custom configs
 "*****************************************************************************
 
 " Auto pairs
 let g:AutoPairsMultilineClose = 0
-
-"*****************************************************************************
-"*****************************************************************************
-
-"" Include user's local vim config
-if filereadable(expand("~/.config/nvim/local_init.vim"))
-  source ~/.config/nvim/local_init.vim
-endif
