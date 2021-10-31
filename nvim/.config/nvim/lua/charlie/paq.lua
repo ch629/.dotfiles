@@ -22,6 +22,8 @@ require'paq'{
     'nvim-treesitter/nvim-treesitter';
     'jiangmiao/auto-pairs';
     'dense-analysis/ale';
+    -- Keybindings
+    'LionC/nest.nvim';
 
     -- Git
     'tpope/vim-rhubarb';

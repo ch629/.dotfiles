@@ -3,8 +3,8 @@ local opt = vim.opt
 vim.g.color_name = 'dracula'
 
 vim.cmd('colorscheme ' .. vim.g.color_name)
-vim.cmd('filetype plugin indent on')
 vim.cmd(':verbose setlocal omnifunc?')
+vim.cmd('filetype plugin indent on')
 
 local encoding = 'utf-8'
 opt.encoding = encoding

@@ -24,10 +24,6 @@ cnoreabbrev Qall qall
 cnoreabbrev Qa qa
 cnoreabbrev qA qa
 
-" terminal emulation
-nnoremap <silent> <leader>sh :terminal<CR>
-
-
 "*****************************************************************************
 "" Commands
 "*****************************************************************************
@@ -68,26 +64,6 @@ augroup END
 "" Mappings
 "*****************************************************************************
 
-"" Split
-noremap <Leader>h :<C-u>split<CR>
-noremap <Leader>v :<C-u>vsplit<CR>
-
-"" Tabs
-nnoremap <Tab> gt
-nnoremap <S-Tab> gT
-nnoremap <silent> <S-t> :tabnew<CR>
-
-"" Set working directory
-nnoremap <leader>. :lcd %:p:h<CR>
-
-"" Opens an edit command with the path of the currently edited file filled in
-noremap <Leader>e :e <C-R>=expand("%:p:h") . "/" <CR>
-
-"" Opens a tab edit command with the path of the currently edited file filled
-noremap <Leader>te :tabe <C-R>=expand("%:p:h") . "/" <CR>
-
-cnoremap <C-P> <C-R>=expand("%:p:h") . "/" <CR>
-
 " ale
 let g:ale_linters = {}
 
@@ -100,18 +76,6 @@ if has('macunix')
   vmap <C-x> :!pbcopy<CR>
   vmap <C-c> :w !pbcopy<CR><CR>
 endif
-
-"" Buffer nav
-noremap <leader>z :bp<CR>
-noremap <leader>q :bp<CR>
-noremap <leader>x :bn<CR>
-noremap <leader>w :bn<CR>
-
-"" Close buffer
-noremap <leader>c :bd<CR>
-
-"" Clean search (highlight)
-nnoremap <silent> <leader><space> :noh<cr>
 
 "" Switching windows
 noremap <C-j> <C-w>j
@@ -126,7 +90,7 @@ nnoremap <S-Left> :vertical resize -5<CR>
 nnoremap <S-Right> :vertical resize +5<CR>
 
 "" Terminal
-:tnoremap <Esc> <C-\><C-n>
+tnoremap <Esc> <C-\><C-n>
 
 "" Vmap for maintain Visual Mode after shifting > and <
 vmap < <gv
@@ -142,3 +106,11 @@ vnoremap K :m '<-2<CR>gv=gv
 
 " Auto pairs
 let g:AutoPairsMultilineClose = 0
+
+if !exists('*s:setupWrapping')
+  function s:setupWrapping()
+    set wrap
+    set wm=2
+    set textwidth=79
+  endfunction
+endif
