@@ -2,11 +2,6 @@
 " TODO: Temp until this is fully replaced with lua
 lua require("charlie")
 
-" Search mappings: These will make it so that going to the next one in a
-" search will center on the line it's found in.
-nnoremap n nzzzv
-nnoremap N Nzzzv
-
 "*****************************************************************************
 "" Abbreviations
 "*****************************************************************************
@@ -76,29 +71,6 @@ if has('macunix')
   vmap <C-x> :!pbcopy<CR>
   vmap <C-c> :w !pbcopy<CR><CR>
 endif
-
-"" Switching windows
-noremap <C-j> <C-w>j
-noremap <C-k> <C-w>k
-noremap <C-l> <C-w>l
-noremap <C-h> <C-w>h
-
-"" Resize splits
-nnoremap <S-Up> :res +5<CR>
-nnoremap <S-Down> :res -5<CR>
-nnoremap <S-Left> :vertical resize -5<CR>
-nnoremap <S-Right> :vertical resize +5<CR>
-
-"" Terminal
-tnoremap <Esc> <C-\><C-n>
-
-"" Vmap for maintain Visual Mode after shifting > and <
-vmap < <gv
-vmap > >gv
-
-"" Move visual block
-vnoremap J :m '>+1<CR>gv=gv
-vnoremap K :m '<-2<CR>gv=gv
 
 "*****************************************************************************
 "" Custom configs

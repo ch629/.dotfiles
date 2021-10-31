@@ -25,7 +25,7 @@ require'nest'.applyKeymaps {
         { 'v', ':<C-u>vsplit<CR>' },
 
         -- Buffers
-        { 'z', ':bp<CR>' },
+        { 'q', ':bp<CR>' },
         { 'w', ':bn<CR>' },
         { 'c', ':bd<CR>' },
 
@@ -33,17 +33,52 @@ require'nest'.applyKeymaps {
 
         -- Git
         { 'g', {
-            { 'c', ':Git commit --verbose<CR>' },
+            { 'c',  ':Git commit --verbose<CR>' },
             { 'sh', ':Git push<CR>' },
             { 'll', ':Git pull<CR>' },
-            { 's', ':Git<CR>' },
-            { 'b', ':Git blame<CR>' },
-            { 'd', ':Git diff<CR>' },
+            { 's',  ':Git<CR>' },
+            { 'b',  ':Git blame<CR>' },
+            { 'd',  ':Git diff<CR>' },
         }},
+
+    }},
+
+    -- Window Switching
+    { '<C-', {
+        { 'j>', '<C-w>j' },
+        { 'k>', '<C-w>k' },
+        { 'l>', '<C-w>l' },
+        { 'h>', '<C-w>h' },
     }},
 
     { mode = 'n', {
         { '<F2>', ':NERDTreeFind<CR>' },
         { '<F3>', ':NERDTreeToggle<CR>' },
+
+        -- Resize splits
+        { '<S-', {
+            { 'Up>',    ":res +5<CR>" },
+            { 'Down>',  ":res -5<CR>" },
+            { 'Left>',  ":vertical resize -5<CR>" },
+            { 'Right>', ":vertical resize +5<CR>" },
+        }},
+
+        { 'n', 'nzzzv' },
+        { 'N', 'Nzzzv' },
+    }},
+
+    -- Terminal
+    { mode = 't', {
+        { '<Esc>', '<-\\><C-n>' },
+    }},
+
+
+    -- Move visual block
+    { mode = 'v', {
+        { 'J', ':m \'>+1<CR>gv=gv' },
+        { 'K', ':m \'<-2<CR>gv=gv' },
+
+        { '<', '<gv', options={noremap=false}},
+        { '>', '>gv', options={noremap=false}},
     }},
 }
