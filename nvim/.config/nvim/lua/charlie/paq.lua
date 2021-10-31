@@ -5,23 +5,27 @@ if fn.empty(fn.glob(install_path)) > 0 then
     fn.system({'git', 'clone', '--depth=1', 'https://github.com/savq/paq-nvim.git', install_path})
 end
 
---TODO: How do we auto install these on first run?
+-- Auto install packages on VimEnter
+vim.cmd('autocmd VimEnter * PaqInstall')
+
 require'paq'{
     'savq/paq-nvim';
 
+    -- Theme
     {'dracula/vim', as='dracula'};
+
+    -- Libraries
+    'nvim-lua/plenary.nvim';
+    {'Shougo/vimproc.vim', run='make'};
+
+    -- NerdTree
     'scrooloose/nerdtree';
     'jistr/vim-nerdtree-tabs';
-    'tpope/vim-commentary';
+
+    -- Status line
     'vim-airline/vim-airline';
     'vim-airline/vim-airline-themes';
-    'vim-scripts/CSApprox';
-    'Yggdroot/indentLine';
-    'fladson/vim-kitty';
-    'nvim-lua/plenary.nvim';
-    'nvim-treesitter/nvim-treesitter';
-    'jiangmiao/auto-pairs';
-    'dense-analysis/ale';
+
     -- Keybindings
     'LionC/nest.nvim';
 
@@ -34,19 +38,28 @@ require'paq'{
     'nvim-telescope/telescope.nvim';
     'nvim-telescope/telescope-fzy-native.nvim';
 
+    'nvim-treesitter/nvim-treesitter';
+    'jiangmiao/auto-pairs';
+    'dense-analysis/ale';
+    'Yggdroot/indentLine';
+
+    -- Util
+    'tpope/vim-commentary';
+
     -- LSP
     'neovim/nvim-lspconfig';
+    'kyazdani42/nvim-web-devicons';
+    'folke/trouble.nvim';
+    'folke/todo-comments.nvim';
+
+    -- Completions
     'hrsh7th/cmp-nvim-lsp';
     'hrsh7th/cmp-buffer';
     'hrsh7th/nvim-cmp';
     'hrsh7th/cmp-vsnip';
     'hrsh7th/vim-vsnip';
-    'kyazdani42/nvim-web-devicons';
-    'folke/trouble.nvim';
-    'folke/todo-comments.nvim';
-    {'Shougo/vimproc.vim', run='make'};
 
     -- Go
-    'sebdah/vim-delve';
     {'fatih/vim-go', run=':GoInstallBinaries'};
+    'sebdah/vim-delve';
 }

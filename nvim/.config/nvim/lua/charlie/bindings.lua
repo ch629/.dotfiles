@@ -32,12 +32,14 @@ require'nest'.applyKeymaps {
         { '<space>', ':noh<CR>' },
 
         -- Git
-        { 'gc', ':Git commit --verbose<CR>' },
-        { 'gsh', ':Git push<CR>' },
-        { 'gll', ':Git pull<CR>' },
-        { 'gs', ':Git<CR>' },
-        { 'gb', ':Git blame<CR>' },
-        { 'gd', ':Git diff<CR>' },
+        { 'g', {
+            { 'c', ':Git commit --verbose<CR>' },
+            { 'sh', ':Git push<CR>' },
+            { 'll', ':Git pull<CR>' },
+            { 's', ':Git<CR>' },
+            { 'b', ':Git blame<CR>' },
+            { 'd', ':Git diff<CR>' },
+        }},
     }},
 
     { mode = 'n', {
