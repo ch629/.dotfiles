@@ -20,7 +20,6 @@ require'paq'{
 
     -- NerdTree
     'scrooloose/nerdtree';
-    'jistr/vim-nerdtree-tabs';
 
     -- Status line
     'nvim-lualine/lualine.nvim';

@@ -66,3 +66,5 @@ end
 
 opt.completeopt = {'menu', 'menuone', 'noselect'}
 opt.wildignore = {'*/tmp/*', '*.so', '*.swp', '*.zip', '*.pyc', '*.db', '*.sqlite'}
+
+vim.g.AutoPairsMultilineClose = false

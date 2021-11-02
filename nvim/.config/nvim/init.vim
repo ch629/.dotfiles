@@ -42,25 +42,9 @@ augroup vimrc-remember-cursor-position
   autocmd BufReadPost * if line("'\"") > 1 && line("'\"") <= line("$") | exe "normal! g`\"" | endif
 augroup END
 
-"" txt
-augroup vimrc-wrapping
-  autocmd!
-  autocmd BufRead,BufNewFile *.txt call s:setupWrapping()
-augroup END
-
-"" make/cmake
-augroup vimrc-make-cmake
-  autocmd!
-  autocmd FileType make setlocal noexpandtab
-  autocmd BufNewFile,BufRead CMakeLists.txt setlocal filetype=cmake
-augroup END
-
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
-
-" ale
-let g:ale_linters = {}
 
 noremap YY "+y<CR>
 noremap <leader>p "+gP<CR>
@@ -70,19 +54,4 @@ if has('macunix')
   " pbcopy for OSX copy/paste
   vmap <C-x> :!pbcopy<CR>
   vmap <C-c> :w !pbcopy<CR><CR>
-endif
-
-"*****************************************************************************
-"" Custom configs
-"*****************************************************************************
-
-" Auto pairs
-let g:AutoPairsMultilineClose = 0
-
-if !exists('*s:setupWrapping')
-  function s:setupWrapping()
-    set wrap
-    set wm=2
-    set textwidth=79
-  endfunction
 endif

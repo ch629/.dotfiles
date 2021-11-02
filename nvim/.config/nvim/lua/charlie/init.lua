@@ -1,6 +1,6 @@
 require'charlie.paq'
-require'charlie.catppuccino'
 require'charlie.options'
+require'charlie.catppuccino'
 require'charlie.statusline'
 require'charlie.bindings'
 require'charlie.lsp'
