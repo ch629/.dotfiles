@@ -86,14 +86,14 @@ require'nest'.applyKeymaps {
 
     -- Terminal
     { mode = 't', {
-        { '<Esc>', '<-\\><C-n>' },
+        { '<Esc>', [[<C-\><C-n>]]},
     }},
 
 
     -- Move visual block
     { mode = 'v', {
-        { 'J', ':m \'>+1<CR>gv=gv' },
-        { 'K', ':m \'<-2<CR>gv=gv' },
+        { 'J', [[:m '>+1<CR>gv=gv]]},
+        { 'K', [[:m '<-2<CR>gv=gv]]},
 
         { '<', '<gv', options={noremap=false}},
         { '>', '>gv', options={noremap=false}},

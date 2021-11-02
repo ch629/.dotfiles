@@ -1,6 +1,6 @@
 local opt = vim.opt
 
-vim.g.color_name = 'dracula'
+vim.g.color_name = 'catppuccino'
 
 vim.cmd('colorscheme ' .. vim.g.color_name)
 vim.cmd(':verbose setlocal omnifunc?')
@@ -63,17 +63,6 @@ opt.wrap = false
 if vim.fn.has('unnamedplus') then
     opt.clipboard = {'unnamed', 'unnamedplus'}
 end
-
---Status Line
-local function status_line()
-    local statusline = {}
-    table.insert(statusline, '%F%m%r%h%w%=(%{&ff}/%Y)\\ (line\\ %l\\/%L,\\ col\\ %c)\\')
-    if vim.fn.exists('*fugitive#statusline') then
-        table.insert(statusline, '%{fugitive#statusline()}')
-    end
-    return table.concat(statusline)
-end
-opt.statusline = status_line()
 
 opt.completeopt = {'menu', 'menuone', 'noselect'}
 opt.wildignore = {'*/tmp/*', '*.so', '*.swp', '*.zip', '*.pyc', '*.db', '*.sqlite'}

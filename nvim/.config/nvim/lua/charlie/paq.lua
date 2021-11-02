@@ -12,7 +12,7 @@ require'paq'{
     'savq/paq-nvim';
 
     -- Theme
-    {'dracula/vim', as='dracula'};
+    'Pocco81/Catppuccino.nvim';
 
     -- Libraries
     'nvim-lua/plenary.nvim';
@@ -23,8 +23,7 @@ require'paq'{
     'jistr/vim-nerdtree-tabs';
 
     -- Status line
-    'vim-airline/vim-airline';
-    'vim-airline/vim-airline-themes';
+    'nvim-lualine/lualine.nvim';
 
     -- Keybindings
     'LionC/nest.nvim';
