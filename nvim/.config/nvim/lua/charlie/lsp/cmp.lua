@@ -1,4 +1,4 @@
-local cmp = require('cmp')
+local cmp = require'cmp'
 
 cmp.setup {
     snippet = {
@@ -17,5 +17,5 @@ cmp.setup {
       { name = 'nvim_lsp' },
       { name = 'buffer' },
       { name = 'vsnip' },
-    }
+    },
 }
