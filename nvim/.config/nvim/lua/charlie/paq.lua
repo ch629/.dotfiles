@@ -11,6 +11,8 @@ vim.cmd('autocmd VimEnter * PaqInstall')
 require'paq'{
     'savq/paq-nvim';
 
+    'lewis6991/impatient.nvim';
+
     -- Theme
     'Pocco81/Catppuccino.nvim';
 

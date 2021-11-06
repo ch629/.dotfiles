@@ -1,4 +1,5 @@
 require'charlie.paq'
+require'impatient'
 require'charlie.options'
 require'charlie.catppuccino'
 require'charlie.statusline'
