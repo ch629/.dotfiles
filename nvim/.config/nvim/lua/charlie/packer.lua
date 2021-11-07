@@ -10,15 +10,6 @@ vim.cmd('packadd packer.nvim')
 return require'packer'.startup(function (use)
     use { 'lewis6991/impatient.nvim', run = function () require'impatient' end }
 
-    -- Theme
-    use {
-        'Pocco81/Catppuccino.nvim',
-        config = function()
-            require'charlie.catppuccino'
-            vim.cmd('colorscheme catppuccino')
-        end,
-    }
-
     -- Libraries
     use 'nvim-lua/plenary.nvim'
 
@@ -55,11 +46,19 @@ return require'packer'.startup(function (use)
 
     use 'jiangmiao/auto-pairs'
     use 'dense-analysis/ale'
-    use 'Yggdroot/indentLine'
+    use {
+        'lukas-reineke/indent-blankline.nvim',
+        config = function() require'charlie.indent_blankline' end,
+    }
 
     -- Util
     use 'tpope/vim-commentary'
     use 'tpope/vim-surround'
+
+    use {
+        'folke/which-key.nvim',
+        config = function() require'which-key'.setup{} end,
+    }
 
     -- LSP
     use {
@@ -85,6 +84,15 @@ return require'packer'.startup(function (use)
         run = ':GoInstallBinaries',
     }
     use 'sebdah/vim-delve'
+
+    -- Theme
+    use {
+        'Pocco81/Catppuccino.nvim',
+        config = function()
+            require'charlie.catppuccino'
+            vim.cmd('colorscheme catppuccino')
+        end,
+    }
 
     -- Keybindings
     use {
