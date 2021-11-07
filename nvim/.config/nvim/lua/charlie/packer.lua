@@ -9,7 +9,9 @@ vim.cmd('packadd packer.nvim')
 local use = require'packer'.use
 
 return require'packer'.startup(function ()
-    use 'lewis6991/impatient.nvim'
+    use { 'lewis6991/impatient.nvim', run = function ()
+        require'impatient'
+    end }
 
     -- Theme
     use 'Pocco81/Catppuccino.nvim'
@@ -52,6 +54,7 @@ return require'packer'.startup(function ()
     use 'kyazdani42/nvim-web-devicons'
     use 'folke/trouble.nvim'
     use 'folke/todo-comments.nvim'
+    use 'glepnir/lspsaga.nvim'
 
     -- Completions
     use 'hrsh7th/cmp-nvim-lsp'

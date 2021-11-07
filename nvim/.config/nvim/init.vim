@@ -27,12 +27,6 @@ command! FixWhitespace :%s/\s\+$//e
 " Format JSON using jq
 command! JsonFmt :%!jq '.'
 
-" LSP
-command! Implements :lua require("telescope.builtin").lsp_implementations()<CR>
-command! References :lua require("telescope.builtin").lsp_references()<CR>
-command! Callers :References
-command! Rename :lua vim.lsp.buf.rename()<CR>
-
 "*****************************************************************************
 "" Autocmd Rules
 "*****************************************************************************
@@ -45,7 +39,6 @@ augroup END
 "*****************************************************************************
 "" Mappings
 "*****************************************************************************
-
 noremap YY "+y<CR>
 noremap <leader>p "+gP<CR>
 noremap XX "+x<CR>
