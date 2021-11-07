@@ -15,16 +15,13 @@ local linters = {
     'unconvert',
     'wrapcheck',
     'revive',
+    'gocritic',
 }
-g.ale_go_golangci_lint_options = ''
-for _, linter in pairs(linters) do
-    g.ale_go_golangci_lint_options = g.ale_go_golangci_lint_options .. ' -E ' .. linter
-end
-
+g.ale_go_golangci_lint_options = '-E ' .. table.concat(linters, ',')
 g.go_metalinter_enabled = linters
 g.ale_go_golangci_lint_package = true
 g.ale_linters = {
-    go = {'golangci-lint'},
+    go = {'golangci-lint', 'gopls'},
 }
 
 -- Commands

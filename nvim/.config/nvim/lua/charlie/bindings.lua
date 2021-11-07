@@ -68,10 +68,9 @@ require'nest'.applyKeymaps {
         { 'h>', '<C-w>h' },
     }},
 
+    { '<F2>', ':NERDTreeFind<CR>' },
+    { '<F3>', ':NERDTreeToggle<CR>' },
     { mode = 'n', {
-        { '<F2>', ':NERDTreeFind<CR>' },
-        { '<F3>', ':NERDTreeToggle<CR>' },
-
         -- Resize splits
         { '<S-', {
             { 'Up>',    ":res +5<CR>" },
