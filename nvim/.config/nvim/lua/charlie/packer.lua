@@ -15,9 +15,6 @@ return require'packer'.startup({
             run = function () require'impatient' end,
         }
 
-        -- Libraries
-        use 'nvim-lua/plenary.nvim'
-
         -- NerdTree
         use {
             'preservim/nerdtree',
@@ -31,16 +28,18 @@ return require'packer'.startup({
         }
 
         -- Git
-        use 'tpope/vim-rhubarb'
-        use 'tpope/vim-fugitive'
+        use {
+            'tpope/vim-fugitive',
+            requires = 'tpope/vim-rhubarb',
+        }
         use 'airblade/vim-gitgutter'
 
         -- Telescope
         use {
             'nvim-telescope/telescope.nvim',
+            requires = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope-fzy-native.nvim'},
             config = function() require'charlie.telescope' end,
         }
-        use 'nvim-telescope/telescope-fzy-native.nvim'
 
         use {
             'nvim-treesitter/nvim-treesitter',
@@ -71,17 +70,27 @@ return require'packer'.startup({
             config = function() require'charlie.lsp' end,
         }
         use 'williamboman/nvim-lsp-installer'
-        use 'kyazdani42/nvim-web-devicons'
-        use 'folke/trouble.nvim'
-        use 'folke/todo-comments.nvim'
+        use {
+            'folke/trouble.nvim',
+            requires = 'kyazdani42/nvim-web-devicons',
+            config = function() require'trouble'.setup {} end,
+        }
+        use {
+            'folke/todo-comments.nvim',
+            requires = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim'},
+        }
         use 'glepnir/lspsaga.nvim'
 
         -- Completions
-        use 'hrsh7th/cmp-nvim-lsp'
-        use 'hrsh7th/cmp-buffer'
-        use 'hrsh7th/nvim-cmp'
-        use 'hrsh7th/cmp-vsnip'
-        use 'hrsh7th/vim-vsnip'
+        use {
+            'hrsh7th/nvim-cmp',
+            requires = {
+                'hrsh7th/cmp-nvim-lsp',
+                'hrsh7th/cmp-buffer',
+                'hrsh7th/cmp-vsnip',
+                'hrsh7th/vim-vsnip',
+            },
+        }
 
         -- Go
         use {

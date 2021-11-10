@@ -1,6 +1,5 @@
 local opt = vim.opt
 
-vim.cmd('verbose setlocal omnifunc?')
 vim.cmd('filetype plugin indent on')
 
 local encoding = 'utf-8'
