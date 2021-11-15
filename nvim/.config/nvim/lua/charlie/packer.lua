@@ -101,10 +101,10 @@ return require'packer'.startup({
 
         -- Theme
         use {
-            'Pocco81/Catppuccino.nvim',
+            'marko-cerovac/material.nvim',
             config = function()
-                require'charlie.catppuccino'
-                vim.cmd('colorscheme catppuccino')
+                vim.g.material_style = 'deep ocean'
+                vim.cmd[[colorscheme material]]
             end,
         }
 

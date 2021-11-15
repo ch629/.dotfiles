@@ -1,6 +1,6 @@
 require'lualine'.setup {
     options = {
-        theme = "catppuccino",
+        theme = 'material-nvim',
         icons_enabled = true,
         component_separators = { left = '', right = ''},
         section_separators = { left = '', right = ''},
