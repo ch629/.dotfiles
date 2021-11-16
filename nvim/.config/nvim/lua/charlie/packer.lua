@@ -48,7 +48,24 @@ return require'packer'.startup({
         }
         use 'nvim-treesitter/playground'
 
-        use 'jiangmiao/auto-pairs'
+        use {
+            'windwp/nvim-autopairs',
+            requires = {'hrsh7th/nvim-cmp'},
+            config = function() 
+                local cmp_autopairs = require('nvim-autopairs.completion.cmp')
+                local cmp = require('cmp')
+                local npairs = require("nvim-autopairs")
+
+                npairs.setup({
+                    check_ts = true,
+                    ts_config = {
+                        lua = {'string'},-- it will not add a pair on that treesitter node
+                        go = {'interpreted_string_literal', 'raw_string_literal'},
+                    }
+                })
+                cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
+            end,
+        }
         use 'dense-analysis/ale'
         use {
             'lukas-reineke/indent-blankline.nvim',
