@@ -101,10 +101,10 @@ return require'packer'.startup({
 
         -- Theme
         use {
-            'marko-cerovac/material.nvim',
+            'folke/tokyonight.nvim',
             config = function()
-                vim.g.material_style = 'deep ocean'
-                vim.cmd[[colorscheme material]]
+                vim.g.tokyonight_style = 'night'
+                vim.cmd[[colorscheme tokyonight]]
             end,
         }
 
