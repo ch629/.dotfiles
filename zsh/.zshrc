@@ -3,7 +3,6 @@ export ZSH=$HOME/.oh-my-zsh
 
 PATH=~/go/bin/:$PATH
 PATH=~/.local/bin/:$PATH
-source ~/.zoxide
 
 ZSH_THEME="spaceship"
 

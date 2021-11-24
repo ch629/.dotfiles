@@ -1,0 +1,12 @@
+linters-settings:
+  wrapcheck:
+    ignoreSigs:
+    - .Errorf(
+    - errors.New(
+    - errors.Wrap(
+    - errors.WrapContext(
+    - .Wrap(
+    - .Wrapf(
+    - .WithMessage(
+    - .WithMessagef(
+    - .WithStack(
