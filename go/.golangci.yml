@@ -5,6 +5,8 @@ linters-settings:
     - errors.New(
     - errors.Wrap(
     - errors.WrapContext(
+    - errors.WithContext(
+    - errors.WithMetadata(
     - .Wrap(
     - .Wrapf(
     - .WithMessage(
