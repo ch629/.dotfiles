@@ -12,3 +12,6 @@ linters-settings:
     - .WithMessage(
     - .WithMessagef(
     - .WithStack(
+    # gRPC errors
+    - status.Error(
+    - status.Errorf(
