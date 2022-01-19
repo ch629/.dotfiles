@@ -66,7 +66,6 @@ return require'packer'.startup({
                 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done({  map_char = { tex = '' } }))
             end,
         }
-        use 'dense-analysis/ale'
         use {
             'lukas-reineke/indent-blankline.nvim',
             config = function() require'charlie.indent_blankline' end,
@@ -97,6 +96,7 @@ return require'packer'.startup({
             requires = {'nvim-lua/plenary.nvim', 'nvim-telescope/telescope.nvim'},
         }
         use 'glepnir/lspsaga.nvim'
+        use 'jose-elias-alvarez/null-ls.nvim'
 
         -- Completions
         use {

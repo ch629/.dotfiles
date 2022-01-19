@@ -15,3 +15,14 @@ linters-settings:
     # gRPC errors
     - status.Error(
     - status.Errorf(
+
+linters:
+  enable:
+    - bodyclose
+    - gosec
+    - whitespace
+    - unconvert
+    - wrapcheck
+    - revive
+    - gocritic
+

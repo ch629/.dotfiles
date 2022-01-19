@@ -8,22 +8,6 @@ g.go_metalinter_command = 'golangci-lint'
 g.go_def_mode = 'gopls'
 g.go_def_mod_mode = 'godef'
 
-local linters = {
-    'bodyclose',
-    'gosec',
-    'whitespace',
-    'unconvert',
-    'wrapcheck',
-    'revive',
-    'gocritic',
-}
-g.ale_go_golangci_lint_options = '-E ' .. table.concat(linters, ',')
-g.go_metalinter_enabled = linters
-g.ale_go_golangci_lint_package = true
-g.ale_linters = {
-    go = {'golangci-lint', 'gopls'},
-}
-
 -- Commands
 -- Swapping between test and code files
 vim.cmd("command! -bang A call go#alternate#Switch(<bang>0, 'edit')")
