@@ -5,7 +5,8 @@ require'lspconfig'.gopls.setup {
             analyses = {
                 unusedparams = true,
                 fieldalignment = true,
-            }
+            },
+            staticcheck = true,
         },
     },
 }
