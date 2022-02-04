@@ -6,6 +6,9 @@ pushd $DOTFILES
 for dir in ./*/
 do
     dir="$(basename "$dir")"
+    if [[ "$dir" == '.git' ]]; then
+        continue
+    fi
     stow -D "$dir" -t ~
     stow "$dir" -t ~
 done

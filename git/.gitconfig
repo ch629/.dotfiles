@@ -32,3 +32,4 @@
 	defaultBranch = main
 [core]
 	editor = nvim
+	excludesFile = ~/.gitignore
