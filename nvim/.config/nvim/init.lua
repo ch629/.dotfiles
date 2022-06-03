@@ -1,7 +1,7 @@
-require'impatient'
-require'charlie'
+require("impatient")
+require("charlie")
 
-vim.cmd[[
+vim.cmd([[
     cnoreabbrev W! w!
     cnoreabbrev Q! q!
     cnoreabbrev Qall! qall!
@@ -30,4 +30,4 @@ vim.cmd[[
       vmap <C-x> :!pbcopy<CR>
       vmap <C-c> :w !pbcopy<CR><CR>
     endif
-]]
+]])

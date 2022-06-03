@@ -25,6 +25,7 @@ linters:
     - wrapcheck
     - revive
     - gocritic
+    - gomoddirectives
   presets:
     - unused
     - bugs

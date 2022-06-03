@@ -1,14 +1,14 @@
 local opt = vim.opt
 
-vim.cmd('filetype plugin indent on')
+vim.cmd("filetype plugin indent on")
 
-local encoding = 'utf-8'
+local encoding = "utf-8"
 opt.encoding = encoding
 opt.fileencoding = encoding
 opt.fileencodings = encoding
 opt.ttyfast = true
 
-opt.backspace = {'indent', 'eol', 'start'}
+opt.backspace = { "indent", "eol", "start" }
 
 opt.tabstop = 4
 opt.softtabstop = 0
@@ -23,21 +23,21 @@ opt.ignorecase = true
 opt.smartcase = true
 opt.joinspaces = false
 
-opt.fileformats = {'unix', 'dos', 'mac'}
+opt.fileformats = { "unix", "dos", "mac" }
 
-local sh = os.getenv'SHELL'
+local sh = os.getenv("SHELL")
 if sh == nil then
-    sh = '/bin/sh'
+	sh = "/bin/sh"
 end
 opt.shell = sh
 
 opt.ruler = true
 opt.number = true
 
-opt.mousemodel = 'popup'
-opt.gfn = 'Monospace 10'
+opt.mousemodel = "popup"
+opt.gfn = "Monospace 10"
 
-opt.gcr = 'a:blinkon0'
+opt.gcr = "a:blinkon0"
 opt.scrolloff = 3
 
 opt.laststatus = 2
@@ -47,20 +47,20 @@ opt.modelines = 10
 
 opt.title = true
 opt.titleold = "Terminal"
-opt.titlestring = '%F'
+opt.titlestring = "%F"
 
 opt.autoread = true
 
-opt.belloff = 'all'
+opt.belloff = "all"
 opt.visualbell = true
 
 opt.wrap = false
 
-if vim.fn.has('unnamedplus') then
-    opt.clipboard = {'unnamed', 'unnamedplus'}
+if vim.fn.has("unnamedplus") then
+	opt.clipboard = { "unnamed", "unnamedplus" }
 end
 
-opt.completeopt = {'menu', 'menuone', 'noselect'}
-opt.wildignore = {'*/tmp/*', '*.so', '*.swp', '*.zip', '*.pyc', '*.db', '*.sqlite'}
+opt.completeopt = { "menu", "menuone", "noselect" }
+opt.wildignore = { "*/tmp/*", "*.so", "*.swp", "*.zip", "*.pyc", "*.db", "*.sqlite" }
 
 vim.g.AutoPairsMultilineClose = false
