@@ -46,8 +46,10 @@ ls.config.set_config({
 	store_selection_keys = "<Tab>",
 })
 
-ls.add_snippets("all", {
-	s("func", {
+ls.add_snippets("go", {
+	-- Func
+	-- TODO: Recursive args?
+	s({ trig = "func", dscr = "a standard function" }, {
 		t("func "),
 		i(1, "name"),
 		t("("),
@@ -55,24 +57,69 @@ ls.add_snippets("all", {
 			t(""),
 			i(nil, "ctx context.Context"),
 		}),
-		t({ ") {", "\t" }),
+		t(") "),
+		c(3, {
+			t(""),
+			i(nil, "error"),
+			sn(nil, {
+				t("("),
+				i(1, "returns"),
+				t(")"),
+			}),
+		}),
+		t({ " {", "\t" }),
+		i(0),
 		t({ "", "}" }),
 	}),
-	s("fn", {
-		-- Simple static text.
-		t("//Parameters: "),
-		-- function, first parameter is the function, second the Placeholders
-		-- whose text it gets as input.
-		f(copy, 2),
-		t({ "", "function " }),
-		-- Placeholder/Insert.
-		i(1),
+
+	-- Receiver func
+	-- TODO: Add args, return
+	s({ trig = "funcr", dscr = "a receiver function" }, {
+		t("func ("),
+		i(1, "r receiver"),
+		t(") "),
+		i(2, "name"),
 		t("("),
-		-- Placeholder with initial text.
-		i(2, "int foo"),
-		-- Linebreak
+		c(3, {
+			t(""),
+			i(nil, "ctx context.Context"),
+		}),
 		t({ ") {", "\t" }),
-		-- Last Placeholder, exit Point of the snippet.
+		i(0),
+		t({ "", "}" }),
+	}),
+
+	-- Start and end span
+	s({ trig = "span", dscr = "a otel span" }, {
+		t([[span, ctx := tracer.Start(ctx, "]]),
+		i(1, "name"),
+		t([[")]]),
+		t({ "", "defer span.End()" }),
+	}),
+
+	s({ trig = "vars", dscr = "vars block" }, {
+		t({ "var (", "\t" }),
+		i(0),
+		t({ "", ")" }),
+	}),
+
+	s({ trig = "consts", dscr = "consts block" }, {
+		t({ "const (", "\t" }),
+		i(0),
+		t({ "", ")" }),
+	}),
+
+	s({ trig = "types", dscr = "types block" }, {
+		t({ "type (", "\t" }),
+		i(0),
+		t({ "", ")" }),
+	}),
+
+	-- TODO: Can we make this only possible in a _test.go file?
+	s({ trig = "test", dscr = "test func" }, {
+		t("func Test"),
+		i(1, "Name"),
+		t({ "(t *testing.T) {", "\t" }),
 		i(0),
 		t({ "", "}" }),
 	}),

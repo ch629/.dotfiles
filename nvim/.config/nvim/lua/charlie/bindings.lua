@@ -141,7 +141,7 @@ require("nest").applyKeymaps({
 	},
 
 	{ mode = "i", {
-		"<c-u>",
+		"<C-u>",
 		require("luasnip.extras.select_choice"),
 	} },
 })
