@@ -139,4 +139,9 @@ require("nest").applyKeymaps({
 			{ ">", ">gv", options = { noremap = false } },
 		},
 	},
+
+	{ mode = "i", {
+		"<c-u>",
+		require("luasnip.extras.select_choice"),
+	} },
 })
