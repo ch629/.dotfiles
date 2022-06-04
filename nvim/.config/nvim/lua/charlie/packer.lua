@@ -85,7 +85,6 @@ return require("packer").startup({
 
 		-- Util
 		use("tpope/vim-commentary")
-		-- use("tpope/vim-surround")
 
 		use({
 			"folke/which-key.nvim",
@@ -122,8 +121,6 @@ return require("packer").startup({
 			requires = {
 				"hrsh7th/cmp-nvim-lsp",
 				"hrsh7th/cmp-buffer",
-				-- "hrsh7th/cmp-vsnip",
-				-- "hrsh7th/vim-vsnip",
 				"L3MON4D3/LuaSnip",
 				"saadparwaiz1/cmp_luasnip",
 			},
@@ -131,10 +128,12 @@ return require("packer").startup({
 
 		-- Go
 		use({
-			"fatih/vim-go",
-			run = ":GoInstallBinaries",
+			"ray-x/go.nvim",
+			requires = { "ray-x/guihua.lua" },
+			config = function()
+				require("go").setup()
+			end,
 		})
-		use("sebdah/vim-delve")
 
 		-- Theme
 		use({
