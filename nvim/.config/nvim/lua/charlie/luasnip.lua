@@ -123,4 +123,10 @@ ls.add_snippets("go", {
 		i(0),
 		t({ "", "}" }),
 	}),
+
+	s({ trig = "init", dscr = "init func" }, {
+		t({ "func init() {", "\t" }),
+		i(0),
+		t({ "", "}" }),
+	}),
 })

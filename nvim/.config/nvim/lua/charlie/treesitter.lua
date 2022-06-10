@@ -15,5 +15,6 @@ require("nvim-treesitter.configs").setup({
 		"make",
 		"dockerfile",
 		"markdown",
+		"proto",
 	},
 })
