@@ -129,4 +129,19 @@ ls.add_snippets("go", {
 		i(0),
 		t({ "", "}" }),
 	}),
+
+	-- TODO: Message and options for filling other fields?
+	s({ trig = "info", dscr = "an info log" }, {
+		t("log.Info(ctx)"),
+	}),
+
+	s({ trig = "warn", dscr = "a warn log" }, {
+		t("log.Warn(ctx)"),
+	}),
+
+	s({ trig = "error", dscr = "an error log" }, {
+		t([[log.Error(ctx).Err(err).Msg("]]),
+		i(0),
+		t([[")]]),
+	}),
 })
