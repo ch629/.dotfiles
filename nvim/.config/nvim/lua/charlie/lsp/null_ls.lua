@@ -20,5 +20,8 @@ null_ls.setup({
 		-- Go
 		null_ls.builtins.diagnostics.golangci_lint,
 		null_ls.builtins.formatting.gofumpt,
+
+		-- Rust
+		null_ls.builtins.formatting.rustfmt,
 	},
 })

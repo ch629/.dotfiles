@@ -134,6 +134,21 @@ return require("packer").startup({
 				require("go").setup()
 			end,
 		})
+		use("sebdah/vim-delve")
+		use({
+			"stevearc/dressing.nvim",
+			config = function()
+				require("dressing").setup({
+					input = {
+						enabled = true,
+					},
+					select = {
+						enabled = true,
+						backend = { "telescope", "builtin" },
+					},
+				})
+			end,
+		})
 
 		-- Theme
 		use({

@@ -7,6 +7,13 @@ require("lspconfig").gopls.setup({
 				fieldalignment = true,
 			},
 			staticcheck = true,
+			codelenses = {
+				generate = true,
+				gc_details = true,
+				tidy = true,
+				upgrade_dependency = true,
+				vendor = true,
+			},
 		},
 	},
 })

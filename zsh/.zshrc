@@ -18,3 +18,18 @@ alias nv="nvim ."
 function de() {
     env $(cat .env|xargs) $@
 }
+
+# function gcb() {
+#     for mergedBranch in $(git for-each-ref --format '%(refname:short)' --merged HEAD refs/heads/)
+#     do
+#         git branch -d ${mergedBranch}
+#     done
+# }
+
+#
+
+alias lg="lazygit"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/charliehowe/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
