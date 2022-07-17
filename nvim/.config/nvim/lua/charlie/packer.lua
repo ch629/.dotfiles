@@ -114,6 +114,12 @@ return require("packer").startup({
 		})
 		use("glepnir/lspsaga.nvim")
 		use("jose-elias-alvarez/null-ls.nvim")
+		use({
+			"j-hui/fidget.nvim",
+			config = function()
+				require("fidget").setup()
+			end,
+		})
 
 		-- Completions
 		use({
