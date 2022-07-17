@@ -45,11 +45,7 @@ require("nest").applyKeymaps({
 			{
 				"r",
 				{
-					-- TODO: Write my own? - Would prefer it to fill the current name but in a floating window
-					--   vim.fn.expand("<cword>") for current name without TS
-					{ "r", require("lspsaga.rename").rename },
-					-- TODO: Update means this breaks bindings?
-					-- { "a", telescope.lsp_code_actions }, -- actions
+					{ "r", require("lspsaga.rename").lsp_rename },
 				},
 			},
 		},
