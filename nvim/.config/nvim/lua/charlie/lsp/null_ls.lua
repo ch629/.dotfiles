@@ -19,9 +19,16 @@ null_ls.setup({
 
 		-- Go
 		null_ls.builtins.diagnostics.golangci_lint,
+		null_ls.builtins.formatting.goimports,
 		null_ls.builtins.formatting.gofumpt,
 
 		-- Rust
 		null_ls.builtins.formatting.rustfmt,
+
+		-- JSON
+		null_ls.builtins.formatting.jq,
+
+		-- JS
+		null_ls.builtins.formatting.prettier,
 	},
 })
