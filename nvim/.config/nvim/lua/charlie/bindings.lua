@@ -1,6 +1,7 @@
 vim.g["mapleader"] = ","
 
 local telescope = require("telescope.builtin")
+local neotest = require("neotest")
 
 require("nest").applyKeymaps({
 	{
@@ -38,6 +39,31 @@ require("nest").applyKeymaps({
 					{ "d", telescope.lsp_definitions }, -- definition
 					{ "i", telescope.lsp_implementations }, -- implementation
 					{ "r", telescope.lsp_references }, -- references
+
+					-- Test
+					-- TODO: Project specific env vars
+					{
+						"t",
+						{
+							-- Test
+							{ "t", neotest.run.run },
+							-- File
+							{
+								"f",
+								function()
+									neotest.run.run(vim.fn.expand("%"))
+								end,
+							},
+							-- Project
+							-- TODO: This wont work in the monorepo
+							{
+								"p",
+								function()
+									neotest.run.run(vim.fn.getcwd())
+								end,
+							},
+						},
+					},
 				},
 			},
 

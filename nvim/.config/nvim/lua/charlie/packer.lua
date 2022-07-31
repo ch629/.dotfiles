@@ -110,7 +110,10 @@ return require("packer").startup({
 		})
 		use({
 			"folke/todo-comments.nvim",
-			requires = { "nvim-lua/plenary.nvim", "nvim-telescope/telescope.nvim" },
+			requires = {
+				"nvim-lua/plenary.nvim",
+				"nvim-telescope/telescope.nvim",
+			},
 		})
 		use("glepnir/lspsaga.nvim")
 		use("jose-elias-alvarez/null-ls.nvim")
@@ -118,6 +121,16 @@ return require("packer").startup({
 			"j-hui/fidget.nvim",
 			config = function()
 				require("fidget").setup()
+			end,
+		})
+		use({
+			"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
+			config = function()
+				require("lsp_lines").setup()
+				-- Disable default diagnostics
+				vim.diagnostic.config({
+					virtual_text = false,
+				})
 			end,
 		})
 
@@ -137,7 +150,9 @@ return require("packer").startup({
 			"ray-x/go.nvim",
 			requires = { "ray-x/guihua.lua" },
 			config = function()
-				require("go").setup()
+				require("go").setup({
+					lsp_codelens = false,
+				})
 			end,
 		})
 		use("sebdah/vim-delve")
@@ -151,6 +166,31 @@ return require("packer").startup({
 					select = {
 						enabled = true,
 						backend = { "telescope", "builtin" },
+					},
+				})
+			end,
+		})
+
+		use({
+			"stevearc/overseer.nvim",
+			config = function()
+				require("overseer").setup()
+			end,
+		})
+
+		use({
+			"nvim-neotest/neotest",
+			requires = {
+				"nvim-lua/plenary.nvim",
+				"nvim-treesitter/nvim-treesitter",
+				"antoinemadec/FixCursorHold.nvim",
+				"stevearc/overseer.nvim",
+				"nvim-neotest/neotest-go",
+			},
+			config = function()
+				require("neotest").setup({
+					adapters = {
+						require("neotest-go"),
 					},
 				})
 			end,
