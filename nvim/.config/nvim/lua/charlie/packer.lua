@@ -95,12 +95,27 @@ return require("packer").startup({
 
 		-- LSP
 		use({
-			"neovim/nvim-lspconfig",
+			"williamboman/mason.nvim",
+			requires = {
+				"williamboman/mason-lspconfig.nvim",
+				"neovim/nvim-lspconfig",
+			},
 			config = function()
+				require("mason").setup()
+				require("mason-lspconfig").setup({
+					ensure_installed = {
+						"gopls",
+						"sumneko_lua",
+						"rust_analyzer",
+						"jsonls",
+						"tsserver",
+						"yamlls",
+						"terraformls",
+					},
+				})
 				require("charlie.lsp")
 			end,
 		})
-		use("williamboman/nvim-lsp-installer")
 		use({
 			"folke/trouble.nvim",
 			requires = "kyazdani42/nvim-web-devicons",
@@ -206,12 +221,7 @@ return require("packer").startup({
 		})
 
 		-- Keybindings
-		use({
-			"LionC/nest.nvim",
-			config = function()
-				require("charlie.bindings")
-			end,
-		})
+		use("LionC/nest.nvim")
 	end,
 	config = {
 		compile_path = fn.stdpath("config") .. "/lua/packer_compiled.lua",
