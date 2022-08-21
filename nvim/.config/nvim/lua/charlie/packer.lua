@@ -93,6 +93,15 @@ return require("packer").startup({
 			end,
 		})
 
+		-- DAP
+		use("mfussenegger/nvim-dap")
+		use({
+			"leoluz/nvim-dap-go",
+			config = function()
+				require("dap-go").setup()
+			end,
+		})
+
 		-- LSP
 		use({
 			"williamboman/mason.nvim",
@@ -105,6 +114,7 @@ return require("packer").startup({
 				require("mason-lspconfig").setup({
 					ensure_installed = {
 						"gopls",
+						"delve",
 						"sumneko_lua",
 						"rust_analyzer",
 						"jsonls",
