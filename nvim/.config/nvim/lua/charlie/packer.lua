@@ -93,14 +93,39 @@ return require("packer").startup({
 			end,
 		})
 
+		-- DAP
+		use("mfussenegger/nvim-dap")
+		use({
+			"leoluz/nvim-dap-go",
+			config = function()
+				require("dap-go").setup()
+			end,
+		})
+
 		-- LSP
 		use({
-			"neovim/nvim-lspconfig",
+			"williamboman/mason.nvim",
+			requires = {
+				"williamboman/mason-lspconfig.nvim",
+				"neovim/nvim-lspconfig",
+			},
 			config = function()
+				require("mason").setup()
+				require("mason-lspconfig").setup({
+					ensure_installed = {
+						"gopls",
+						"delve",
+						"sumneko_lua",
+						"rust_analyzer",
+						"jsonls",
+						"tsserver",
+						"yamlls",
+						"terraformls",
+					},
+				})
 				require("charlie.lsp")
 			end,
 		})
-		use("williamboman/nvim-lsp-installer")
 		use({
 			"folke/trouble.nvim",
 			requires = "kyazdani42/nvim-web-devicons",
@@ -115,7 +140,12 @@ return require("packer").startup({
 				"nvim-telescope/telescope.nvim",
 			},
 		})
-		use("glepnir/lspsaga.nvim")
+		use({
+			"glepnir/lspsaga.nvim",
+			config = function()
+				require("lspsaga").init_lsp_saga()
+			end,
+		})
 		use("jose-elias-alvarez/null-ls.nvim")
 		use({
 			"j-hui/fidget.nvim",
@@ -143,6 +173,18 @@ return require("packer").startup({
 				"L3MON4D3/LuaSnip",
 				"saadparwaiz1/cmp_luasnip",
 			},
+		})
+
+		-- Rust
+		use({
+			"simrat39/rust-tools.nvim",
+			config = function()
+				require("rust-tools").setup({
+					tools = {
+						autoSetHints = true,
+					},
+				})
+			end,
 		})
 
 		-- Go
@@ -201,17 +243,12 @@ return require("packer").startup({
 			"folke/tokyonight.nvim",
 			config = function()
 				vim.g.tokyonight_style = "night"
-				vim.cmd([[colorscheme tokyonight]])
+				vim.cmd([[colorscheme tokyonight-night]])
 			end,
 		})
 
 		-- Keybindings
-		use({
-			"LionC/nest.nvim",
-			config = function()
-				require("charlie.bindings")
-			end,
-		})
+		use("LionC/nest.nvim")
 	end,
 	config = {
 		compile_path = fn.stdpath("config") .. "/lua/packer_compiled.lua",

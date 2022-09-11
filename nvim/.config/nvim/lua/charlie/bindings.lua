@@ -71,7 +71,7 @@ require("nest").applyKeymaps({
 			{
 				"r",
 				{
-					{ "r", require("lspsaga.rename").lsp_rename },
+					{ "r", ":Lspsaga rename<CR>" },
 				},
 			},
 		},
