@@ -38,7 +38,12 @@ return require("packer").startup({
 			"tpope/vim-fugitive",
 			requires = "tpope/vim-rhubarb",
 		})
-		use("airblade/vim-gitgutter")
+		use({
+			"lewis6991/gitsigns.nvim",
+			config = function()
+				require("gitsigns").setup()
+			end,
+		})
 
 		-- Telescope
 		use({
@@ -51,6 +56,7 @@ return require("packer").startup({
 
 		use({
 			"nvim-treesitter/nvim-treesitter",
+			requires = { "nvim-treesitter/nvim-treesitter-context" },
 			config = function()
 				require("charlie.treesitter")
 			end,
@@ -101,6 +107,12 @@ return require("packer").startup({
 				require("dap-go").setup()
 			end,
 		})
+		use({
+			"rcarriga/nvim-dap-ui",
+			config = function()
+				require("dapui").setup({})
+			end,
+		})
 
 		-- LSP
 		use({
@@ -114,7 +126,6 @@ return require("packer").startup({
 				require("mason-lspconfig").setup({
 					ensure_installed = {
 						"gopls",
-						"delve",
 						"sumneko_lua",
 						"rust_analyzer",
 						"jsonls",
@@ -143,16 +154,12 @@ return require("packer").startup({
 		use({
 			"glepnir/lspsaga.nvim",
 			config = function()
-				require("lspsaga").init_lsp_saga()
+				require("lspsaga").init_lsp_saga({
+					custom_kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
+				})
 			end,
 		})
 		use("jose-elias-alvarez/null-ls.nvim")
-		use({
-			"j-hui/fidget.nvim",
-			config = function()
-				require("fidget").setup()
-			end,
-		})
 		use({
 			"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 			config = function()
@@ -160,6 +167,66 @@ return require("packer").startup({
 				-- Disable default diagnostics
 				vim.diagnostic.config({
 					virtual_text = false,
+				})
+			end,
+		})
+		use({
+			"j-hui/fidget.nvim",
+			config = function()
+				require("fidget").setup({
+					window = {
+						blend = 0,
+					},
+				})
+			end,
+		})
+		use({
+			"folke/noice.nvim",
+			config = function()
+				require("noice").setup({
+					messages = {
+						view = "mini",
+						view_error = "notify",
+					},
+					notify = {
+						view = "mini",
+					},
+					lsp = {
+						progress = {
+							enabled = false,
+						},
+						message = {
+							view = "mini",
+						},
+					},
+				})
+			end,
+			requires = {
+				"MunifTanjim/nui.nvim",
+				"rcarriga/nvim-notify",
+			},
+		})
+		use({
+			"SmiteshP/nvim-navic",
+			requires = "neovim/nvim-lspconfig",
+			config = function()
+				require("nvim-navic").setup({
+					highlight = true,
+				})
+				vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
+			end,
+		})
+		use({
+			"theHamsta/nvim-semantic-tokens",
+			config = function()
+				require("nvim-semantic-tokens").setup({
+					preset = "default",
+					-- highlighters is a list of modules following the interface of nvim-semantic-tokens.table-highlighter or
+					-- function with the signature: highlight_token(ctx, token, highlight) where
+					--        ctx (as defined in :h lsp-handler)
+					--        token  (as defined in :h vim.lsp.semantic_tokens.on_full())
+					--        highlight (a helper function that you can call (also multiple times) with the determined highlight group(s) as the only parameter)
+					highlighters = { require("nvim-semantic-tokens.table-highlighter") },
 				})
 			end,
 		})
@@ -182,6 +249,49 @@ return require("packer").startup({
 				require("rust-tools").setup({
 					tools = {
 						autoSetHints = true,
+					},
+					server = {
+						on_attach = function(client, bufnr)
+							local caps = client.server_capabilities
+							if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
+								local augroup = vim.api.nvim_create_augroup("SemanticTokens", {})
+								vim.api.nvim_create_autocmd("TextChanged", {
+									group = augroup,
+									buffer = bufnr,
+									callback = function()
+										vim.lsp.buf.semantic_tokens_full()
+									end,
+								})
+								-- fire it first time on load as well
+								vim.lsp.buf.semantic_tokens_full()
+							end
+							require("nvim-navic").attach(client, bufnr)
+						end,
+						settings = {
+							["rust-analyzer"] = {
+								lens = {
+									enable = true,
+								},
+								checkOnSave = {
+									command = "clippy",
+								},
+
+								imports = {
+									granularity = {
+										group = "module",
+									},
+									prefix = "self",
+								},
+								cargo = {
+									buildScripts = {
+										enable = true,
+									},
+								},
+								procMacro = {
+									enable = true,
+								},
+							},
+						},
 					},
 				})
 			end,
@@ -226,13 +336,29 @@ return require("packer").startup({
 				"nvim-lua/plenary.nvim",
 				"nvim-treesitter/nvim-treesitter",
 				"antoinemadec/FixCursorHold.nvim",
-				"stevearc/overseer.nvim",
+
 				"nvim-neotest/neotest-go",
+				"rouge8/neotest-rust",
 			},
 			config = function()
+				-- get neotest namespace (api call creates or returns namespace)
+				local neotest_ns = vim.api.nvim_create_namespace("neotest")
+				vim.diagnostic.config({
+					virtual_text = {
+						format = function(diagnostic)
+							local message = diagnostic.message
+								:gsub("\n", " ")
+								:gsub("\t", " ")
+								:gsub("%s+", " ")
+								:gsub("^%s+", "")
+							return message
+						end,
+					},
+				}, neotest_ns)
 				require("neotest").setup({
 					adapters = {
 						require("neotest-go"),
+						require("neotest-rust"),
 					},
 				})
 			end,
@@ -240,10 +366,65 @@ return require("packer").startup({
 
 		-- Theme
 		use({
-			"folke/tokyonight.nvim",
+			"catppuccin/nvim",
+			as = "catppuccin",
 			config = function()
-				vim.g.tokyonight_style = "night"
-				vim.cmd([[colorscheme tokyonight-night]])
+				require("catppuccin").setup({
+					flavour = "mocha", -- latte, frappe, macchiato, mocha
+					background = { -- :h background
+						light = "latte",
+						dark = "mocha",
+					},
+					transparent_background = false,
+					term_colors = true,
+					dim_inactive = {
+						enabled = false,
+						shade = "dark",
+						percentage = 0.15,
+					},
+					no_italic = false, -- Force no italic
+					no_bold = false, -- Force no bold
+					styles = {
+						comments = { "italic" },
+						conditionals = { "italic" },
+						loops = {},
+						functions = {},
+						keywords = {},
+						strings = {},
+						variables = {},
+						numbers = {},
+						booleans = {},
+						properties = {},
+						types = {},
+						operators = {},
+					},
+					color_overrides = {},
+					custom_highlights = {},
+					integrations = {
+						cmp = true,
+						gitsigns = true,
+						nvimtree = false,
+						telescope = true,
+						notify = true,
+						mason = true,
+						neotest = true,
+						which_key = true,
+						lsp_trouble = true,
+						treesitter = true,
+						navic = { enabled = true, custom_bg = "NONE" },
+						fidget = true,
+						indent_blankline = {
+							enabled = true,
+							colored_indent_levels = false,
+						},
+						treesitter_context = true,
+						noice = true,
+						semantic_tokens = true,
+						lsp_saga = true,
+						-- For more plugins integrations please scroll down (https://github.com/catppuccin/nvim#integrations)
+					},
+				})
+				vim.cmd([[colorscheme catppuccin]])
 			end,
 		})
 

@@ -62,6 +62,17 @@ require("nest").applyKeymaps({
 									neotest.run.run(vim.fn.getcwd())
 								end,
 							},
+
+							-- Debug
+							{
+								"d",
+								function()
+									neotest.run.run({ strategy = "dap" })
+								end,
+							},
+
+							-- Output
+							{ "o", neotest.output.open },
 						},
 					},
 				},
@@ -72,6 +83,7 @@ require("nest").applyKeymaps({
 				"r",
 				{
 					{ "r", ":Lspsaga rename<CR>" },
+					{ "a", vim.lsp.buf.code_action },
 				},
 			},
 		},
