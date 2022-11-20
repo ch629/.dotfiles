@@ -1,4 +1,5 @@
 require("telescope").load_extension("fzy_native")
+require("telescope").load_extension("noice")
 
 require("telescope").setup({
 	defaults = {

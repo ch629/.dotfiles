@@ -1,14 +1,15 @@
 local null_ls = require("null-ls")
 
 null_ls.setup({
-	capabilities = require("cmp_nvim_lsp").update_capabilities(vim.lsp.protocol.make_client_capabilities()),
+	timeout_ms = 5000,
+	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 	debug = true,
 	on_attach = function(client)
-		if client.resolved_capabilities.document_formatting then
+		if client.server_capabilities.documentFormattingProvider then
 			vim.cmd([[
                 augroup LspFormatting
                     autocmd! * <buffer>
-                    autocmd BufWritePre <buffer> lua vim.lsp.buf.formatting_seq_sync()
+                    autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 5000 })
                 augroup END
             ]])
 		end
@@ -30,5 +31,9 @@ null_ls.setup({
 
 		-- JS
 		null_ls.builtins.formatting.prettier,
+
+		-- Ruby
+		-- null_ls.builtins.formatting.rubocop,
+		-- null_ls.builtins.diagnostics.rubocop,
 	},
 })
