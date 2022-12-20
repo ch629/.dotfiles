@@ -17,11 +17,14 @@ return require("packer").startup({
 			end,
 		})
 
-		-- NerdTree
+		-- Tree
 		use({
-			"preservim/nerdtree",
+			"nvim-tree/nvim-tree.lua",
+			requires = {
+				"nvim-tree/nvim-web-devicons",
+			},
 			config = function()
-				require("charlie.nerdtree")
+				require("nvim-tree").setup()
 			end,
 		})
 
@@ -403,7 +406,7 @@ return require("packer").startup({
 					integrations = {
 						cmp = true,
 						gitsigns = true,
-						nvimtree = false,
+						nvimtree = true,
 						telescope = true,
 						notify = true,
 						mason = true,
