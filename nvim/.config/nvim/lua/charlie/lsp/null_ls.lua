@@ -3,7 +3,7 @@ local null_ls = require("null-ls")
 null_ls.setup({
 	timeout_ms = 5000,
 	capabilities = require("cmp_nvim_lsp").default_capabilities(),
-	debug = true,
+	debug = false,
 	on_attach = function(client)
 		if client.server_capabilities.documentFormattingProvider then
 			vim.cmd([[
