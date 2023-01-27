@@ -6,7 +6,7 @@ PATH=~/.local/bin/:$PATH
 
 ZSH_THEME="spaceship"
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting tmux)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.tokens
@@ -19,17 +19,14 @@ function de() {
     env $(cat .env|xargs) $@
 }
 
-# function gcb() {
-#     for mergedBranch in $(git for-each-ref --format '%(refname:short)' --merged HEAD refs/heads/)
-#     do
-#         git branch -d ${mergedBranch}
-#     done
-# }
-
-#
-
 alias lg="lazygit"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/charliehowe/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+autoload -U compinit; compinit
+
+# Wasmer
+export WASMER_DIR="/Users/charliehowe/.wasmer"
+[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
+export LC_ALL=en_US.UTF-8

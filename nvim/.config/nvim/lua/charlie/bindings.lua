@@ -100,8 +100,10 @@ require("nest").applyKeymaps({
 		},
 	},
 
-	{ "<F2>", ":NERDTreeFind<CR>" },
-	{ "<F3>", ":NERDTreeToggle<CR>" },
+	-- { "<F2>", ":NERDTreeFind<CR>" },
+	-- { "<F3>", ":NERDTreeToggle<CR>" },
+	{ "<F2>", ":NvimTreeFindFile<CR>" },
+	{ "<F3>", ":NvimTreeToggle<CR>" },
 
 	-- Resize splits
 	{
