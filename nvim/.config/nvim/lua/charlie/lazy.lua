@@ -153,9 +153,14 @@ require("lazy").setup({
 	},
 	{
 		"glepnir/lspsaga.nvim",
-		event = "BufEnter",
+		event = "BufRead",
+		config = true,
+		dependencies = {
+			"catppuccin/nvim",
+			"nvim-tree/nvim-web-devicons",
+		},
 		-- opts = {
-		-- 	custom_kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
+		--     custom_kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
 		-- },
 	},
 	{
@@ -165,13 +170,13 @@ require("lazy").setup({
 	{
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
 		event = "BufEnter",
-		config = function()
-			require("lsp_lines").setup()
+		init = function()
 			-- Disable default diagnostics
 			vim.diagnostic.config({
 				virtual_text = false,
 			})
 		end,
+		config = true,
 	},
 	{
 		"j-hui/fidget.nvim",
@@ -210,24 +215,18 @@ require("lazy").setup({
 		"SmiteshP/nvim-navic",
 		event = "BufEnter",
 		dependencies = "neovim/nvim-lspconfig",
-		opts = function()
-			require("nvim-navic").setup({
-				highlight = true,
-			})
+		init = function()
 			vim.o.winbar = "%{%v:lua.require'nvim-navic'.get_location()%}"
 		end,
+		opts = {
+			highlight = true,
+		},
 	},
 	{
 		"theHamsta/nvim-semantic-tokens",
 		event = "BufEnter",
 		opts = {
 			preset = "default",
-			-- highlighters is a list of modules following the interface of nvim-semantic-tokens.table-highlighter or
-			-- function with the signature: highlight_token(ctx, token, highlight) where
-			--        ctx (as defined in :h lsp-handler)
-			--        token  (as defined in :h vim.lsp.semantic_tokens.on_full())
-			--        highlight (a helper function that you can call (also multiple times) with the determined highlight group(s) as the only parameter)
-			--highlighters = { require("nvim-semantic-tokens.table-highlighter") },
 		},
 	},
 
@@ -252,22 +251,7 @@ require("lazy").setup({
 				autoSetHints = true,
 			},
 			server = {
-				on_attach = function(client, bufnr)
-					local caps = client.server_capabilities
-					if caps.semanticTokensProvider and caps.semanticTokensProvider.full then
-						local augroup = vim.api.nvim_create_augroup("SemanticTokens", {})
-						vim.api.nvim_create_autocmd("TextChanged", {
-							group = augroup,
-							buffer = bufnr,
-							callback = function()
-								vim.lsp.buf.semantic_tokens_full()
-							end,
-						})
-						-- fire it first time on load as well
-						vim.lsp.buf.semantic_tokens_full()
-					end
-					require("nvim-navic").attach(client, bufnr)
-				end,
+				on_attach = require("charlie.lsp.attach"),
 				settings = {
 					["rust-analyzer"] = {
 						lens = {
@@ -370,7 +354,7 @@ require("lazy").setup({
 	-- Theme
 	{
 		"catppuccin/nvim",
-		as = "catppuccin",
+		name = "catppuccin",
 		lazy = false,
 		priority = 1000,
 		config = function()

@@ -1,3 +1,4 @@
+require("charlie.lsp.attach")
 require("charlie.lsp.cmp")
 require("charlie.lsp.todo")
 
