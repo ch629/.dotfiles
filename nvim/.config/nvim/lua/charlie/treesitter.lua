@@ -21,6 +21,10 @@ require("nvim-treesitter.configs").setup({
 		"rust",
 		"regex",
 		"toml",
+		"gitcommit",
+		"gitignore",
+		"gitattributes",
+		"git_rebase",
 	},
 })
 
