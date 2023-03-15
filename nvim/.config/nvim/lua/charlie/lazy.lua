@@ -145,7 +145,7 @@ require("lazy").setup({
 			require("mason-lspconfig").setup({
 				ensure_installed = {
 					"gopls",
-					"sumneko_lua",
+					"lua_ls",
 					"rust_analyzer",
 					"jsonls",
 					"tsserver",
