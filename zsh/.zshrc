@@ -32,3 +32,5 @@ autoload -U compinit; compinit
 export WASMER_DIR="/Users/charliehowe/.wasmer"
 [ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
 export LC_ALL=en_US.UTF-8
+
+source "$HOMEBREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc"
