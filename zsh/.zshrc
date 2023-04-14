@@ -12,6 +12,8 @@ source $ZSH/oh-my-zsh.sh
 source ~/.tokens
 
 alias nv="nvim ."
+# Start a new tmux session with the current dir as the name.
+alias tm="tmux new -s ${PWD##*/}"
 
 # Loads dotenv variables as env vars & runs the provided command
 #  eg: `de make run`
@@ -21,7 +23,7 @@ function de() {
 
 alias lg="lazygit"
 
-export PATH="/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/:$PATH"
+export PATH="$HOMEBREW_PREFIX/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/:$PATH"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
 export PATH="/Users/charliehowe/.rd/bin:$PATH"
