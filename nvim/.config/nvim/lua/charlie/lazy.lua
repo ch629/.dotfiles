@@ -18,6 +18,24 @@ require("lazy").setup({
 		dependencies = {
 			"nvim-tree/nvim-web-devicons",
 		},
+		init = function()
+			vim.api.nvim_create_autocmd({ "VimEnter" }, {
+				callback = function(data)
+					-- buffer is a directory
+					local directory = vim.fn.isdirectory(data.file) == 1
+
+					if not directory then
+						return
+					end
+
+					-- change to the directory
+					vim.cmd.cd(data.file)
+
+					-- open the tree
+					require("nvim-tree.api").tree.open()
+				end,
+			})
+		end,
 		config = true,
 	},
 
@@ -127,7 +145,7 @@ require("lazy").setup({
 			require("mason-lspconfig").setup({
 				ensure_installed = {
 					"gopls",
-					"sumneko_lua",
+					"lua_ls",
 					"rust_analyzer",
 					"jsonls",
 					"tsserver",
