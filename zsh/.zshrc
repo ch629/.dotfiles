@@ -2,7 +2,7 @@
 export ZSH=$HOME/.oh-my-zsh
 
 
-ZSH_THEME="spaceship"
+# ZSH_THEME="spaceship"
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting tmux)
 
@@ -35,3 +35,4 @@ source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
 source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 eval "$(zoxide init zsh)"
+eval "$(starship init zsh)"
