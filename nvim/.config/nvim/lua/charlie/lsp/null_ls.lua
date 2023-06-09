@@ -31,9 +31,5 @@ null_ls.setup({
 
 		-- JS
 		null_ls.builtins.formatting.prettier,
-
-		-- Ruby
-		-- null_ls.builtins.formatting.rubocop,
-		-- null_ls.builtins.diagnostics.rubocop,
 	},
 })

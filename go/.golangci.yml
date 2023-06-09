@@ -1,20 +1,23 @@
 linters-settings:
   wrapcheck:
     ignoreSigs:
-    - .Errorf(
-    - errors.New(
-    - errors.Wrap(
-    - errors.WrapContext(
-    - errors.WithContext(
-    - errors.WithMetadata(
-    - .Wrap(
-    - .Wrapf(
-    - .WithMessage(
-    - .WithMessagef(
-    - .WithStack(
-    # gRPC errors
-    - status.Error(
-    - status.Errorf(
+      - .Errorf(
+      - errors.New(
+      - errors.Wrap(
+      - errors.WrapContext(
+      - errors.WithContext(
+      - errors.WithMetadata(
+      - .Wrap(
+      - .Wrapf(
+      - .WithMessage(
+      - .WithMessagef(
+      - .WithStack(
+      # gRPC errors
+      - status.Error(
+      - status.Errorf(
+      - contexts.WrapSpanError
+      - contexts.SpanError
+      - contexts.SpanErrorf
 
 linters:
   enable:
@@ -26,6 +29,33 @@ linters:
     - revive
     - gocritic
     - gomoddirectives
+    - gofmt
+    - gofumpt
+    - misspell
+    - gosec
+    - paralleltest
+    - importas
+    - durationcheck
   presets:
     - unused
     - bugs
+
+linters-settings:
+  gofmt:
+    simplify: true
+
+  misspell:
+    locale: UK
+
+  paralleltest:
+    # Ignore missing calls to `t.Parallel()` and only report incorrect uses of it.
+    ignore-missing: true
+
+issues:
+  exclude-rules:
+    # Exclude some linters from running on tests files.
+    - path: _test\.go
+      linters:
+        - bodyclose
+        - gosec
+        - unused

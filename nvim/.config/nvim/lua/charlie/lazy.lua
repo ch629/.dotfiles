@@ -160,6 +160,7 @@ require("lazy").setup({
 		"folke/trouble.nvim",
 		event = "BufEnter",
 		config = true,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 	{
 		"folke/todo-comments.nvim",
@@ -246,6 +247,11 @@ require("lazy").setup({
 		opts = {
 			preset = "default",
 		},
+	},
+	{
+		"simrat39/symbols-outline.nvim",
+		event = "BufEnter",
+		config = true,
 	},
 
 	-- Completions
@@ -378,7 +384,8 @@ require("lazy").setup({
 		config = function()
 			require("catppuccin").setup({
 				flavour = "mocha", -- latte, frappe, macchiato, mocha
-				background = { -- :h background
+				background = {
+					-- :h background
 					light = "latte",
 					dark = "mocha",
 				},
@@ -433,6 +440,22 @@ require("lazy").setup({
 			})
 			vim.cmd([[colorscheme catppuccin]])
 		end,
+	},
+
+	-- {
+	-- 	"github/copilot.vim",
+	-- 	event = "BufEnter",
+	-- },
+	{
+		"zbirenbaum/copilot.lua",
+		event = "BufEnter",
+		config = true,
+	},
+
+	{
+		"zbirenbaum/copilot-cmp",
+		event = "BufEnter",
+		config = true,
 	},
 
 	-- Keybindings

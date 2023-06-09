@@ -2,6 +2,7 @@ vim.g["mapleader"] = ","
 
 local telescope = require("telescope.builtin")
 local neotest = require("neotest")
+local csuggest = require("copilot.suggestion")
 
 require("nest").applyKeymaps({
 	{
@@ -11,9 +12,6 @@ require("nest").applyKeymaps({
 			{ "G", telescope.live_grep },
 			{ "B", telescope.buffers },
 
-			-- Open terminal
-			{ "sh", ":terminal<CR>" },
-
 			-- Splits
 			{ "h", ":<C-u>split<CR>" },
 			{ "v", ":<C-u>vsplit<CR>" },
@@ -21,7 +19,6 @@ require("nest").applyKeymaps({
 			-- Buffers
 			{ "q", ":bp<CR>" },
 			{ "w", ":bn<CR>" },
-			{ "c", ":bd<CR>" },
 
 			{ "<Space>", ":noh<CR>" },
 
@@ -86,6 +83,17 @@ require("nest").applyKeymaps({
 					{ "a", vim.lsp.buf.code_action },
 				},
 			},
+
+			-- Copilot
+			{
+				"c",
+				{
+					"a",
+					function()
+						csuggest.toggle_auto_trigger()
+					end,
+				},
+			},
 		},
 	},
 
@@ -121,9 +129,12 @@ require("nest").applyKeymaps({
 	{ "N", "Nzzzv" },
 
 	-- Terminal
-	{ mode = "t", {
-		{ "<Esc>", [[<C-\><C-n>]] },
-	} },
+	{
+		mode = "t",
+		{
+			{ "<Esc>", [[<C-\><C-n>]] },
+		},
+	},
 
 	-- Move visual block
 	{
@@ -138,8 +149,32 @@ require("nest").applyKeymaps({
 		},
 	},
 
-	{ mode = "i", {
-		"<C-u>",
-		require("luasnip.extras.select_choice"),
-	} },
+	{
+		mode = "i",
+		{
+			"<C-u>",
+			require("luasnip.extras.select_choice"),
+		},
+		{
+			-- Accept copilot suggestion
+			"<C-Space>",
+			function()
+				csuggest.accept()
+			end,
+		},
+		{
+			-- Next copilot suggestion
+			"<Tab>",
+			function()
+				csuggest.next()
+			end,
+		},
+		{
+			-- Previous copilot suggestion
+			"<S-Tab>",
+			function()
+				csuggest.prev()
+			end,
+		},
+	},
 })

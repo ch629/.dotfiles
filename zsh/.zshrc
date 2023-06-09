@@ -24,7 +24,7 @@ export PATH="/Users/charliehowe/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 autoload -U compinit; compinit
 
-export PATH="~/go/bin/:$PATH"
+export PATH="/Users/charliehowe/go/bin/:$PATH"
 
 # Wasmer
 export WASMER_DIR="/Users/charliehowe/.wasmer"
