@@ -1,5 +1,7 @@
 palette = "catppuccin_mocha"
 
+format = "$directory$all"
+
 [character]
 # Note the use of Catppuccin color 'maroon'
 success_symbol = "[[➜](green)](maroon)"
@@ -41,3 +43,11 @@ surface0 = "#313244"
 base = "#1e1e2e"
 mantle = "#181825"
 crust = "#11111b"
+
+[kubernetes]
+disabled = false
+format = '[󱃾 $context/$namespace](dimmed blue) '
+
+[kubernetes.context_aliases]
+'gke_.*_(?P<var_cluster>[\w-]+)' = 'gke-$var_cluster'
+'rancher-desktop' = 'local'

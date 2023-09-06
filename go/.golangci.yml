@@ -19,6 +19,16 @@ linters-settings:
       - contexts.SpanError
       - contexts.SpanErrorf
 
+  gofmt:
+    simplify: true
+
+  misspell:
+    locale: UK
+
+  paralleltest:
+    # Ignore missing calls to `t.Parallel()` and only report incorrect uses of it.
+    ignore-missing: true
+
 linters:
   enable:
     - bodyclose
@@ -36,20 +46,10 @@ linters:
     - paralleltest
     - importas
     - durationcheck
+    - errcheck
   presets:
     - unused
     - bugs
-
-linters-settings:
-  gofmt:
-    simplify: true
-
-  misspell:
-    locale: UK
-
-  paralleltest:
-    # Ignore missing calls to `t.Parallel()` and only report incorrect uses of it.
-    ignore-missing: true
 
 issues:
   exclude-rules:

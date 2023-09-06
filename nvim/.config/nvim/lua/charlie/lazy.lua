@@ -126,11 +126,32 @@ require("lazy").setup({
 		"rcarriga/nvim-dap-ui",
 		event = "BufEnter",
 		config = true,
+		init = function()
+			local dap, dapui = require("dap"), require("dapui")
+			dap.listeners.after.event_initialized["dapui_config"] = function()
+				dapui.open()
+			end
+			dap.listeners.before.event_terminated["dapui_config"] = function()
+				dapui.close()
+			end
+			dap.listeners.before.event_exited["dapui_config"] = function()
+				dapui.close()
+			end
+		end,
 	},
 	{
 		"theHamsta/nvim-dap-virtual-text",
 		event = "BufEnter",
 		config = true,
+	},
+	{
+		"jay-babu/mason-nvim-dap.nvim",
+		event = "BufEnter",
+		config = function()
+			require("mason-nvim-dap").setup({
+				ensure_installed = { "delve" },
+			})
+		end,
 	},
 
 	-- LSP
@@ -199,7 +220,8 @@ require("lazy").setup({
 	},
 	{
 		"j-hui/fidget.nvim",
-		event = "BufEnter",
+		event = "LspAttach",
+		tag = "legacy",
 		opts = {
 			window = {
 				blend = 0,

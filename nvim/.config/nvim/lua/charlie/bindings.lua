@@ -2,6 +2,7 @@ vim.g["mapleader"] = ","
 
 local telescope = require("telescope.builtin")
 local neotest = require("neotest")
+local dap = require("dap")
 local csuggest = require("copilot.suggestion")
 
 require("nest").applyKeymaps({
@@ -63,9 +64,7 @@ require("nest").applyKeymaps({
 							-- Debug
 							{
 								"d",
-								function()
-									neotest.run.run({ strategy = "dap" })
-								end,
+								require("dap-go").debug_test,
 							},
 
 							-- Output
@@ -89,9 +88,38 @@ require("nest").applyKeymaps({
 				"c",
 				{
 					"a",
-					function()
-						csuggest.toggle_auto_trigger()
-					end,
+					csuggest.toggle_auto_trigger,
+				},
+			},
+
+			-- DAP
+			{
+				"d",
+				{
+					{
+						"b",
+						dap.toggle_breakpoint,
+					},
+					{
+						"c",
+						dap.continue,
+					},
+					{
+						"i",
+						dap.step_into,
+					},
+					{
+						"o",
+						dap.step_over,
+					},
+					{
+						"r",
+						dap.repl.open,
+					},
+					{
+						"u",
+						require("dapui").toggle,
+					},
 				},
 			},
 		},
