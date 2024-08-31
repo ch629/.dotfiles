@@ -50,7 +50,10 @@ require("lazy").setup({
 	-- Git
 	{
 		"tpope/vim-fugitive",
-		dependencies = "tpope/vim-rhubarb",
+		dependencies = {
+			"tpope/vim-rhubarb",
+			"tpope/vim-commentary",
+		},
 	},
 	{
 		"lewis6991/gitsigns.nvim",
@@ -76,7 +79,6 @@ require("lazy").setup({
 		end,
 		run = ":TSUpdate",
 	},
-	-- use("nvim-treesitter/playground")
 
 	{
 		"windwp/nvim-autopairs",
@@ -99,38 +101,8 @@ require("lazy").setup({
 	},
 	{
 		"lukas-reineke/indent-blankline.nvim",
-		config = function()
-			require("charlie.indent_blankline")
-		end,
-	},
-
-	-- Util
-	{ "tpope/vim-commentary" },
-
-	{
-		"folke/which-key.nvim",
-		config = true,
-	},
-
-	-- DAP
-	{
-		"mfussenegger/nvim-dap",
-		event = "BufEnter",
-	},
-	{
-		"leoluz/nvim-dap-go",
-		event = "BufEnter",
-		config = true,
-	},
-	{
-		"rcarriga/nvim-dap-ui",
-		event = "BufEnter",
-		config = true,
-	},
-	{
-		"theHamsta/nvim-dap-virtual-text",
-		event = "BufEnter",
-		config = true,
+		main = "ibl",
+		opts = {},
 	},
 
 	-- LSP
@@ -160,6 +132,7 @@ require("lazy").setup({
 		"folke/trouble.nvim",
 		event = "BufEnter",
 		config = true,
+		dependencies = { "nvim-tree/nvim-web-devicons" },
 	},
 	{
 		"folke/todo-comments.nvim",
@@ -170,24 +143,27 @@ require("lazy").setup({
 		},
 	},
 	{
-		"glepnir/lspsaga.nvim",
-		event = "BufRead",
-		config = true,
+		"nvimdev/lspsaga.nvim",
+		event = "LspAttach",
+		config = function()
+			require("lspsaga").setup({
+				lightbulb = {
+					enable = false,
+				},
+			})
+		end,
 		dependencies = {
 			"catppuccin/nvim",
 			"nvim-tree/nvim-web-devicons",
 		},
-		-- opts = {
-		--     custom_kind = require("catppuccin.groups.integrations.lsp_saga").custom_kind(),
-		-- },
 	},
 	{
-		"jose-elias-alvarez/null-ls.nvim",
+		"nvimtools/none-ls.nvim",
 		event = "BufEnter",
 	},
 	{
 		"https://git.sr.ht/~whynothugo/lsp_lines.nvim",
-		event = "BufEnter",
+		event = "LspAttach",
 		init = function()
 			-- Disable default diagnostics
 			vim.diagnostic.config({
@@ -198,7 +174,8 @@ require("lazy").setup({
 	},
 	{
 		"j-hui/fidget.nvim",
-		event = "BufEnter",
+		event = "LspAttach",
+		tag = "legacy",
 		opts = {
 			window = {
 				blend = 0,
@@ -262,58 +239,62 @@ require("lazy").setup({
 
 	-- Rust
 	{
-		"simrat39/rust-tools.nvim",
-		event = "BufEnter",
-		opts = {
-			tools = {
-				autoSetHints = true,
-			},
-			server = {
-				on_attach = require("charlie.lsp.attach"),
-				settings = {
-					["rust-analyzer"] = {
-						lens = {
-							enable = true,
-						},
-						checkOnSave = {
-							command = "clippy",
-						},
-
-						imports = {
-							granularity = {
-								group = "module",
-							},
-							prefix = "self",
-						},
-						cargo = {
-							buildScripts = {
+		"mrcjkb/rustaceanvim",
+		version = "^5",
+		lazy = false,
+		config = function()
+			vim.g.rustaceanvim = {
+				tools = {
+					autoSetHints = true,
+				},
+				server = {
+					on_attach = require("charlie.lsp.attach"),
+					default_settings = {
+						["rust-analyzer"] = {
+							lens = {
 								enable = true,
 							},
-						},
-						procMacro = {
-							enable = true,
-						},
-						inlayHints = {
-							locationLinks = false,
+							checkOnSave = {
+								command = "clippy",
+							},
+
+							imports = {
+								granularity = {
+									group = "module",
+								},
+								prefix = "self",
+							},
+							cargo = {
+								buildScripts = {
+									enable = true,
+								},
+							},
+							procMacro = {
+								enable = true,
+							},
+							inlayHints = {
+								locationLinks = false,
+							},
 						},
 					},
 				},
-			},
-		},
+			}
+		end,
 	},
 
 	-- Go
 	{
 		"ray-x/go.nvim",
-		dependencies = { "ray-x/guihua.lua" },
-		event = "BufEnter",
+		dependencies = {
+			"ray-x/guihua.lua",
+			"neovim/nvim-lspconfig",
+			"nvim-treesitter/nvim-treesitter",
+		},
+		event = "CmdlineEnter",
+		ft = { "go", "gomod" },
 		opts = {
 			lsp_codelens = false,
 		},
-	},
-	{
-		"sebdah/vim-delve",
-		event = "BufEnter",
 	},
 	{
 		"stevearc/dressing.nvim",
@@ -340,9 +321,9 @@ require("lazy").setup({
 			"nvim-lua/plenary.nvim",
 			"nvim-treesitter/nvim-treesitter",
 			"antoinemadec/FixCursorHold.nvim",
+			"nvim-neotest/nvim-nio",
 
-			"nvim-neotest/neotest-go",
-			"rouge8/neotest-rust",
+			"fredrikaverpil/neotest-golang",
 		},
 		event = "BufEnter",
 		config = function()
@@ -362,11 +343,37 @@ require("lazy").setup({
 			}, neotest_ns)
 			require("neotest").setup({
 				adapters = {
-					require("neotest-go"),
-					require("neotest-rust"),
+					require("neotest-golang")({
+						go_test_args = {
+							"-race",
+							"-count=1",
+							"-tags=integration_tests",
+						},
+					}),
+					require("rustaceanvim.neotest"),
 				},
 			})
 		end,
+		opts = {
+			-- See all config options with :h neotest.Config
+			discovery = {
+				-- Drastically improve performance in ginormous projects by
+				-- only AST-parsing the currently opened buffer.
+				enabled = false,
+				-- Number of workers to parse files concurrently.
+				-- A value of 0 automatically assigns number based on CPU.
+				-- Set to 1 if experiencing lag.
+				concurrent = 1,
+			},
+			running = {
+				-- Run tests concurrently when an adapter provides multiple commands to run.
+				concurrent = true,
+			},
+			summary = {
+				-- Enable/disable animation of icons.
+				animated = false,
+			},
+		},
 	},
 
 	-- Theme
@@ -378,7 +385,8 @@ require("lazy").setup({
 		config = function()
 			require("catppuccin").setup({
 				flavour = "mocha", -- latte, frappe, macchiato, mocha
-				background = { -- :h background
+				background = {
+					-- :h background
 					light = "latte",
 					dark = "mocha",
 				},
@@ -433,6 +441,18 @@ require("lazy").setup({
 			})
 			vim.cmd([[colorscheme catppuccin]])
 		end,
+	},
+
+	{
+		"zbirenbaum/copilot.lua",
+		event = "BufEnter",
+		config = true,
+	},
+
+	{
+		"zbirenbaum/copilot-cmp",
+		event = "BufEnter",
+		config = true,
 	},
 
 	-- Keybindings

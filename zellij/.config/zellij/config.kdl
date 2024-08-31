@@ -168,9 +168,6 @@ keybinds clear-defaults=true {
      shared_except "move" "locked" {
         bind "Ctrl m" { SwitchToMode "Move"; }
     }
-    shared_except "tmux" "locked" {
-        bind "Ctrl b" { SwitchToMode "Tmux"; }
-    }
 }
 
 plugins {

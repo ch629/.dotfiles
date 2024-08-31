@@ -1,19 +1,10 @@
 local null_ls = require("null-ls")
 
 null_ls.setup({
-	timeout_ms = 5000,
+	timeout_ms = 1000,
 	capabilities = require("cmp_nvim_lsp").default_capabilities(),
 	debug = false,
-	on_attach = function(client)
-		if client.server_capabilities.documentFormattingProvider then
-			vim.cmd([[
-                augroup LspFormatting
-                    autocmd! * <buffer>
-                    autocmd BufWritePre <buffer> lua vim.lsp.buf.format({ timeout_ms = 5000 })
-                augroup END
-            ]])
-		end
-	end,
+	on_attach = require("charlie.lsp.attach"),
 	sources = {
 		-- Lua
 		null_ls.builtins.formatting.stylua,
@@ -23,17 +14,10 @@ null_ls.setup({
 		null_ls.builtins.formatting.goimports,
 		null_ls.builtins.formatting.gofumpt,
 
-		-- Rust
-		null_ls.builtins.formatting.rustfmt,
-
-		-- JSON
-		null_ls.builtins.formatting.jq,
-
 		-- JS
 		null_ls.builtins.formatting.prettier,
 
-		-- Ruby
-		-- null_ls.builtins.formatting.rubocop,
-		-- null_ls.builtins.diagnostics.rubocop,
+		-- Protos
+		null_ls.builtins.formatting.buf,
 	},
 })

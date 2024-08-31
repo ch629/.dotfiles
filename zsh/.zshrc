@@ -1,10 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-
-# ZSH_THEME="spaceship"
-
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting tmux)
+plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
 source $ZSH/oh-my-zsh.sh
 source ~/.tokens
@@ -18,13 +15,9 @@ function de() {
 }
 
 alias lg="lazygit"
-
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/charliehowe/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 autoload -U compinit; compinit
 
-export PATH="~/go/bin/:$PATH"
+export PATH="/Users/charliehowe/go/bin/:$PATH"
 
 # Wasmer
 export WASMER_DIR="/Users/charliehowe/.wasmer"
@@ -36,3 +29,21 @@ source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
+
+alias l="exa -la"
+alias ls="exa"
+alias cat="bat"
+alias gprv="gh pr view -w"
+
+alias helmlogin="export HELM_EXPERIMENTAL_OCI=1 && gcloud auth application-default print-access-token | helm registry login -u oauth2accesstoken --password-stdin https://europe-docker.pkg.dev"
+
+# Handling nvim swapfiles
+alias lsswap="ls -la ~/.local/state/nvim/swap"
+alias rmswap="rm ~/.local/state/nvim/swap/*.swp"
+
+alias k="kubectl"
+alias glom="gl origin $(git_main_branch)"
+
+### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
+export PATH="/Users/charliehowe/.rd/bin:$PATH"
+### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
