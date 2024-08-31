@@ -47,6 +47,10 @@ linters:
     - importas
     - durationcheck
     - errcheck
+    - prealloc
+    - thelper
+    - zerologlint
+    - protogetter
   presets:
     - unused
     - bugs

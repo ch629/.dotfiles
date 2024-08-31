@@ -2,7 +2,6 @@ vim.g["mapleader"] = ","
 
 local telescope = require("telescope.builtin")
 local neotest = require("neotest")
-local dap = require("dap")
 local csuggest = require("copilot.suggestion")
 
 require("nest").applyKeymaps({
@@ -45,6 +44,7 @@ require("nest").applyKeymaps({
 						{
 							-- Test
 							{ "t", neotest.run.run },
+
 							-- File
 							{
 								"f",
@@ -52,19 +52,13 @@ require("nest").applyKeymaps({
 									neotest.run.run(vim.fn.expand("%"))
 								end,
 							},
+
 							-- Project
-							-- TODO: This wont work in the monorepo
 							{
 								"p",
 								function()
 									neotest.run.run(vim.fn.getcwd())
 								end,
-							},
-
-							-- Debug
-							{
-								"d",
-								require("dap-go").debug_test,
 							},
 
 							-- Output
@@ -91,37 +85,6 @@ require("nest").applyKeymaps({
 					csuggest.toggle_auto_trigger,
 				},
 			},
-
-			-- DAP
-			{
-				"d",
-				{
-					{
-						"b",
-						dap.toggle_breakpoint,
-					},
-					{
-						"c",
-						dap.continue,
-					},
-					{
-						"i",
-						dap.step_into,
-					},
-					{
-						"o",
-						dap.step_over,
-					},
-					{
-						"r",
-						dap.repl.open,
-					},
-					{
-						"u",
-						require("dapui").toggle,
-					},
-				},
-			},
 		},
 	},
 
@@ -136,8 +99,6 @@ require("nest").applyKeymaps({
 		},
 	},
 
-	-- { "<F2>", ":NERDTreeFind<CR>" },
-	-- { "<F3>", ":NERDTreeToggle<CR>" },
 	{ "<F2>", ":NvimTreeFindFile<CR>" },
 	{ "<F3>", ":NvimTreeToggle<CR>" },
 
@@ -179,10 +140,6 @@ require("nest").applyKeymaps({
 
 	{
 		mode = "i",
-		{
-			"<C-u>",
-			require("luasnip.extras.select_choice"),
-		},
 		{
 			-- Accept copilot suggestion
 			"<C-Space>",
