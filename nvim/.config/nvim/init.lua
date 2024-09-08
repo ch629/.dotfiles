@@ -5,6 +5,8 @@ vim.g.loaded_netrwPlugin = 1
 
 vim.opt.termguicolors = true
 
+vim.lsp.inlay_hint.enable(true)
+
 vim.cmd([[
     cnoreabbrev W! w!
     cnoreabbrev Q! q!
