@@ -2,7 +2,7 @@ local null_ls = require("null-ls")
 
 null_ls.setup({
 	timeout_ms = 1000,
-	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+	capabilities = require("charlie.lsp.capabilities"),
 	debug = false,
 	on_attach = require("charlie.lsp.attach"),
 	sources = {
