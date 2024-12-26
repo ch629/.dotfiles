@@ -70,6 +70,7 @@ require("lazy").setup({
 		end,
 	},
 
+	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
 		event = "BufEnter",
@@ -78,6 +79,27 @@ require("lazy").setup({
 			require("charlie.treesitter")
 		end,
 		run = ":TSUpdate",
+	},
+
+	{
+		"nvim-treesitter/nvim-treesitter-textobjects",
+		event = "UIEnter",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+	},
+	{
+		"chrisgrieser/nvim-various-textobjs",
+		event = "UIEnter",
+		dependencies = { "nvim-treesitter/nvim-treesitter-textobjects" },
+		opts = {
+			keymaps = {
+				useDefaults = true,
+			},
+		},
+	},
+	{
+		"hiphish/rainbow-delimiters.nvim",
+		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		event = "BufEnter",
 	},
 
 	{
@@ -120,7 +142,7 @@ require("lazy").setup({
 					"lua_ls",
 					"rust_analyzer",
 					"jsonls",
-					"tsserver",
+					"ts_ls",
 					"yamlls",
 					"terraformls",
 				},
@@ -232,8 +254,6 @@ require("lazy").setup({
 		dependencies = {
 			"hrsh7th/cmp-nvim-lsp",
 			"hrsh7th/cmp-buffer",
-			"L3MON4D3/LuaSnip",
-			"saadparwaiz1/cmp_luasnip",
 		},
 	},
 
@@ -451,8 +471,11 @@ require("lazy").setup({
 
 	{
 		"zbirenbaum/copilot-cmp",
-		event = "BufEnter",
+		event = "InsertEnter",
 		config = true,
+		dependencies = {
+			"hrsh7th/nvim-cmp",
+		},
 	},
 
 	-- Keybindings

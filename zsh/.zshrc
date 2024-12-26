@@ -3,10 +3,7 @@ export ZSH=$HOME/.oh-my-zsh
 
 plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
 
-source $ZSH/oh-my-zsh.sh
 source ~/.tokens
-
-alias nv="nvim ."
 
 # Loads dotenv variables as env vars & runs the provided command
 #  eg: `de make run`
@@ -14,26 +11,28 @@ function de() {
     env $(cat .env|xargs) $@
 }
 
-alias lg="lazygit"
-autoload -U compinit; compinit
+
+if type brew &>/dev/null
+then
+  FPATH="$(brew --prefix)/share/zsh/site-functions:${FPATH}"
+fi
+
+source $ZSH/oh-my-zsh.sh
 
 export PATH="/Users/charliehowe/go/bin/:$PATH"
-
-# Wasmer
-export WASMER_DIR="/Users/charliehowe/.wasmer"
-[ -s "$WASMER_DIR/wasmer.sh" ] && source "$WASMER_DIR/wasmer.sh"
-export LC_ALL=en_US.UTF-8
-
-source "$(brew --prefix)/share/google-cloud-sdk/path.zsh.inc"
-source "$(brew --prefix)/share/google-cloud-sdk/completion.zsh.inc"
+export PATH="$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/:$PATH"
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
 
-alias l="exa -la"
-alias ls="exa"
+alias nv="nvim ."
+alias lg="lazygit"
+# alias l="exa -la"
+# alias ls="exa"
 alias cat="bat"
 alias gprv="gh pr view -w"
+alias gmt="go mod tidy"
+alias ga.="git add ."
 
 alias helmlogin="export HELM_EXPERIMENTAL_OCI=1 && gcloud auth application-default print-access-token | helm registry login -u oauth2accesstoken --password-stdin https://europe-docker.pkg.dev"
 
