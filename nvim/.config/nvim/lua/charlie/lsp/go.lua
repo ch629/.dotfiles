@@ -4,7 +4,7 @@ require("lspconfig").gopls.setup({
 		gopls = {
 			analyses = {
 				unusedparams = true,
-				fieldalignment = false,
+				fieldalignment = true,
 			},
 			staticcheck = true,
 			semanticTokens = true,
@@ -18,7 +18,7 @@ require("lspconfig").gopls.setup({
 			annotations = {
 				escape = true,
 			},
-			buildFlags = { "-tags", "integration_tests,draw,integration,unit,slt,export" },
+			buildFlags = { "-tags", "integration_tests,draw,integration,unit,slt,export,codegen" },
 		},
 	},
 	on_attach = require("charlie.lsp.attach"),

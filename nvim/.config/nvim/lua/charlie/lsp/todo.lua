@@ -13,11 +13,15 @@ require("todo-comments").setup({
 		NOTE = { icon = " ", color = "hint" },
 	},
 	merge_keywords = true,
+	gui_style = {
+		fg = "NONE",
+		bg = "BOLD",
+	},
 	highlight = {
 		before = "",
 		keyword = "bg",
 		after = "fg",
-		pattern = [[.*<(KEYWORDS)(\(.*\))?\s*:?]],
+		pattern = [[.*<(KEYWORDS).*\s*:]],
 		comments_only = true,
 		max_line_len = 400,
 		exclude = {},
@@ -39,5 +43,6 @@ require("todo-comments").setup({
 			"--column",
 		},
 		pattern = [[\b(KEYWORDS):]],
+		-- pattern = [[\b(KEYWORDS)(\(.*\))?\s*:]],
 	},
 })
