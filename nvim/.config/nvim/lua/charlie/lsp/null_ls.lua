@@ -1,7 +1,7 @@
 local null_ls = require("null-ls")
 
 null_ls.setup({
-	timeout_ms = 1000,
+	timeout_ms = 2000,
 	capabilities = require("charlie.lsp.capabilities"),
 	debug = false,
 	on_attach = require("charlie.lsp.attach"),

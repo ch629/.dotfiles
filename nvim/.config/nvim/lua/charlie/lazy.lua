@@ -236,21 +236,21 @@ require("lazy").setup({
 			highlight = true,
 		},
 	},
-	{
-		"theHamsta/nvim-semantic-tokens",
-		event = "BufEnter",
-		opts = {
-			preset = "default",
-		},
-	},
+	-- {
+	--     "theHamsta/nvim-semantic-tokens",
+	--     event = "BufEnter",
+	--     opts = {
+	--         preset = "default",
+	--     },
+	-- },
 
 	-- Completions
 	{
 		"saghen/blink.cmp",
-		-- optional: provides snippets for the snippet source
 		event = "InsertEnter",
 		dependencies = {
 			"giuxtaposition/blink-cmp-copilot",
+			"Kaiser-Yang/blink-cmp-avante",
 		},
 
 		-- use a release tag to download pre-built binaries
@@ -269,7 +269,10 @@ require("lazy").setup({
 			-- See the full "keymap" documentation for information on defining your own keymap.
 			keymap = {
 				preset = "enter",
-				cmdline = {
+			},
+
+			cmdline = {
+				keymap = {
 					preset = "super-tab",
 				},
 			},
@@ -284,10 +287,22 @@ require("lazy").setup({
 				nerd_font_variant = "mono",
 			},
 
+			signature = {
+				enabled = true,
+			},
+
+			completion = {
+				documentation = {
+					auto_show = true,
+					auto_show_delay_ms = 25,
+				},
+			},
+
 			-- Default list of enabled providers defined so that you can extend it
 			-- elsewhere in your config, without redefining it, due to `opts_extend`
 			sources = {
 				default = {
+					"avante",
 					"copilot",
 					"lsp",
 					"buffer",
@@ -299,6 +314,13 @@ require("lazy").setup({
 						module = "blink-cmp-copilot",
 						score_offset = 100,
 						async = true,
+					},
+					avante = {
+						module = "blink-cmp-avante",
+						name = "Avante",
+						opts = {
+							-- options for blink-cmp-avante
+						},
 					},
 				},
 			},
@@ -515,7 +537,92 @@ require("lazy").setup({
 	{
 		"zbirenbaum/copilot.lua",
 		event = "BufEnter",
-		config = true,
+		config = function()
+			require("copilot").setup({
+				-- copilot_model = "claude-3.7-sonnet",
+				copilot_model = "gpt-4o",
+			})
+		end,
+	},
+	{
+		"ravitemer/mcphub.nvim",
+		dependencies = {
+			"nvim-lua/plenary.nvim",
+		},
+		build = "npm install -g mcp-hub@latest", -- Installs `mcp-hub` node binary globally
+		config = function()
+			require("mcphub").setup()
+		end,
+	},
+
+	{
+		"yetone/avante.nvim",
+		event = "VeryLazy",
+		version = false, -- Never set this value to "*"! Never!
+		opts = {
+			providers = {
+				copilot = {
+					endpoint = "https://api.githubcopilot.com",
+					-- model = "claude-3.7-sonnet",
+					model = "gpt-4o",
+					proxy = nil, -- [protocol://]host[:port] Use this proxy
+					allow_insecure = false, -- Allow insecure server connections
+					timeout = 60000, -- Timeout in milliseconds
+					extra_request_body = {
+						temperature = 0,
+					},
+				},
+			},
+			provider = "copilot",
+			system_prompt = function()
+				local hub = require("mcphub").get_hub_instance()
+				return hub and hub:get_active_servers_prompt() or ""
+			end,
+			custom_tools = function()
+				return {
+					require("mcphub.extensions.avante").mcp_tool(),
+				}
+			end,
+		},
+		-- if you want to build from source then do `make BUILD_FROM_SOURCE=true`
+		build = "make",
+		-- build = "powershell -ExecutionPolicy Bypass -File Build.ps1 -BuildFromSource false" -- for windows
+		dependencies = {
+			"nvim-treesitter/nvim-treesitter",
+			"stevearc/dressing.nvim",
+			"nvim-lua/plenary.nvim",
+			"MunifTanjim/nui.nvim",
+			--- The below dependencies are optional,
+			"nvim-telescope/telescope.nvim", -- for file_selector provider telescope
+			"nvim-tree/nvim-web-devicons", -- or echasnovski/mini.icons
+			"zbirenbaum/copilot.lua", -- for providers='copilot'
+			"ravitemer/mcphub.nvim",
+			{
+				-- support for image pasting
+				"HakonHarnes/img-clip.nvim",
+				event = "VeryLazy",
+				opts = {
+					-- recommended settings
+					default = {
+						embed_image_as_base64 = false,
+						prompt_for_file_name = false,
+						drag_and_drop = {
+							insert_mode = true,
+						},
+						-- required for Windows users
+						use_absolute_path = true,
+					},
+				},
+			},
+			{
+				-- Make sure to set this up properly if you have lazy=true
+				"MeanderingProgrammer/render-markdown.nvim",
+				opts = {
+					file_types = { "markdown", "Avante" },
+				},
+				ft = { "markdown", "Avante" },
+			},
+		},
 	},
 
 	-- Keybindings

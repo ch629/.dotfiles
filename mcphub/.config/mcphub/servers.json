@@ -1,0 +1,83 @@
+{
+  "mcpServers": {
+    "docker-mcp": {
+      "command": "/Users/charliehowe/.local/bin/uvx",
+      "args": [
+        "docker-mcp"
+      ],
+      "disabled": false
+    },
+    "godoc": {
+      "command": "go",
+      "autoApprove": [
+        "getPackageInfo",
+        "searchPackages"
+      ],
+      "args": [
+        "run",
+        "github.com/yikakia/godoc-mcp-server/cmd/godoc-mcp-server@latest"
+      ]
+    },
+    "git": {
+      "command": "/Users/charliehowe/.local/bin/uvx",
+      "autoApprove": [
+        "git_diff",
+        "git_diff_staged",
+        "git_diff_unstaged",
+        "git_log",
+        "git_show",
+        "git_status"
+      ],
+      "args": [
+        "mcp-server-git"
+      ]
+    },
+    "filesystem": {
+      "command": "npx",
+      "autoApprove": [
+        "get_file_info",
+        "list_allowed_directories",
+        "list_directory",
+        "read_file",
+        "read_multiple_files",
+        "search_files"
+      ],
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/charliehowe/Desktop",
+        "/Users/charliehowe/Projects"
+      ]
+    },
+    "mcp-mermaid": {
+      "command": "npx",
+      "autoApprove": [
+        "generate_mermaid_diagram"
+      ],
+      "args": [
+        "-y",
+        "mcp-mermaid"
+      ]
+    },
+    "context7": {
+      "command": "npx",
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ],
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ]
+    }
+  },
+  "nativeMCPServers": {
+    "neovim": {
+      "autoApprove": [
+        "find_files",
+        "list_directory",
+        "read_file"
+      ]
+    }
+  }
+}
