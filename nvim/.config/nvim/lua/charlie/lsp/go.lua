@@ -1,4 +1,4 @@
-require("lspconfig").gopls.setup({
+vim.lsp.config("gopls", {
 	capabilities = require("charlie.lsp.capabilities"),
 	settings = {
 		gopls = {
