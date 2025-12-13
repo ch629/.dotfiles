@@ -19,7 +19,7 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="/Users/charliehowe/go/bin/:$PATH"
+export PATH="/Users/charlie.howes/go/bin/:$PATH"
 export PATH="$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/:$PATH"
 
 eval "$(zoxide init zsh)"
@@ -43,10 +43,15 @@ alias rmswap="rm ~/.local/state/nvim/swap/*.swp"
 alias k="kubectl"
 alias glom="gl origin $(git_main_branch)"
 
-export PATH="/Users/charliehowe/.local/bin:$PATH"
+export PATH="/Users/charlie.howes/.local/bin:$PATH"
 
 ### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/charliehowe/.rd/bin:$PATH"
+export PATH="/Users/charlie.howes/.rd/bin:$PATH"
 ### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
+export JAVA_HOME="/opt/homebrew/Cellar/openjdk@11/11.0.27/libexec/openjdk.jdk/Contents/Home"
 
-. "$HOME/.local/bin/env"
+function UUID() {
+    echo $(uuidgen) | awk '{print tolower($0)}' | tr -d '\n' | pbcopy
+}
+
+alias uuid=UUID

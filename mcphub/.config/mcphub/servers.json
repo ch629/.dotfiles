@@ -1,39 +1,30 @@
 {
   "mcpServers": {
+    "context7": {
+      "args": [
+        "-y",
+        "@upstash/context7-mcp"
+      ],
+      "autoApprove": [
+        "resolve-library-id",
+        "get-library-docs"
+      ],
+      "command": "npx"
+    },
     "docker-mcp": {
-      "command": "/Users/charliehowe/.local/bin/uvx",
       "args": [
         "docker-mcp"
       ],
-      "disabled": false
-    },
-    "godoc": {
-      "command": "go",
-      "autoApprove": [
-        "getPackageInfo",
-        "searchPackages"
-      ],
-      "args": [
-        "run",
-        "github.com/yikakia/godoc-mcp-server/cmd/godoc-mcp-server@latest"
-      ]
-    },
-    "git": {
       "command": "/Users/charliehowe/.local/bin/uvx",
-      "autoApprove": [
-        "git_diff",
-        "git_diff_staged",
-        "git_diff_unstaged",
-        "git_log",
-        "git_show",
-        "git_status"
-      ],
-      "args": [
-        "mcp-server-git"
-      ]
+      "disabled": true
     },
     "filesystem": {
-      "command": "npx",
+      "args": [
+        "-y",
+        "@modelcontextprotocol/server-filesystem",
+        "/Users/charliehowe/Desktop",
+        "/Users/charliehowe/Projects"
+      ],
       "autoApprove": [
         "get_file_info",
         "list_allowed_directories",
@@ -42,33 +33,45 @@
         "read_multiple_files",
         "search_files"
       ],
+      "command": "npx",
+      "disabled": false
+    },
+    "git": {
       "args": [
-        "-y",
-        "@modelcontextprotocol/server-filesystem",
-        "/Users/charliehowe/Desktop",
-        "/Users/charliehowe/Projects"
-      ]
+        "mcp-server-git"
+      ],
+      "autoApprove": [
+        "git_diff",
+        "git_diff_staged",
+        "git_diff_unstaged",
+        "git_log",
+        "git_show",
+        "git_status"
+      ],
+      "command": "/Users/charliehowe/.local/bin/uvx",
+      "disabled": false
+    },
+    "godoc": {
+      "args": [
+        "run",
+        "github.com/yikakia/godoc-mcp-server/cmd/godoc-mcp-server@latest"
+      ],
+      "autoApprove": [
+        "getPackageInfo",
+        "searchPackages"
+      ],
+      "command": "go"
     },
     "mcp-mermaid": {
-      "command": "npx",
-      "autoApprove": [
-        "generate_mermaid_diagram"
-      ],
       "args": [
         "-y",
         "mcp-mermaid"
-      ]
-    },
-    "context7": {
-      "command": "npx",
-      "autoApprove": [
-        "resolve-library-id",
-        "get-library-docs"
       ],
-      "args": [
-        "-y",
-        "@upstash/context7-mcp"
-      ]
+      "autoApprove": [
+        "generate_mermaid_diagram"
+      ],
+      "command": "npx",
+      "disabled": true
     }
   },
   "nativeMCPServers": {
