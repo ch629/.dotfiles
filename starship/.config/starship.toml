@@ -1,6 +1,7 @@
 palette = "catppuccin_mocha"
 
 format = "$directory$all"
+command_timeout = 750
 
 [character]
 # Note the use of Catppuccin color 'maroon'
@@ -48,6 +49,10 @@ crust = "#11111b"
 disabled = false
 format = '[󱃾 $context/$namespace](dimmed blue) '
 
-[kubernetes.context_aliases]
-'gke_.*_(?P<var_cluster>[\w-]+)' = 'gke-$var_cluster'
-'rancher-desktop' = 'local'
+[[kubernetes.contexts]]
+context_pattern = 'gke_.*_(?P<var_cluster>[\w-]+)'
+context_alias = 'gke-$var_cluster'
+
+[[kubernetes.contexts]]
+context_pattern = 'rancher-desktop'
+context_alias = 'local'

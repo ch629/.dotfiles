@@ -1,5 +1,5 @@
-require("lspconfig").gopls.setup({
-	capabilities = require("cmp_nvim_lsp").default_capabilities(),
+vim.lsp.config("gopls", {
+	capabilities = require("charlie.lsp.capabilities"),
 	settings = {
 		gopls = {
 			analyses = {

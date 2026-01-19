@@ -1,4 +1,4 @@
-require("lspconfig").ts_ls.setup({
-    capabilities = require("cmp_nvim_lsp").default_capabilities(),
-    on_attach = require("charlie.lsp.attach"),
+vim.lsp.config("ts_ls", {
+	capabilities = require("charlie.lsp.capabilities"),
+	on_attach = require("charlie.lsp.attach"),
 })
