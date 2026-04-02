@@ -1,7 +1,7 @@
 # Path to your oh-my-zsh installation.
 export ZSH=$HOME/.oh-my-zsh
 
-plugins=(git zsh-autosuggestions zsh-syntax-highlighting)
+plugins=(git)
 
 source ~/.tokens
 
@@ -19,8 +19,7 @@ fi
 
 source $ZSH/oh-my-zsh.sh
 
-export PATH="/Users/charlie.howes/go/bin/:$PATH"
-export PATH="$(brew --prefix)/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/bin/:$PATH"
+export PATH="$HOME/go/bin/:$PATH"
 
 eval "$(zoxide init zsh)"
 eval "$(starship init zsh)"
@@ -34,8 +33,6 @@ alias gprv="gh pr view -w"
 alias gmt="go mod tidy"
 alias ga.="git add ."
 
-alias helmlogin="export HELM_EXPERIMENTAL_OCI=1 && gcloud auth application-default print-access-token | helm registry login -u oauth2accesstoken --password-stdin europe-docker.pkg.dev"
-
 # Handling nvim swapfiles
 alias lsswap="ls -la ~/.local/state/nvim/swap"
 alias rmswap="rm ~/.local/state/nvim/swap/*.swp"
@@ -43,11 +40,8 @@ alias rmswap="rm ~/.local/state/nvim/swap/*.swp"
 alias k="kubectl"
 alias glom="gl origin $(git_main_branch)"
 
-export PATH="/Users/charlie.howes/.local/bin:$PATH"
+export PATH="$HOME/.local/bin:$PATH"
 
-### MANAGED BY RANCHER DESKTOP START (DO NOT EDIT)
-export PATH="/Users/charlie.howes/.rd/bin:$PATH"
-### MANAGED BY RANCHER DESKTOP END (DO NOT EDIT)
 export JAVA_HOME="/opt/homebrew/Cellar/openjdk@11/11.0.27/libexec/openjdk.jdk/Contents/Home"
 
 function UUID() {
@@ -55,3 +49,21 @@ function UUID() {
 }
 
 alias uuid=UUID
+
+alias avante='nvim -c "lua vim.defer_fn(function()require(\"avante.api\").zen_mode()end, 100)"'
+
+source $(brew --prefix)/share/zsh-autosuggestions/zsh-autosuggestions.zsh
+source $(brew --prefix)/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
+
+. "$HOME/.local/bin/env"
+
+# opencode
+export PATH=/Users/charliehowes/.opencode/bin:$PATH
+
+eval "$(direnv hook zsh)"
+
+export GOPRIVATE="github.com/betikake/"
+export GPG_TTY=$(tty)
+
+alias prnum="gh pr view --json number | jq '.number'"
+alias prrepo="gh repo view --json nameWithOwner | jq '.nameWithOwner'"

@@ -79,6 +79,7 @@ require("lazy").setup({
 			require("charlie.treesitter")
 		end,
 		run = ":TSUpdate",
+		branch = "master",
 	},
 
 	{
@@ -95,11 +96,6 @@ require("lazy").setup({
 				useDefaults = true,
 			},
 		},
-	},
-	{
-		"hiphish/rainbow-delimiters.nvim",
-		dependencies = { "nvim-treesitter/nvim-treesitter" },
-		event = "BufEnter",
 	},
 
 	{
@@ -142,6 +138,11 @@ require("lazy").setup({
 					"ts_ls",
 					"yamlls",
 					"terraformls",
+				},
+				automatic_enable = {
+					exclude = {
+						"rust_analyzer",
+					},
 				},
 			})
 			require("charlie.lsp")
@@ -296,6 +297,15 @@ require("lazy").setup({
 					auto_show = true,
 					auto_show_delay_ms = 25,
 				},
+				-- menu = {
+				--     draw = {
+				--         columns = {
+				--             { 'kind_icon' },
+				--             { 'label',      'label_description', gap = 1 },
+				--             { 'source_name' },
+				--         },
+				--     },
+				-- },
 			},
 
 			-- Default list of enabled providers defined so that you can extend it
@@ -331,9 +341,9 @@ require("lazy").setup({
 	-- Rust
 	{
 		"mrcjkb/rustaceanvim",
-		version = "^5",
+		version = "^7",
 		lazy = false,
-		config = function()
+		init = function()
 			vim.g.rustaceanvim = {
 				tools = {
 					autoSetHints = true,
@@ -536,9 +546,7 @@ require("lazy").setup({
 		event = "BufEnter",
 		config = function()
 			require("copilot").setup({
-				copilot_model = "claude-3.7-sonnet",
-				-- copilot_model = "claude-sonnet-4",
-				-- copilot_model = "gpt-4o",
+				copilot_model = "gpt-41-copilot",
 			})
 		end,
 	},
@@ -571,8 +579,34 @@ require("lazy").setup({
 						temperature = 0,
 					},
 				},
+				mistral = {
+					__inherited_from = "openai",
+					api_key_name = "MISTRAL_API_KEY",
+					endpoint = "https://api.mistral.ai/v1/",
+					model = "devstral-2512",
+					extra_request_body = {
+						max_tokens = 4096, -- to avoid using max_completion_tokens
+					},
+				},
 			},
-			provider = "copilot",
+			acp_providers = {
+				["codex"] = {
+					command = "npx",
+					args = { "@zed-industries/codex-acp" },
+					env = {
+						NODE_NO_WARNINGS = "1",
+						OPENAI_API_KEY = os.getenv("OPENAI_API_KEY"),
+					},
+				},
+				{
+					["opencode"] = {
+						command = "opencode",
+						args = { "acp" },
+					},
+				},
+			},
+			-- provider = "copilot",
+			provider = "mistral",
 			system_prompt = function()
 				local hub = require("mcphub").get_hub_instance()
 				return hub and hub:get_active_servers_prompt() or ""
