@@ -1,65 +1,95 @@
-linters-settings:
-  wrapcheck:
-    ignoreSigs:
-      - .Errorf(
-      - errors.New(
-      - errors.Wrap(
-      - errors.WrapContext(
-      - errors.WithContext(
-      - errors.WithMetadata(
-      - .Wrap(
-      - .Wrapf(
-      - .WithMessage(
-      - .WithMessagef(
-      - .WithStack(
-      # gRPC errors
-      - status.Error(
-      - status.Errorf(
-      - contexts.WrapSpanError
-      - contexts.SpanError
-      - contexts.SpanErrorf
-
-  gofmt:
-    simplify: true
-
-  misspell:
-    locale: UK
-
-  paralleltest:
-    # Ignore missing calls to `t.Parallel()` and only report incorrect uses of it.
-    ignore-missing: true
-
+version: "2"
 linters:
   enable:
+    - asasalint
+    - asciicheck
+    - bidichk
     - bodyclose
-    - gosec
-    - whitespace
-    - unconvert
-    - wrapcheck
-    - revive
+    - contextcheck
+    - durationcheck
+    - errchkjson
+    - errorlint
+    - exhaustive
+    - gocheckcompilerdirectives
+    - gochecksumtype
     - gocritic
     - gomoddirectives
+    - gosec
+    - gosmopolitan
+    - importas
+    - loggercheck
+    - makezero
+    - misspell
+    - musttag
+    - nilerr
+    - nilnesserr
+    - noctx
+    - paralleltest
+    - prealloc
+    - protogetter
+    - reassign
+    - recvcheck
+    - revive
+    - rowserrcheck
+    - spancheck
+    - sqlclosecheck
+    - testifylint
+    - thelper
+    - unconvert
+    - unparam
+    - whitespace
+    - wrapcheck
+    - zerologlint
+    - modernize
+    - copyloopvar
+  settings:
+    paralleltest:
+      ignore-missing: true
+    wrapcheck:
+      ignore-sigs:
+        - .Errorf(
+        - errors.New(
+        - errors.Wrap(
+        - errors.WrapContext(
+        - errors.WithContext(
+        - errors.WithMetadata(
+        - .Wrap(
+        - .Wrapf(
+        - .WithMessage(
+        - .WithMessagef(
+        - .WithStack(
+        - status.Error(
+        - status.Errorf(
+        - contexts.WrapSpanError
+        - contexts.SpanError
+        - contexts.SpanErrorf
+  exclusions:
+    generated: lax
+    presets:
+      - comments
+      - common-false-positives
+      - legacy
+      - std-error-handling
+    rules:
+      - linters:
+          - bodyclose
+          - gosec
+          - unused
+        path: _test\.go
+    paths:
+      - third_party$
+      - builtin$
+      - examples$
+formatters:
+  enable:
     - gofmt
     - gofumpt
-    - misspell
-    - gosec
-    - paralleltest
-    - importas
-    - durationcheck
-    - errcheck
-    - prealloc
-    - thelper
-    - zerologlint
-    - protogetter
-  presets:
-    - unused
-    - bugs
-
-issues:
-  exclude-rules:
-    # Exclude some linters from running on tests files.
-    - path: _test\.go
-      linters:
-        - bodyclose
-        - gosec
-        - unused
+  settings:
+    gofmt:
+      simplify: true
+  exclusions:
+    generated: lax
+    paths:
+      - third_party$
+      - builtin$
+      - examples$

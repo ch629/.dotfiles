@@ -1,0 +1,169 @@
+[
+  {
+    "id": "researcher-uncertainty",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "invoke_subagent": "jira-researcher",
+    "prompt": "Analyze ticket FIN-123 from the details: summary=\"Investigate payout mismatch\", status=\"In Progress\", and no acceptance criteria are provided. Do not invent fields. Use your required output headings exactly.",
+    "must_include": [
+      "Unknowns",
+      "Acceptance criteria"
+    ],
+    "should_include": [
+      "Confidence",
+      "clarification"
+    ],
+    "must_not_include": [
+      "transitioned",
+      "assigned",
+      "created"
+    ]
+  },
+  {
+    "id": "validator-evidence-matrix",
+    "suite": "offline",
+    "timeout": 120,
+    "agent": "developer-primary",
+    "invoke_subagent": "jira-ticket-validator",
+    "prompt": "Validate this change against ticket ACME-456. Ticket AC: 1) debit and credit stay balanced, 2) retries are idempotent. Dev notes: changed fee calculation in settlement.go; no tests were added for idempotency. Use only this provided information and do not run tools/commands. Use your required output headings exactly.",
+    "must_include": [
+      "Verdict|Decision",
+      "Evidence",
+      "Risks",
+      "Next Actions"
+    ],
+    "should_include": [
+      "Pass/Fail/Unknown",
+      "Gap",
+      "Next Actions"
+    ],
+    "must_not_include": [
+      "assuming it passes"
+    ]
+  },
+  {
+    "id": "go-review-financial-invariants",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "invoke_subagent": "go-financial-code-reviewer",
+    "prompt": "Review this Go change summary: currency math uses float64 and rounds using math.Round at the end; no overflow tests; go test passes. Use only this provided information and do not run tools/commands. Return strict review output.",
+    "must_include": [
+      "Verdict",
+      "float64",
+      "rounding",
+      "overflow"
+    ],
+    "should_include": [
+      "Financial invariants checklist",
+      "golangci-lint",
+      "Reject",
+      "Required Fixes"
+    ],
+    "must_not_include": [
+      "looks fine overall"
+    ]
+  },
+  {
+    "id": "developer-consolidated-response",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "prompt": "You updated a high-risk payment reconciliation flow linked to ticket PAY-987 and ran sub-reviews. Give final sign-off response.",
+    "must_include": [
+      "Decision",
+      "Evidence",
+      "Risks",
+      "Next Actions"
+    ],
+    "should_include": [
+      "validator",
+      "reviewer"
+    ],
+    "must_not_include": [
+      "No further validation needed"
+    ]
+  },
+  {
+    "id": "go-review-google-style-findings",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "invoke_subagent": "go-financial-code-reviewer",
+    "prompt": "Review this Go change summary: package is named util; exported function ProcessPayment has no doc comment; code returns errors.New(\"Invalid Amount.\"); local variable customerid is used instead of customerID. Use only this provided information and do not run tools/commands. Return strict review output.",
+    "must_include": [
+      "Verdict|Financial correctness|GoogleStyle",
+      "GoogleStyle",
+      "error",
+      "doc"
+    ],
+    "should_include": [
+      "initialism",
+      "customerID",
+      "util",
+      "severity"
+    ],
+    "must_not_include": [
+      "looks fine overall"
+    ]
+  },
+  {
+    "id": "go-review-100go-concurrency-pitfalls",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "invoke_subagent": "go-financial-code-reviewer",
+    "prompt": "Review this Go change summary: request handler starts a goroutine without context cancellation and never waits for it; a defer close is used inside a for loop over files; retry logic relies on map iteration order for deterministic replay; one error is checked with == instead of errors.Is. Use only this provided information and do not run tools/commands. Return strict review output.",
+    "must_include": [
+      "Verdict|FAIL|Reject",
+      "100go",
+      "context",
+      "map iteration"
+    ],
+    "should_include": [
+      "defer",
+      "errors.Is",
+      "goroutine",
+      "idempotency"
+    ],
+    "must_not_include": [
+      "no issues found"
+    ]
+  },
+  {
+    "id": "go-review-tagged-findings-format",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "invoke_subagent": "go-financial-code-reviewer",
+    "prompt": "Review this Go change summary: settlement uses float64, rounding applied only at final total, and tests omit replay/idempotency and time-boundary cases. Use only this provided information and do not run tools/commands. Return strict review output.",
+    "must_include": [
+      "Verdict|Financial correctness",
+      "severity|Critical|High|Medium|Low",
+      "confidence|risk"
+    ],
+    "should_include": [
+      "Financial",
+      "GoogleStyle",
+      "100go",
+      "idempotency"
+    ],
+    "must_not_include": []
+  },
+  {
+    "id": "live-jira-research",
+    "suite": "live",
+    "agent": "developer-primary",
+    "invoke_subagent": "jira-researcher",
+    "prompt": "Research Jira ticket ABC-123 and summarize what a developer must implement with acceptance criteria.",
+    "must_include": [
+      "Ticket",
+      "What needs doing",
+      "Acceptance criteria"
+    ],
+    "should_include": [
+      "Known facts",
+      "Unknowns"
+    ],
+    "must_not_include": [
+      "created",
+      "updated",
+      "transitioned"
+    ]
+  }
+]

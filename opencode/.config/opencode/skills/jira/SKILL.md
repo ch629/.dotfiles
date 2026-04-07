@@ -9,7 +9,7 @@ Use this skill when the user asks to manage Jira tickets from the CLI with `acli
 
 ## What this skill does
 
-- Validates Jira CLI auth state with user confirmation before running actions.
+- Assumes Jira CLI auth is valid and proceeds directly with requested work.
 - Finds, views, creates, updates, transitions, assigns, comments, and links work items.
 - Uses runtime CLI help to discover exact command syntax and flags.
 
@@ -41,7 +41,7 @@ Use this skill for requests like:
 
 ## Description formatting policy
 
-- When creating or editing ticket descriptions, use Jira ADF/ACL-compatible structured content only.
+- When creating or editing ticket descriptions, use Jira ADF-compatible structured content only.
 - Never use Markdown in ticket descriptions.
 - If the description includes code, include it as a code block in the Jira-compatible format.
 - Use syntax highlighting language tags when known; if unknown, use an untyped code block.
@@ -49,9 +49,10 @@ Use this skill for requests like:
 ## Execution playbook
 
 1. Validate auth context.
-   - Ask the user to validate Jira auth in their environment before proceeding.
+   - Assume auth is already valid and start with the requested Jira command flow.
    - Do not attempt to log in, log out, rotate tokens, or otherwise fix auth automatically.
-   - If auth is not valid, stop mutation steps and wait for the user to confirm auth is ready.
+   - If any command returns an auth error, stop further Jira actions and tell the user to authorize the CLI in their environment.
+   - After an auth error, ask the user to confirm once authorization is fixed, then continue.
 
 2. Resolve target work items.
    - Prefer explicit keys when provided.

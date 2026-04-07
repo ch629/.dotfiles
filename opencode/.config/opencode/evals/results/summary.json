@@ -1,0 +1,46 @@
+{
+  "timestamp": "2026-04-02T18:40:33.827418+00:00",
+  "args": {
+    "cases": "opencode/.config/opencode/evals/cases.json",
+    "out_dir": "opencode/.config/opencode/evals/results",
+    "baseline": "opencode/.config/opencode/evals/results/baseline.json",
+    "workspace": ".",
+    "agent": "developer-primary",
+    "suite": "offline",
+    "only": "researcher-uncertainty",
+    "jobs": 1,
+    "timeout": 90,
+    "set_baseline": false,
+    "compare_baseline": false,
+    "attach": "",
+    "no_auto_serve": false
+  },
+  "summary": {
+    "total": 1,
+    "passed": 1,
+    "failed": 0,
+    "score": 5
+  },
+  "results": [
+    {
+      "id": "researcher-uncertainty",
+      "suite": "offline",
+      "agent": "developer-primary",
+      "invoke_subagent": "jira-researcher",
+      "command": "opencode run --attach http://127.0.0.1:58875 --agent developer-primary --dir . --format default '@jira-researcher Analyze ticket FIN-123 from the details: summary=\"Investigate payout mismatch\", status=\"In Progress\", and no acceptance criteria are provided. Do not invent fields. Use your required output headings exactly.'",
+      "started_at": "2026-04-02T18:39:59.772587+00:00",
+      "ended_at": "2026-04-02T18:40:33.822871+00:00",
+      "ok": true,
+      "error": "",
+      "stdout": "- Ticket: FIN-123 \u2014 https://your-jira-instance/browse/FIN-123\n\n- Known facts: I do not know; the only provided details are summary=\"Investigate payout mismatch\" and status=\"In Progress\". No Jira verification was possible here.\n\n- Unknowns: Acceptance criteria, root cause, affected payout scope, severity/priority, owner, and any parent/epic context.\n\n- What needs doing:\n  - Investigate the payout mismatch.\n  - Reproduce or isolate the mismatch using available payout data.\n  - Identify whether the issue is calculation, timing, data sync, or integration related.\n  - Document findings and recommend next steps or a fix.\n\n- Acceptance criteria:\n  - [ ] A clear cause of the payout mismatch is identified.\n  - [ ] The affected payout records or scope are documented.\n  - [ ] A proposed fix or mitigation is recorded.\n  - [ ] Evidence from the investigation is attached or summarized.\n\n- Assumptions:\n  - The ticket is a diagnostic/investigation task rather than an immediate code change.\n  - \"Investigate payout mismatch\" implies the goal is to find root cause, not just describe symptoms.\n\n- Confidence: Low. I do not know the actual Jira fields or acceptance criteria; please provide the ticket\u2019s Jira details or parent/epic context.\n",
+      "stderr": "\u001b[0m\n> developer-primary \u00b7 gpt-5.3-codex\n\u001b[0m\n\u001b[0m\u2022 \u001b[0mResearch FIN-123 ticket\u001b[90m Jira-Researcher Agent\u001b[0m\n\u001b[0m\u2713 \u001b[0mResearch FIN-123 ticket\u001b[90m Jira-Researcher Agent\u001b[0m\n",
+      "passed": true,
+      "score": 5,
+      "missing": [],
+      "missing_should": [
+        "clarification"
+      ],
+      "forbidden_hits": []
+    }
+  ]
+}
