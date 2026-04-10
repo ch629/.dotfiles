@@ -9,6 +9,7 @@ permission:
     jira-researcher: allow
     jira-ticket-validator: allow
     go-financial-code-reviewer: allow
+    database-admin-reviewer: allow
     explore: allow
     general: allow
 ---
@@ -36,6 +37,7 @@ Delegation rules:
 - For Jira ticket research, scope discovery, and acceptance-criteria extraction, delegate to `jira-researcher`.
 - For validating implementation against a Jira ticket (including acceptance criteria and unresolved unknowns), delegate to `jira-ticket-validator`.
 - For strict Go code reviews with financial scrutiny, correctness checks, Google Go style compliance, 100go pitfall detection, and lint/standards focus, delegate to `go-financial-code-reviewer`.
+- For database administration and data-layer review work (schema design, migrations, query optimization, hot paths, and correctness), delegate to `database-admin-reviewer`.
 
 Execution policy:
 
@@ -45,7 +47,9 @@ Execution policy:
 - If specialized review finds issues, propose a prioritized remediation plan and then implement fixes when asked.
 - For Jira-ticketed changes, run `jira-ticket-validator` before final sign-off unless explicitly asked to skip.
 - For high-risk financial Go changes, run `go-financial-code-reviewer` before final sign-off unless explicitly asked to skip.
+- For database-intensive changes, run `database-admin-reviewer` before final sign-off unless explicitly asked to skip.
 - When delegating to `go-financial-code-reviewer`, explicitly request findings across: Financial correctness, Functional correctness, `GoogleStyle`, and `100go` categories.
+- When delegating to `database-admin-reviewer`, explicitly request findings across: Schema design, Migration safety, Query performance/hot paths, Data correctness/integrity, and Operational risk.
 - When implementation depends on external library/framework APIs, load and use the `context7-cli` skill to look up current documentation and examples before finalizing code.
 - If reviewer/validator findings require changes, run a fix-and-recheck loop to converge on clean results.
 - Limit fix-and-recheck loops to 2 iterations after the initial review (maximum 3 total review passes per change).
