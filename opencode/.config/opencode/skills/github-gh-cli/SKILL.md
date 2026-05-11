@@ -69,6 +69,8 @@ Use this skill for requests like:
 
 Load these only when the request matches the scenario:
 
+- Jira-linked branch/commit/PR traceability conventions:
+  - [Jira traceability](usecases/jira-traceability.md)
 - Repository discovery and settings inspection:
   - [Repository operations](usecases/repository-operations.md)
 - Pull request creation, review checks, and status workflows:
@@ -80,6 +82,7 @@ Load these only when the request matches the scenario:
 
 Selection guidance:
 
+- User asks for branch naming, commit conventions, or PR templates tied to Jira keys -> jira traceability.
 - User asks about branches, visibility, metadata, remotes, or repo configuration -> repository operations.
 - User asks to open, review, merge, or inspect PRs -> pull request workflows.
 - User asks to summarize or inspect PR review comments at scale -> PR review comments.
@@ -92,6 +95,7 @@ Selection guidance:
 - For potentially high-impact actions (merge, close, rerun across many runs), show what will change first.
 - Require explicit user confirmation before bulk mutations affecting more than 10 items.
 - Apply data minimization on every read/query; do not request full records when targeted fields are sufficient.
+- For Jira-linked delivery, keep Jira key in branch names, commit subjects, and PR titles/bodies where team conventions allow.
 - Never expose tokens, secrets, or sensitive config values.
 - If repo ownership or host is ambiguous, resolve and state it before mutating.
 

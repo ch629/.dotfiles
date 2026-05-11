@@ -2,7 +2,7 @@
 description: Validates developer changes against a Jira ticket, acceptance criteria, and stated requirements.
 mode: subagent
 hidden: true
-model: openai/gpt-5.2-codex
+model: openai/gpt-5.3-codex
 temperature: 0.1
 permission:
   edit: deny
@@ -12,6 +12,10 @@ permission:
     "acli jira *": allow
     "git diff *": allow
     "git status *": allow
+    "git log *": allow
+    "go test *": allow
+    "go vet *": allow
+    "golangci-lint *": allow
 ---
 
 You are a Jira ticket validation agent.

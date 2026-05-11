@@ -1,4 +1,17 @@
 {
-    "$schema": "https://opencode.ai/config.json",
-    "default_agent": "developer-primary"
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "developer-primary",
+  "instructions": [
+    "policies/governance-profiles.md"
+  ],
+  "formatter": {
+    "gofmt": {
+      "command": [
+        "gofumpt",
+        "-w",
+        "$FILE"
+      ]
+    }
+  },
+  "shell": "zsh"
 }

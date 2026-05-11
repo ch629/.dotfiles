@@ -11,8 +11,8 @@ permission:
     "*": ask
     "golangci-lint *": allow
     "go *": allow
-    "grep": allow
-    "rg": allow
+    "grep *": allow
+    "rg *": allow
     "git diff *": allow
     "git status *": allow
     "git log *": allow

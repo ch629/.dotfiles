@@ -41,6 +41,11 @@ python3 opencode/.config/opencode/evals/run_evals.py --compare-baseline
 3. Run with `--compare-baseline`.
 4. Keep changes only if score and pass counts improve (or are intentionally unchanged).
 
+Profile-aware behavior checks:
+
+- Offline cases include path-sensitive governance checks (for example `/betika/` requirements such as strict coverage/traceability formatting).
+- Add new profile-specific cases whenever you introduce a new company profile.
+
 ## Notes
 
 - OpenCode `run` only accepts primary agents directly. For subagent-specific checks, cases can set `invoke_subagent` and the harness prepends `@subagent` to the prompt.

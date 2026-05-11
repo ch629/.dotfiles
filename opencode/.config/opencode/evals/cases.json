@@ -146,6 +146,150 @@
     "must_not_include": []
   },
   {
+    "id": "planner-implementation-breakdown",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "invoke_subagent": "go-implementation-planner",
+    "prompt": "Plan implementation for ticket PAY-741. Known details: add retry-safe settlement posting for duplicate webhook deliveries; AC: 1) duplicate webhook must not create duplicate ledger entries, 2) processing failures must be observable via metrics and structured logs. Constraints: keep existing API shape. Use only this information and do not run tools/commands.",
+    "must_include": [
+      "Implementation plan",
+      "Risk",
+      "Test strategy",
+      "Requirement|AC"
+    ],
+    "should_include": [
+      "idempot",
+      "race",
+      "first coding step"
+    ],
+    "must_not_include": [
+      "implemented",
+      "created branch"
+    ]
+  },
+  {
+    "id": "developer-dod-gate-enforcement",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "prompt": "You finished ticket PAY-222. Evidence available: unit tests pass locally, but no go test -race run, no lint output, and no Jira validator run. Provide final sign-off response.",
+    "must_include": [
+      "Decision",
+      "Evidence",
+      "Risks",
+      "Next Actions"
+    ],
+    "should_include": [
+      "go test ./... -race",
+      "golangci-lint",
+      "jira-ticket-validator"
+    ],
+    "must_not_include": [
+      "Approved for merge"
+    ]
+  },
+  {
+    "id": "traceability-convention-response",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "prompt": "For Jira ticket PAY-333, give recommended branch name, commit subject, and PR title/body headings that preserve traceability.",
+    "must_include": [
+      "PAY-333",
+      "branch",
+      "commit",
+      "PR"
+    ],
+    "should_include": [
+      "Acceptance Criteria",
+      "Validation",
+      "Risks"
+    ],
+    "must_not_include": [
+      "no jira key needed"
+    ]
+  },
+  {
+    "id": "betika-pr-title-format",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "prompt": "I am working in /work/betika/payments on ticket PAY-741. Give me the exact PR title format and one valid example title.",
+    "must_include": [
+      "conventional",
+      "\\[PAY-741\\]|\\[ABC-123\\]",
+      "fix\\(|feat\\(|refactor\\(|test\\("
+    ],
+    "should_include": [
+      "/betika/",
+      "PR title",
+      "\\["
+    ],
+    "must_not_include": [
+      "PAY-741:",
+      "title can be anything"
+    ]
+  },
+  {
+    "id": "betika-commit-type-policy",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "prompt": "I am in /work/betika/core and want to create a commit for cleanup. What commit format should you use and which type is disallowed?",
+    "must_include": [
+      "conventional",
+      "chore",
+      "disallow|not allowed|forbidden"
+    ],
+    "should_include": [
+      "type(scope): subject",
+      "/betika/"
+    ],
+    "must_not_include": [
+      "use chore"
+    ]
+  },
+  {
+    "id": "platform-review-terraform-helm",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "invoke_subagent": "platform-infra-reviewer",
+    "prompt": "Review this platform change summary: Terraform replaces an RDS instance because identifier changed, remote state locking config is not shown, Helm chart removes readinessProbe and sets imagePullPolicy Always for production, Service changed from ClusterIP to LoadBalancer, and no rollback notes were provided. Use only this provided information and do not run tools/commands.",
+    "must_include": [
+      "Verdict|Decision",
+      "Terraform|state",
+      "Helm|Kubernetes",
+      "Security|Operational"
+    ],
+    "should_include": [
+      "readiness",
+      "LoadBalancer",
+      "rollback",
+      "severity"
+    ],
+    "must_not_include": [
+      "no issues found"
+    ]
+  },
+  {
+    "id": "platform-review-argocd-sync-waves",
+    "suite": "offline",
+    "agent": "developer-primary",
+    "invoke_subagent": "platform-infra-reviewer",
+    "prompt": "Review this Argo CD deployment change summary: CRDs and CRs are all in default wave 0, db migration job is marked PostSync instead of PreSync, one hook has no hook-delete-policy, and rollout docs rely on selective sync to execute hooks. Use only this provided information and do not run tools/commands.",
+    "must_include": [
+      "Argo|sync wave|wave",
+      "PreSync|PostSync",
+      "hook-delete-policy",
+      "selective sync"
+    ],
+    "should_include": [
+      "Verdict|Decision",
+      "ordering",
+      "risk",
+      "severity"
+    ],
+    "must_not_include": [
+      "looks good"
+    ]
+  },
+  {
     "id": "live-jira-research",
     "suite": "live",
     "agent": "developer-primary",

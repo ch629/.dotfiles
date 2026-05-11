@@ -72,6 +72,8 @@ Use this skill for requests like:
 
 Load these only when the user request matches the scenario:
 
+- End-to-end ticket delivery from intake to implementation handoff:
+  - [Ticket to PR Go delivery](usecases/ticket-to-pr-go-delivery.md)
 - Triage queue and assignment flows:
   - [Triage queue](usecases/triage-queue.md)
 - Create follow-up tickets and cross-link/comment flows:
@@ -81,10 +83,12 @@ Load these only when the user request matches the scenario:
 
 Selection guidance:
 
+- If the user asks to take a ticket from pickup through implementation readiness/PR readiness, load ticket-to-pr-go-delivery.
 - If the user asks "what should I work on", "assign these", or "start these tickets", load triage.
 - If the user asks to spawn a new ticket from existing work and connect them, load create-and-link.
 - If the user asks to modify many tickets at once, load bulk-update.
 - If a request matches multiple guides, prefer by primary intent:
+  - end-to-end delivery workflow -> ticket-to-pr-go-delivery
   - queue review/ownership decisions -> triage
   - creating a new derived ticket + relationship -> create-and-link
   - one action applied to many tickets -> bulk-update
@@ -98,6 +102,7 @@ Selection guidance:
 - If command syntax is uncertain, run `--help` first instead of guessing.
 - Do not delete/archive tickets unless the user explicitly asks.
 - Ensure all description updates follow the description formatting policy (no Markdown).
+- For implementation-ready tickets, preserve traceability by keeping Jira key references in branch/commit/PR recommendations.
 - Never print, store, or echo auth tokens/secrets; redact sensitive values in user-facing output.
 
 ## Output expectations for the user

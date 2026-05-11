@@ -1,5 +1,5 @@
 {
-  "timestamp": "2026-04-02T18:40:33.827418+00:00",
+  "timestamp": "2026-04-10T13:11:59.500192+00:00",
   "args": {
     "cases": "opencode/.config/opencode/evals/cases.json",
     "out_dir": "opencode/.config/opencode/evals/results",
@@ -7,7 +7,7 @@
     "workspace": ".",
     "agent": "developer-primary",
     "suite": "offline",
-    "only": "researcher-uncertainty",
+    "only": "platform-review-argocd-sync-waves",
     "jobs": 1,
     "timeout": 90,
     "set_baseline": false,
@@ -19,26 +19,26 @@
     "total": 1,
     "passed": 1,
     "failed": 0,
-    "score": 5
+    "score": 11
   },
   "results": [
     {
-      "id": "researcher-uncertainty",
+      "id": "platform-review-argocd-sync-waves",
       "suite": "offline",
       "agent": "developer-primary",
-      "invoke_subagent": "jira-researcher",
-      "command": "opencode run --attach http://127.0.0.1:58875 --agent developer-primary --dir . --format default '@jira-researcher Analyze ticket FIN-123 from the details: summary=\"Investigate payout mismatch\", status=\"In Progress\", and no acceptance criteria are provided. Do not invent fields. Use your required output headings exactly.'",
-      "started_at": "2026-04-02T18:39:59.772587+00:00",
-      "ended_at": "2026-04-02T18:40:33.822871+00:00",
+      "invoke_subagent": "platform-infra-reviewer",
+      "command": "opencode run --attach http://127.0.0.1:53132 --agent developer-primary --dir . --format default '@platform-infra-reviewer Review this Argo CD deployment change summary: CRDs and CRs are all in default wave 0, db migration job is marked PostSync instead of PreSync, one hook has no hook-delete-policy, and rollout docs rely on selective sync to execute hooks. Use only this provided information and do not run tools/commands.'",
+      "started_at": "2026-04-10T13:11:15.550755+00:00",
+      "ended_at": "2026-04-10T13:11:59.498760+00:00",
       "ok": true,
       "error": "",
-      "stdout": "- Ticket: FIN-123 \u2014 https://your-jira-instance/browse/FIN-123\n\n- Known facts: I do not know; the only provided details are summary=\"Investigate payout mismatch\" and status=\"In Progress\". No Jira verification was possible here.\n\n- Unknowns: Acceptance criteria, root cause, affected payout scope, severity/priority, owner, and any parent/epic context.\n\n- What needs doing:\n  - Investigate the payout mismatch.\n  - Reproduce or isolate the mismatch using available payout data.\n  - Identify whether the issue is calculation, timing, data sync, or integration related.\n  - Document findings and recommend next steps or a fix.\n\n- Acceptance criteria:\n  - [ ] A clear cause of the payout mismatch is identified.\n  - [ ] The affected payout records or scope are documented.\n  - [ ] A proposed fix or mitigation is recorded.\n  - [ ] Evidence from the investigation is attached or summarized.\n\n- Assumptions:\n  - The ticket is a diagnostic/investigation task rather than an immediate code change.\n  - \"Investigate payout mismatch\" implies the goal is to find root cause, not just describe symptoms.\n\n- Confidence: Low. I do not know the actual Jira fields or acceptance criteria; please provide the ticket\u2019s Jira details or parent/epic context.\n",
-      "stderr": "\u001b[0m\n> developer-primary \u00b7 gpt-5.3-codex\n\u001b[0m\n\u001b[0m\u2022 \u001b[0mResearch FIN-123 ticket\u001b[90m Jira-Researcher Agent\u001b[0m\n\u001b[0m\u2713 \u001b[0mResearch FIN-123 ticket\u001b[90m Jira-Researcher Agent\u001b[0m\n",
+      "stdout": "**Verdict: Fail**\n\n## Terraform/state safety\n- **No evidence from provided summary.**\n\n## Helm/Kubernetes correctness\n- **High \u2014 CRDs and CRs both in default wave 0**\n  - **Rationale:** Argo CD may apply custom resources before the corresponding CRDs/controllers are established. This creates nondeterministic sync failures and unsafe ordering. Per the provided summary, there is no explicit dependency sequencing.\n  - **Exact remediation guidance:** Assign explicit Argo CD sync waves so prerequisites land first. Put CRDs (and, if applicable, the controller/operator) in earlier waves than CRs, e.g. CRDs/controller in negative or lower waves, CRs in later non-negative waves. Use `argocd.argoproj.io/sync-wave` with explicit integer values.\n\n- **Medium \u2014 One hook has no `hook-delete-policy`**\n  - **Rationale:** Hook resources can remain stale or block future operations if cleanup behavior is undefined. This is specifically called out as unsafe in Argo CD hook handling.\n  - **Exact remediation guidance:** Add `argocd.argoproj.io/hook-delete-policy` to the hook and choose the cleanup behavior intentionally, e.g. `HookSucceeded`, `HookFailed`, or `BeforeHookCreation` based on whether historical job retention is needed.\n\n## Security/compliance\n- **No evidence from provided summary.**\n\n## Operational/rollout risk\n- **High \u2014 DB migration job is `PostSync` instead of `PreSync`**\n  - **Rationale:** Running schema/data migrations after the application rollout can break backward compatibility assumptions and cause runtime failures if the new app version depends on migrated state before becoming healthy.\n  - **Exact remediation guidance:** Move the migration job to `PreSync` if the application requires the migrated database state before rollout. If `PostSync` is intentional, provide explicit evidence that the deployment is backward/forward compatible and safe during the transition.\n\n- **High \u2014 Rollout docs rely on selective sync to execute hooks**\n  - **Rationale:** Argo CD hooks do **not** run during selective sync. A runbook that depends on selective sync for hook execution is operationally incorrect and can skip migrations/validation/cleanup steps.\n  - **Exact remediation guidance:** Update rollout documentation to use full application sync when hooks are required, or redesign the process so critical steps do not depend on hooks during selective sync. Explicitly document this limitation in the runbook.\n\n- **Medium \u2014 Hook phase/wave strategy is inconsistent/unsafe**\n  - **Rationale:** The provided summary shows mixed issues in phase and wave usage (`PostSync` migration, CRDs/CRs both wave 0, missing hook cleanup). That indicates the deployment ordering model is not clearly intentional.\n  - **Exact remediation guidance:** Define and document a single rollout ordering strategy:\n    1. prerequisites/CRDs/controllers first,\n    2. `PreSync` migrations or setup jobs,\n    3. main application sync,\n    4. `PostSync` only for non-blocking verification/notifications.\n    Use explicit waves where dependencies exist.\n\n## Prioritized remediation plan\n1. **Fix ordering first:** move CRDs/controllers ahead of CRs with explicit sync waves.\n2. **Correct migration timing:** change the DB migration job to `PreSync`, unless compatibility evidence proves `PostSync` is safe.\n3. **Fix hook lifecycle:** add a deliberate `hook-delete-policy` to the hook missing one.\n4. **Correct the runbook:** remove/replace any instruction that expects selective sync to run hooks.\n5. **Document rollout guarantees:** record the intended phase/wave model and compatibility assumptions so future changes can be reviewed safely.\n",
+      "stderr": "\u001b[0m\n> developer-primary \u00b7 gpt-5.3-codex\n\u001b[0m\n\u001b[0m\u2022 \u001b[0mReview Argo CD change\u001b[90m Platform-Infra-Reviewer Agent\u001b[0m\n\u001b[0m\u2713 \u001b[0mReview Argo CD change\u001b[90m Platform-Infra-Reviewer Agent\u001b[0m\n",
       "passed": true,
-      "score": 5,
+      "score": 11,
       "missing": [],
       "missing_should": [
-        "clarification"
+        "severity"
       ],
       "forbidden_hits": []
     }
