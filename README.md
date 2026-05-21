@@ -12,3 +12,11 @@ git clone https://github.com/zsh-users/zsh-syntax-highlighting.git ${ZSH_CUSTOM:
 
 ## Usage
 Run the install file to create symlinks to each folder in this repo.
+
+## OpenCode agent guidance
+
+When using the OpenCode agents in `opencode/.config/opencode/agents`:
+
+- Use `go-financial-code-reviewer` for high-risk Go and financial logic reviews (currency math, settlement, idempotency, correctness, Go style/100go).
+- Use `database-admin-reviewer` for data-layer reviews (schema design, migration safety, query/hot-path performance, data integrity, and operational DB risk).
+- Use both when a change spans Go financial logic and DB design/performance concerns.

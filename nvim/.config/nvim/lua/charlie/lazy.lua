@@ -73,19 +73,20 @@ require("lazy").setup({
 	-- Treesitter
 	{
 		"nvim-treesitter/nvim-treesitter",
-		event = "BufEnter",
 		dependencies = { "nvim-treesitter/nvim-treesitter-context" },
 		config = function()
 			require("charlie.treesitter")
 		end,
 		run = ":TSUpdate",
-		branch = "master",
+		lazy = false,
+		branch = "main",
 	},
 
 	{
 		"nvim-treesitter/nvim-treesitter-textobjects",
 		event = "UIEnter",
 		dependencies = { "nvim-treesitter/nvim-treesitter" },
+		branch = "main",
 	},
 	{
 		"chrisgrieser/nvim-various-textobjs",
@@ -138,6 +139,7 @@ require("lazy").setup({
 					"ts_ls",
 					"yamlls",
 					"terraformls",
+					"helm_ls",
 				},
 				automatic_enable = {
 					exclude = {
@@ -590,23 +592,13 @@ require("lazy").setup({
 				},
 			},
 			acp_providers = {
-				["codex"] = {
-					command = "npx",
-					args = { "@zed-industries/codex-acp" },
-					env = {
-						NODE_NO_WARNINGS = "1",
-						OPENAI_API_KEY = os.getenv("OPENAI_API_KEY"),
-					},
-				},
-				{
-					["opencode"] = {
-						command = "opencode",
-						args = { "acp" },
-					},
+				["opencode"] = {
+					command = "opencode",
+					args = { "acp" },
 				},
 			},
 			-- provider = "copilot",
-			provider = "mistral",
+			provider = "opencode",
 			system_prompt = function()
 				local hub = require("mcphub").get_hub_instance()
 				return hub and hub:get_active_servers_prompt() or ""
@@ -640,6 +632,8 @@ require("lazy").setup({
 			},
 		},
 	},
+
+	{ "qvalentin/helm-ls.nvim", ft = "helm" },
 
 	-- Keybindings
 	{
