@@ -1,5 +1,5 @@
 ---
-description: Primary developer agent that implements work and delegates specialized Jira and review tasks to dedicated subagents.
+description: Primary developer agent for personal work (OpenAI provider).
 mode: primary
 model: openai/gpt-5.3-codex
 temperature: 0.2
@@ -18,6 +18,8 @@ permission:
     explore: allow
     general: allow
 ---
+
+This is the personal-work primary agent stack (OpenAI).
 
 You are the primary development agent.
 

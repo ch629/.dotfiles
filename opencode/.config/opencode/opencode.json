@@ -1,6 +1,6 @@
 {
     "$schema": "https://opencode.ai/config.json",
-    "default_agent": "developer-primary",
+    "default_agent": "developer-personal",
     "instructions": [
         "policies/governance-profiles.md"
     ],
@@ -27,13 +27,22 @@
             },
             "models": {
                 "gateframe/gpt-5.3-codex": {
-                    "name": "Gateframe Codex"
+                    "name": "Gateframe GPT-5.3-Codex"
                 },
                 "gateframe/gpt-5.4": {
-                    "name": "Gateframe GPT"
+                    "name": "Gateframe GPT-5.4"
                 },
-                "gateframe/gpt-5.4-mini": {
-                    "name": "Gateframe GPT Mini"
+                "gateframe/chatgpt-5.4": {
+                    "name": "Gateframe ChatGPT-5.4"
+                },
+                "gateframe/gemini-3.5-flash": {
+                    "name": "Gateframe Gemini 3.5 Flash"
+                },
+                "gateframe/minimax-2.7": {
+                    "name": "Gateframe Minimax 2.7"
+                },
+                "gateframe/qwen3.6-plus": {
+                    "name": "Gateframe Qwen 3.6 Plus"
                 }
             }
         }

@@ -28,7 +28,7 @@ python3 opencode/.config/opencode/evals/run_evals.py --compare-baseline
 - `--suite live` - run prompts that expect real Jira access.
 - `--only <pattern1,pattern2>` - run only matching case IDs (regex, comma-separated).
 - `--jobs <n>` - run up to `n` cases in parallel.
-- `--agent developer-primary` - override target primary agent.
+- `--agent developer-personal` - override target primary agent.
 - `--workspace <path>` - directory to run OpenCode in.
 - `--out-dir <path>` - where reports are written.
 - `--attach <url>` - use an existing OpenCode server instead of auto-start.

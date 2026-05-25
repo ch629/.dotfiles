@@ -10,7 +10,7 @@ permission:
     "*": deny
     jira-researcher: allow
     go-implementation-planner: allow
-    developer-primary: allow
+    developer-personal: allow
     jira-ticket-validator: allow
     go-financial-code-reviewer: allow
     general: allow
@@ -105,7 +105,7 @@ Execution workflow:
 
 5. Implementation orchestration per approved section
    - Ensure worker creates/uses a dedicated git worktree and branch for the section.
-   - Delegate implementation to `developer-primary` with explicit instructions to:
+    - Delegate implementation to `developer-personal` with explicit instructions to:
      - stay within the section scope
      - map AC -> code/test evidence
      - run relevant tests/lint/race checks
