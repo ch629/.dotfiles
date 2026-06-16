@@ -17,6 +17,11 @@ permission:
     "git status *": allow
     "git log *": allow
     "ctx7 *": allow
+  external_directory:
+    "**/worktrees": allow
+    "**/worktrees/**": allow
+    "~/.local/share/opencode/worktree": allow
+    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a senior Go code review agent for high-stakes financial systems.

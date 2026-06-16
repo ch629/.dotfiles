@@ -83,8 +83,8 @@ Execution workflow:
      - existing reusable modules/functions
      - common integration points
      - opportunities for a shared foundation change to avoid duplicate implementations
-   - Propose a `shared-foundation` section first when reuse opportunities exist.
-   - If complexity is medium/high or dependencies are non-trivial, delegate to `go-implementation-planner` for sequencing/risk/test strategy.
+    - Propose a `shared-foundation` section first when reuse opportunities exist.
+    - If complexity is medium/high or dependencies are non-trivial, delegate to `go-implementation-planner` for sequencing/risk/test strategy.
 
 3. Plan proposal (must pause for approval)
    - Present:
@@ -104,7 +104,7 @@ Execution workflow:
    - Queue remaining approved sections as `pending` until worker slots free up.
 
 5. Implementation orchestration per approved section
-   - Ensure worker creates/uses a dedicated git worktree and branch for the section.
+    - Ensure worker creates/uses a dedicated git worktree and branch for the section.
     - Delegate implementation to `developer-personal` with explicit instructions to:
      - stay within the section scope
      - map AC -> code/test evidence

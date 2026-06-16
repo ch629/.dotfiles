@@ -2,8 +2,7 @@
 description: Betika-scoped Go implementation planner using Gateframe.
 mode: subagent
 hidden: true
-model: gateframe/gateframe/gemini-3.5-flash
-temperature: 0.1
+model: gateframe/gateframe/qwen3.6-plus
 permission:
   edit: deny
   webfetch: deny

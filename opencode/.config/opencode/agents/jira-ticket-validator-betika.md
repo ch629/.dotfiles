@@ -3,7 +3,6 @@ description: Betika-scoped Jira ticket validator using Gateframe.
 mode: subagent
 hidden: true
 model: gateframe/gateframe/qwen3.6-plus
-temperature: 0.1
 permission:
   edit: deny
   webfetch: deny

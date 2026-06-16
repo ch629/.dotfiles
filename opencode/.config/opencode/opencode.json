@@ -1,50 +1,87 @@
 {
-    "$schema": "https://opencode.ai/config.json",
-    "default_agent": "developer-personal",
-    "instructions": [
-        "policies/governance-profiles.md"
-    ],
-    "formatter": {
-        "gofmt": {
-            "command": [
-                "gofumpt",
-                "-w",
-                "$FILE"
-            ]
-        }
-    },
-    "shell": "zsh",
-    "disabled_providers": [],
-    "provider": {
-        "gateframe": {
-            "name": "Betika Gateframe",
-            "npm": "@ai-sdk/openai-compatible",
-            "options": {
-                "baseURL": "https://router.gateframe.ai/v1",
-                "headers": {
-                    "Authorization": "Bearer {env:GATEFRAME_TOKEN}"
-                }
-            },
-            "models": {
-                "gateframe/gpt-5.3-codex": {
-                    "name": "Gateframe GPT-5.3-Codex"
-                },
-                "gateframe/gpt-5.4": {
-                    "name": "Gateframe GPT-5.4"
-                },
-                "gateframe/chatgpt-5.4": {
-                    "name": "Gateframe ChatGPT-5.4"
-                },
-                "gateframe/gemini-3.5-flash": {
-                    "name": "Gateframe Gemini 3.5 Flash"
-                },
-                "gateframe/minimax-2.7": {
-                    "name": "Gateframe Minimax 2.7"
-                },
-                "gateframe/qwen3.6-plus": {
-                    "name": "Gateframe Qwen 3.6 Plus"
-                }
-            }
-        }
+  "$schema": "https://opencode.ai/config.json",
+  "default_agent": "developer-personal",
+  "instructions": [
+    "policies/governance-profiles.md"
+  ],
+  "formatter": {
+    "gofmt": {
+      "command": [
+        "gofumpt",
+        "-w",
+        "$FILE"
+      ]
     }
+  },
+  "shell": "zsh",
+  "lsp": true,
+  "disabled_providers": [],
+  "provider": {
+    "gateframe": {
+      "name": "Betika Gateframe",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "https://router.gateframe.ai/v1",
+        "headers": {
+          "Authorization": "Bearer {env:GATEFRAME_TOKEN}"
+        }
+      },
+      "models": {
+        "gateframe/qwen3.6-plus": {
+          "name": "Gateframe Qwen 3.6 Plus"
+        },
+        "anthropic/claude-opus-4-8": {
+          "name": "Anthropic Claude Opus 4-8"
+        }
+      }
+    },
+    "claude-wrapper": {
+      "name": "Claude (local CLI)",
+      "npm": "@ai-sdk/openai-compatible",
+      "options": {
+        "baseURL": "http://127.0.0.1:8787/v1"
+      },
+      "models": {
+        "opus": {
+          "name": "Claude Opus 4.8",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": false,
+          "temperature": false,
+          "limit": {
+            "context": 200000,
+            "output": 32000
+          }
+        },
+        "sonnet": {
+          "name": "Claude Sonnet 4.6",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": false,
+          "temperature": false,
+          "limit": {
+            "context": 200000,
+            "output": 32000
+          }
+        },
+        "haiku": {
+          "name": "Claude Haiku 4.5",
+          "reasoning": true,
+          "tool_call": true,
+          "attachment": false,
+          "temperature": false,
+          "limit": {
+            "context": 200000,
+            "output": 32000
+          }
+        }
+      }
+    }
+  },
+  "plugin": [
+    "@mohak34/opencode-notifier",
+    "@tarquinen/opencode-dcp@latest",
+    "octto",
+    "./.opencode/plugins/strip-top-p.ts"
+  ]
 }

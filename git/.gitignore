@@ -2,3 +2,6 @@
 .envrc
 
 .swp
+.opencode/opencode.json
+
+**/.claude/settings.local.json

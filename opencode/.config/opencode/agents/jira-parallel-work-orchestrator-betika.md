@@ -2,7 +2,6 @@
 description: Betika-scoped parallel Jira orchestrator using Gateframe.
 mode: subagent
 model: gateframe/gateframe/qwen3.6-plus
-temperature: 0.1
 permission:
   edit: deny
   webfetch: deny

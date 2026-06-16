@@ -36,3 +36,5 @@
 [core]
 	editor = nvim
 	excludesFile = ~/.gitignore
+[commit]
+	gpgsign = true

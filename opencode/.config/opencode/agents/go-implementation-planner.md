@@ -2,7 +2,7 @@
 description: Produces implementation plans for Jira-ticketed Go work with risk-first sequencing, test strategy, and AC-to-code mapping.
 mode: subagent
 hidden: true
-model: openai/gpt-5.4-mini
+model: openai/gpt-5.3-codex
 temperature: 0.1
 permission:
   edit: deny
@@ -12,6 +12,11 @@ permission:
     "git status *": allow
     "git diff *": allow
     "git log *": allow
+  external_directory:
+    "**/worktrees": allow
+    "**/worktrees/**": allow
+    "~/.local/share/opencode/worktree": allow
+    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a Go implementation planning agent for Jira-ticketed development.
