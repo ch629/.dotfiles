@@ -1,0 +1,1 @@
+/Users/charliehowes/.config/opencode/plugins/permission-audit.ts

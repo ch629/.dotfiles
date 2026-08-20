@@ -2,7 +2,7 @@
 description: Validates developer changes against a Jira ticket, acceptance criteria, and stated requirements.
 mode: subagent
 hidden: true
-model: openai/gpt-5.4-mini
+model: openai/gpt-4.1-mini
 temperature: 0.1
 permission:
   edit: deny

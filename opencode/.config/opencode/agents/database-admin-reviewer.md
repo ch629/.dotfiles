@@ -2,7 +2,7 @@
 description: Reviews database schemas, migrations, and query hot paths for correctness, integrity, and performance.
 mode: subagent
 hidden: true
-model: openai/gpt-5.4
+model: openai/gpt-4.1
 temperature: 0.1
 permission:
   edit: deny

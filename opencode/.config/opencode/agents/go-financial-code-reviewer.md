@@ -2,7 +2,7 @@
 description: Performs strict Go code reviews focused on correctness, Go standards, lint compliance, and financial accuracy.
 mode: subagent
 hidden: true
-model: openai/gpt-5.4
+model: openai/gpt-4.1
 temperature: 0.1
 permission:
   edit: deny

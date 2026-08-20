@@ -1,7 +1,7 @@
 ---
 description: Plans and orchestrates parallel Jira implementation workstreams with approval gates, isolated worktrees, and validator/reviewer checks.
 mode: subagent
-model: openai/gpt-5.3-codex
+model: openai/gpt-4.1
 temperature: 0.1
 permission:
   edit: deny

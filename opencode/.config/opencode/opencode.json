@@ -1,19 +1,19 @@
 {
   "$schema": "https://opencode.ai/config.json",
-  "default_agent": "developer-personal",
-  "instructions": [
-    "policies/governance-profiles.md"
-  ],
+  "default_agent": "quick-dev",
+  "instructions": ["policies/governance-profiles.md"],
   "formatter": {
     "gofmt": {
-      "command": [
-        "gofumpt",
-        "-w",
-        "$FILE"
-      ]
+      "command": ["gofumpt", "-w", "$FILE"]
     }
   },
   "shell": "zsh",
+  "command": {
+    "audit-permissions": {
+      "description": "Shows permission audit summary and suggests new allowlist patterns based on commands you've approved manually",
+      "template": "Run `bun ~/.config/opencode/scripts/permission-audit-summary.ts suggest:all` and present findings grouped by agent. For each agent's suggestions, ask the user which ones they want to add to that agent's bash permission block, then apply the approved ones."
+    }
+  },
   "lsp": true,
   "disabled_providers": [],
   "provider": {
@@ -82,6 +82,8 @@
     "@mohak34/opencode-notifier",
     "@tarquinen/opencode-dcp@latest",
     "octto",
-    "./.opencode/plugins/strip-top-p.ts"
+    "./.opencode/plugins/strip-top-p.ts",
+    "./.opencode/plugins/ponytail/.opencode/plugins/ponytail.mjs",
+    "../../.opencode/plugins/permission-audit.ts"
   ]
 }

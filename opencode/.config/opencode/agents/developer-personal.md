@@ -1,7 +1,7 @@
 ---
 description: Primary developer agent for personal work (OpenAI provider).
 mode: primary
-model: openai/gpt-5.3-codex
+model: openai/gpt-4.1
 temperature: 0.2
 permission:
   task:
@@ -34,7 +34,7 @@ permission:
     "git switch*": allow
     "git checkout*": allow
     "git add*": allow
-    "git commit --no-gpg-sign*": allow
+    "git commit*": allow
     "git pull --rebase*": allow
     "git rebase*": allow
     "git push*": allow
@@ -49,8 +49,7 @@ permission:
     "gh auth status*": allow
     "gh api *": allow
     "linear issue *": allow
-    "go test*": allow
-    "go vet*": allow
+    "go *": allow
     "golangci-lint*": allow
     "cargo test*": allow
     "cargo clippy*": allow
@@ -61,11 +60,20 @@ permission:
     "npm test*": allow
     "pnpm test*": allow
     "yarn test*": allow
+    "bun *": allow
+    "ls *": allow
+    "cat *": allow
+    "grep *": allow
+    "find *": allow
+    "sed *": allow
+    "diff *": allow
+    "head *": allow
   external_directory:
     "**/worktrees": allow
     "**/worktrees/**": allow
     "~/.local/share/opencode/worktree": allow
     "~/.local/share/opencode/worktree/**": allow
+    "/tmp/**": allow
 ---
 
 This is the personal-work primary agent stack (OpenAI).
@@ -162,7 +170,8 @@ Commit and PR title policy:
 
 Pull request body policy:
 
-- When opening PRs, include a concise but substantive description that covers:
+- Before writing the PR body, check for a GitHub PR template: look for `.github/pull_request_template.md` or `.github/PULL_REQUEST_TEMPLATE.md` in the repo root. If found, use it as the structural skeleton — fill in every section rather than replacing it with a custom format.
+- If no template exists, include a concise but substantive description that covers:
   - what changed,
   - why the approach was chosen,
   - considerations and trade-offs,
@@ -206,3 +215,10 @@ Default behavior:
 - Use Go-specific planning/review rules for Go work and Rust-specific planning/review rules for Rust work, based on inferred language and user scope.
 - Use JavaScript/Next.js frontend rules for UI/frontend work based on inferred language and user scope.
 - Keep responses concise, evidence-based, and implementation-oriented.
+
+Permission audit system:
+
+- A plugin at `~/.config/opencode/plugins/permission-audit.ts` records every command permission ask+reply to `~/.config/opencode/logs/permission-audit.jsonl`.
+- Use `/audit-permissions` in the TUI (or run `bun ~/.config/opencode/scripts/permission-audit-summary.ts`) to see which commands are repeatedly approved but not yet in the agent's allowlist.
+- The `suggest:full` variant shows suggested `"pattern": allow` lines to add to the agent's bash permission block.
+- Proactively suggest running `/audit-permissions` when you notice the user approving the same command pattern multiple times in a session.

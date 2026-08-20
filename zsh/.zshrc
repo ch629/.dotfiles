@@ -26,6 +26,7 @@ eval "$(starship init zsh)"
 
 alias nv="nvim ."
 alias lg="lazygit"
+alias oc="opencode"
 alias l="eza -la"
 alias ls="eza"
 alias cat="bat"
@@ -67,3 +68,6 @@ export GPG_TTY=$(tty)
 
 alias prnum="gh pr view --json number | jq '.number'"
 alias prrepo="gh repo view --json nameWithOwner | jq '.nameWithOwner'"
+
+# arctic
+export PATH=/Users/charliehowes/.arctic/bin:$PATH

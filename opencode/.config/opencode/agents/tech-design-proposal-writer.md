@@ -2,7 +2,7 @@
 description: Drafts technical design docs and proposals with research-backed options, ambiguity checks, and concise executive summaries.
 mode: primary
 hidden: false
-model: openai/gpt-5.4-mini
+model: openai/gpt-4.1-mini
 temperature: 0.2
 permission:
   edit: deny

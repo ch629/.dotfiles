@@ -2,7 +2,7 @@
 description: Researches Linear tickets and explains required implementation work without making any changes.
 mode: subagent
 hidden: true
-model: openai/gpt-5.4-mini
+model: openai/gpt-4.1-mini
 temperature: 0.1
 permission:
   edit: deny

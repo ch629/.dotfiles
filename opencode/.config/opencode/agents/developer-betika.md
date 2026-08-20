@@ -1,7 +1,7 @@
 ---
 description: Primary developer agent for Betika work (Gateframe provider).
 mode: primary
-model: gateframe/qwen3.6-plus
+model: gateframe/gateframe/qwen3.6-plus
 permission:
   task:
     "*": deny

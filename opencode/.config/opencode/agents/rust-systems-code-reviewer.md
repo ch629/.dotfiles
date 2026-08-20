@@ -2,7 +2,7 @@
 description: Reviews Rust code for low-level systems with focus on memory safety, concurrency correctness, and reliability.
 mode: subagent
 hidden: true
-model: openai/gpt-5.4
+model: openai/gpt-4.1
 temperature: 0.1
 permission:
   edit: deny

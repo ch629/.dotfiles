@@ -1,7 +1,7 @@
 ---
 description: Plans and orchestrates parallel Linear ticket workstreams with user approval gates, isolated worktrees, and validator/agent-review loops.
 mode: primary
-model: openai/gpt-5.3-codex
+model: openai/gpt-4.1
 temperature: 0.2
 permission:
   task:
@@ -31,7 +31,7 @@ permission:
     "git switch*": allow
     "git checkout*": allow
     "git add*": allow
-    "git commit --no-gpg-sign*": allow
+    "git commit*": allow
     "git pull --rebase*": allow
     "git rebase*": allow
     "git push*": allow
@@ -105,7 +105,7 @@ Execution policy:
     - Workers should use `worktree_create`, make an initial commit, run the required reviewer agent(s) against the local worktree diff vs `origin/main`, apply requested fixes as follow-up commits, open a GitHub PR only after the agent review passes, and then use `worktree_delete` for cleanup when finished.
     - Reviewers must inspect the code changes in the worktree directly; do not use `gh` or PR-based diffs as the source of truth for review.
     - Workers must write commits with meaningful subjects that describe the actual change, not vague placeholders like "fix" or "update".
-    - Workers must use `git commit --no-gpg-sign` for all commits in these worktrees.
+    - Workers must use `git commit` for all commits in these worktrees.
     - When updating from the base branch or resolving merge conflicts, use `git pull --rebase` and continue with `git rebase --continue` rather than merge-based conflict resolution.
     - Workers must write PR descriptions that clearly explain:
       - what was done,
