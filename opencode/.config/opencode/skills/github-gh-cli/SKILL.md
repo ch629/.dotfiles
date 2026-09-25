@@ -1,6 +1,6 @@
 ---
 name: github-gh-cli
-description: Manage GitHub repositories, pull requests, and Actions workflows with the gh CLI when users ask things like "open a PR", "check workflow runs", "view repo details", or "review PR status".
+description: Manage GitHub repositories, pull requests, stacked PRs, and Actions workflows with the gh CLI when users ask things like "open a PR", "check workflow runs", "view repo details", "review PR status", or "manage a stack of PRs".
 ---
 
 # GitHub GH CLI Skill
@@ -22,6 +22,9 @@ Use this skill for requests like:
 - "Check failed GitHub Actions workflows"
 - "View this repo's default branch and settings"
 - "Rerun the failed workflow for this commit"
+- "Create a stack of PRs from these branches"
+- "Submit my stacked PRs to GitHub"
+- "Merge the stack"
 
 ## When not to use
 
@@ -79,6 +82,8 @@ Load these only when the request matches the scenario:
   - [PR review comments](usecases/pr-review-comments.md)
 - GitHub Actions workflow and run investigation:
   - [Workflow operations](usecases/workflow-operations.md)
+- Stacked PR creation, navigation, sync, and merge with `gh stack`:
+  - [Stack operations](usecases/stack-operations.md)
 
 Selection guidance:
 
@@ -87,6 +92,7 @@ Selection guidance:
 - User asks to open, review, merge, or inspect PRs -> pull request workflows.
 - User asks to summarize or inspect PR review comments at scale -> PR review comments.
 - User asks about Actions status, logs, failures, reruns, or workflow health -> workflow operations.
+- User asks to create, submit, sync, navigate, rebase, or merge a stack of PRs -> stack operations.
 - If a request spans multiple areas, load the guide that matches the primary intent first, then load others as needed.
 
 ## Safety and quality rules
