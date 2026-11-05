@@ -43,7 +43,7 @@ All names below have the `workflow-` prefix in `cases.json`.
 
 | Acceptance criterion | Cases |
 | --- | --- |
-| Contract field coverage, unknown paths/commands, empty and no-match boundaries | `ticketless-contract-fields`, `ticketed-compatibility` |
+| Contract field coverage and unknown paths/commands (empty and no-match boundaries are not explicitly asserted) | `ticketless-contract-fields`, `ticketed-compatibility` |
 | Discovery / Proposed delivery / Blocked / Approved delivery / Superseded, revision-bound approval and renewal | `discovery-empty-requirements`, `ticketless-contract-fields`, `blocked-missing-evidence`, `approved-current-revision`, `superseded-approval-renewal`, `ambiguous-approval-not-delivery` |
 | Discoverable repo-local versioned artifact; ticketless path-plus-summary resumption | `ticketless-resume-path-summary`, `dirty-artifact-preservation` |
 | Planning approval is not publication authority; manual handoff when permissions deny | `approved-current-revision`, `permission-denied-manual-handoff` |

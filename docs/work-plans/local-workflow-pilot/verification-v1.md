@@ -69,7 +69,7 @@ Infrastructure policy checks passed (frontmatter, configured shell rules, shared
 
 Build: not applicable (Markdown-only implementation; no executable/build inputs
 changed). These are static regression checks, not delivery-policy behavioral tests.
-Manual contract audit: all thirteen required field categories, all five states,
+Manual contract audit: all twelve required field categories, all five states,
 material-change reapproval, separate publication authority, dirty preservation and
 manual path-plus-summary continuation are covered in delivery-brief.md. Pilot links
 provide a current revision and a bidirectional supersession procedure; no fictional

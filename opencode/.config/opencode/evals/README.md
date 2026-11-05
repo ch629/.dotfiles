@@ -74,16 +74,21 @@ The pre-contract baseline is **Blocked / not run**, not red or green: OpenCode
 retry and static evidence are recorded in the pilot. Do not set/overwrite a baseline
 with synthetic failures or call JSON/Ruby checks behavioral success.
 
-To resume behavioral evaluation, use an authorized isolated checkout of the recorded
-pre-contract revision, resolve the runtime blocker without changing routing/model,
-then start a **fresh** loopback server with that checkout's `OPENCODE_CONFIG_DIR`.
-Verify readiness before running the command below, replacing the paths and port:
+To resume behavioral evaluation, use an authorized isolated checkout of test commit
+`0bbac5bebffb5b475f4ed4ade9f8ae089ef95586`. This revision supplies the ten workflow
+cases and the agent configuration, unchanged from pre-contract revision
+`4470628067697152ab4e0e0425e7bd4790741edf`; the latter alone lacks the workflow cases.
+Resolve the runtime blocker without changing routing/model, then start a **fresh**
+loopback server with that checkout's `OPENCODE_CONFIG_DIR`. From that checkout's
+repository root, verify readiness before running the command below, replacing the
+paths and port:
 
 ```bash
 python3 opencode/.config/opencode/evals/run_evals.py --cases opencode/.config/opencode/evals/cases.json --suite offline --only '^workflow-' --workspace /absolute/worktree --attach http://127.0.0.1:PORT --out-dir /absolute/worktree/opencode/.config/opencode/evals/results/workflow-pre-contract-v1
 ```
 
-Record source SHA/tree, config directory, agent/model, binary version, exact commands,
+Record the revisions supplying cases and agent configuration, source SHA/tree,
+config directory, agent/model, binary version, exact commands,
 exit codes, transcripts and limitations; stop only the server you started. Never
 silently substitute a model or reuse the default discovered server. Any authorized
 model/config change needs a separately identified baseline. Restart with the intended
