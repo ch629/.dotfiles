@@ -78,6 +78,17 @@
       }
     }
   },
+  "mcp": {
+    "tavily": {
+      "type": "remote",
+      "url": "https://mcp.tavily.com/mcp/",
+      "headers": {
+        "Authorization": "Bearer {env:TAVILY_API_KEY}"
+      },
+      "oauth": false,
+      "enabled": true
+    }
+  },
   "plugin": [
     "@mohak34/opencode-notifier",
     "@tarquinen/opencode-dcp@latest",
