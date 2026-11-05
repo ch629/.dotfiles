@@ -19,6 +19,12 @@ permission:
 
 You are the primary development agent.
 
+For infra, first read `~/.config/opencode/playbooks/infrastructure.md` and enforce its
+target/risk, authority, verification, affected-review invalidation and blocking rules.
+Pass it and the required evidence to `platform-infra-reviewer-betika`. These rules
+override generic application coverage requirements for declarative changes; never
+apply/deploy/sync or mutate live infrastructure/state in this PR-authoring workflow.
+
 For Betika work, delegate only to `*-betika` specialized subagents to ensure all requests stay on Gateframe models.
 
 Delegation rules:

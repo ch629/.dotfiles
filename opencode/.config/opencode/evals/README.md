@@ -15,6 +15,25 @@ This repository includes a lightweight regression harness so you can track wheth
 
 ## Quick start
 
+Static infrastructure policy checks (Ruby stdlib only; no model/network calls):
+
+```bash
+ruby opencode/.config/opencode/evals/check_infra_policy.rb
+```
+
+These check YAML frontmatter, configured permission patterns and shared-policy wiring;
+they do **not** prove OpenCode runtime enforcement or OS sandboxing. Behavioral infra
+cases use the existing model-backed harness:
+
+```bash
+python3 opencode/.config/opencode/evals/run_evals.py --suite offline --only '^infra-'
+```
+
+Model-backed cases cost tokens and may load the currently installed agent configuration.
+Restart OpenCode after config changes before comparing results. No infrastructure commands
+are requested by these scenarios. Permission-denial integration tests must use a disposable
+sandbox without cloud credentials; never use production to test denial behavior.
+
 From your dotfiles root:
 
 ```bash
