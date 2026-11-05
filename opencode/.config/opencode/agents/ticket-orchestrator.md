@@ -1,7 +1,7 @@
 ---
 description: Primary orchestrator that turns one ticket into a clarified, researched, test-first, reviewed, PR-ready workstream across isolated worktrees, passing only a compact Ticket Brief between stages.
 mode: primary
-model: anthropic/claude-sonnet-4-6
+model: openai/gpt-6.1-sol
 temperature: 0.2
 permission:
   edit: deny

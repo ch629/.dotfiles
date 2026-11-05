@@ -2,7 +2,7 @@
 description: Lighter, cheaper code reviewer for trivial low-risk diffs. Same prompt and contract as code-reviewer, on a smaller model. Routed by the orchestrator only for trivial-tier changes.
 mode: subagent
 hidden: true
-model: openrouter/qwen/qwen-plus
+model: openai/gpt-6-luna
 temperature: 0.1
 permission:
   edit: deny

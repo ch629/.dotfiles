@@ -2,7 +2,7 @@
 description: Implements the feature against pre-written failing tests, making them pass with clean, idiomatic code. Also applies reviewer-requested fixes.
 mode: subagent
 hidden: true
-model: openrouter/qwen/qwen3-235b-a22b
+model: openai/gpt-6.1-terra
 temperature: 0.2
 permission:
   webfetch: deny

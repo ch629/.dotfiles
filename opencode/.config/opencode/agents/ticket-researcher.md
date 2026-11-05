@@ -2,7 +2,7 @@
 description: Turns a clarified ticket into a compact Ticket Brief and a concrete implementation approach by reading the codebase read-only. Produces the single source of truth for downstream stages.
 mode: subagent
 hidden: true
-model: openrouter/qwen/qwen3.7-plus
+model: openai/gpt-6.1-terra
 temperature: 0.2
 permission:
   edit: deny

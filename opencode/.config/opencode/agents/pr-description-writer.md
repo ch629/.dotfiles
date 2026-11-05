@@ -2,7 +2,7 @@
 description: Writes a structured PR description from the evidence map, reviewer verdicts, and commit list. Produces text only; does not open or mutate the PR.
 mode: subagent
 hidden: true
-model: openrouter/z-ai/glm-4.7-flash
+model: openai/gpt-6-luna
 temperature: 0.2
 permission:
   edit: deny

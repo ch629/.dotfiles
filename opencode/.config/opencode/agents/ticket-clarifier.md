@@ -2,7 +2,7 @@
 description: Flags ambiguities, missing acceptance criteria, and risky assumptions in a raw ticket before any research or coding begins. Pure reasoning over provided text; no lookups.
 mode: subagent
 hidden: true
-model: openrouter/deepseek/deepseek-v4-flash
+model: openai/gpt-6-luna
 temperature: 0.1
 permission:
   edit: deny

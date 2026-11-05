@@ -2,7 +2,7 @@
 description: Final gate that maps every acceptance criterion to concrete evidence in the change before a PR is opened. Read-only; no re-research.
 mode: subagent
 hidden: true
-model: openrouter/qwen/qwen-plus
+model: openai/gpt-6-luna
 temperature: 0.1
 permission:
   edit: deny

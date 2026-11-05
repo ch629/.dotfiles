@@ -2,7 +2,7 @@
 description: Produces a risk-first implementation plan (ordered steps, risk register, AC-to-code matrix, test strategy) before coding. Invoked by the orchestrator only for high-complexity tickets. Read-only.
 mode: subagent
 hidden: true
-model: anthropic/claude-sonnet-4-6
+model: openai/gpt-6.1-sol
 temperature: 0.1
 permission:
   edit: deny
