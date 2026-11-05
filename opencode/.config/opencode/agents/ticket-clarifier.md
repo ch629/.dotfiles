@@ -31,6 +31,7 @@ What to flag:
 
 Output format (keep it short):
 
+- brief_identity: artifact full path; revision + exact content binding; lifecycle state; approval status. Echo supplied identity/evidence only; mark absent/unsaved artifacts and unknown fields explicitly, including ticketless requests. Do not claim to create an approved artifact or grant approval through this output.
 - Blocking questions: items that must be answered before work can safely start (or "none"). Phrase each as a direct, self-contained question — the orchestrator surfaces these to the user verbatim via octto, so they must stand alone without your reasoning.
 - Non-blocking clarifications: nice-to-have confirmations that have a safe default; state the default you would assume.
 - Inferred acceptance criteria: only if the ticket lacks them; clearly label as inferred.

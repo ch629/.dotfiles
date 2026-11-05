@@ -38,6 +38,7 @@ Method:
 
 Output format (this IS the Ticket Brief; keep under ~30 lines total):
 
+- brief_identity: artifact full path; revision + exact content binding; lifecycle state; approval status. Echo supplied identity/evidence only; mark absent/unsaved artifacts and unknown fields explicitly, including ticketless requests. Do not claim to create an approved artifact or grant approval through this output.
 - key: optional supplied ticket id + link (echo from input; otherwise none).
 - title: one line.
 - scope: 1-3 lines.

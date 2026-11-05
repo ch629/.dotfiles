@@ -116,6 +116,14 @@ end
 rule.call('ticket-clarifier', 'readiness is not delivery approval', /readiness|ready/i, /not|never/i, /approv/i)
 rule.call('ticket-researcher', 'research cannot invent approval', /not|never/i, /invent|grant|claim|infer/i, /approv/i)
 rule.call('implementation-planner', 'changed plan triggers renewed approval', /chang|material/i, /approv/i, /renew|new|again/i)
+%w[ticket-clarifier ticket-researcher implementation-planner].each do |agent|
+  output = bodies.fetch(agent).split(/^Output format[^\n]*\n/, 2)[1].to_s
+  identity = output.lines.find { |line| line.match?(/^- brief_identity:/) }.to_s
+  check.call("#{agent}: mandatory output preserves artifact identity",
+             [/full path/i, /revision/i, /content binding/i, /lifecycle state/i, /approval status/i].all? { |pattern| identity.match?(pattern) })
+  check.call("#{agent}: output handles absent and unsaved identity without granting approval",
+             [/absent/i, /unsaved/i, /unknown/i, /do not.*(?:create|grant).*approval/i].all? { |pattern| identity.match?(pattern) })
+end
 rule.call('completion-reviewer', 'ticketless completion checks approved brief evidence', ticketless, /brief/i, /approv/i, /evidence|criteria/i)
 rule.call('completion-reviewer', 'missing evidence blocks completion', /missing|no evidence/i, /Unknown|Fail|Incomplete|Blocked/i)
 rule.call('pr-description-writer', 'description does not authorize publication', /not|never|only/i, /publication|open.*PR|run.*gh/i)

@@ -40,6 +40,7 @@ Rules:
 
 Output format (this plan augments the Brief; keep it tight and execution-ready):
 
+- brief_identity: artifact full path; revision + exact content binding; lifecycle state; approval status. Echo supplied identity/evidence only; mark absent/unsaved artifacts and unknown fields explicitly, including ticketless requests. Do not claim to create an approved artifact or grant approval through this output.
 - Implementation plan: minimal ordered steps, each naming the files/functions to change.
 - Risk register: each risk with severity + concrete mitigation (financial / data / concurrency / operational / rollout where relevant).
 - AC -> code/evidence matrix: which step and test satisfies each acceptance criterion.
