@@ -62,6 +62,40 @@ python3 opencode/.config/opencode/evals/run_evals.py --compare-baseline
 
 ## Baseline workflow (recommended)
 
+### Phase 1 delivery-brief pilot
+
+Contract: [delivery-brief.md](../policies/delivery-brief.md). Start/resume with the
+[versioned pilot index](../../../../docs/work-plans/local-workflow-pilot/README.md).
+The ten `workflow-` cases are committed planning scenarios, not proof of policy
+loading or runtime enforcement. Phase 1 adds no agent routing or permission changes.
+
+The pre-contract baseline is **Blocked / not run**, not red or green: OpenCode
+1.18.34 readiness failed before model output (`err_d4eb727f`); the implementation
+retry and static evidence are recorded in the pilot. Do not set/overwrite a baseline
+with synthetic failures or call JSON/Ruby checks behavioral success.
+
+To resume behavioral evaluation, use an authorized isolated checkout of the recorded
+pre-contract revision, resolve the runtime blocker without changing routing/model,
+then start a **fresh** loopback server with that checkout's `OPENCODE_CONFIG_DIR`.
+Verify readiness before running the command below, replacing the paths and port:
+
+```bash
+python3 opencode/.config/opencode/evals/run_evals.py --cases opencode/.config/opencode/evals/cases.json --suite offline --only '^workflow-' --workspace /absolute/worktree --attach http://127.0.0.1:PORT --out-dir /absolute/worktree/opencode/.config/opencode/evals/results/workflow-pre-contract-v1
+```
+
+Record source SHA/tree, config directory, agent/model, binary version, exact commands,
+exit codes, transcripts and limitations; stop only the server you started. Never
+silently substitute a model or reuse the default discovered server. Any authorized
+model/config change needs a separately identified baseline. Restart with the intended
+configuration for a post-change comparison, not the baseline server.
+
+Inspect transcripts for semantic correctness, negation, echoed prompt text and
+invented evidence even when regex scores pass. These text-only cases cannot prove
+saved artifacts, cross-session resumption, dirty-tree preservation or enforced tool
+denials. Those require a separately authorized disposable integration environment.
+No ticket access or publication is needed. A blocked model run remains Blocked until
+genuine evidence exists; independent review is still required.
+
 1. Set baseline on your current known-good config.
 2. Make prompt/model/permission changes.
 3. Run with `--compare-baseline`.
