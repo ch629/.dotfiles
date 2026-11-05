@@ -15,6 +15,32 @@ This repository includes a lightweight regression harness so you can track wheth
 
 ## Quick start
 
+Run `ruby opencode/.config/opencode/evals/check_quick_dev.rb` for static quick-dev
+permission, scope and review-contract regressions. These assertions check policy wiring,
+not model behavior, live approval enforcement or OS sandboxing.
+
+For the pinned worktree plugin's Git lifecycle and mocked permission-event check, see
+[`../worktree-plugin.md`](../worktree-plugin.md#check-the-pinned-release). It is not a live TUI test.
+
+Static infrastructure policy checks (Ruby stdlib only; no model/network calls):
+
+```bash
+ruby opencode/.config/opencode/evals/check_infra_policy.rb
+```
+
+These check YAML frontmatter, configured permission patterns and shared-policy wiring;
+they do **not** prove OpenCode runtime enforcement or OS sandboxing. Behavioral infra
+cases use the existing model-backed harness:
+
+```bash
+python3 opencode/.config/opencode/evals/run_evals.py --suite offline --only '^infra-'
+```
+
+Model-backed cases cost tokens and may load the currently installed agent configuration.
+Restart OpenCode after config changes before comparing results. No infrastructure commands
+are requested by these scenarios. Permission-denial integration tests must use a disposable
+sandbox without cloud credentials; never use production to test denial behavior.
+
 From your dotfiles root:
 
 ```bash
@@ -51,3 +77,7 @@ Profile-aware behavior checks:
 - OpenCode `run` only accepts primary agents directly. For subagent-specific checks, cases can set `invoke_subagent` and the harness prepends `@subagent` to the prompt.
 - If no `--attach` is provided, the harness first tries to reuse an existing server (env URL, then `127.0.0.1:4096`) before starting a temporary one.
 - Progress updates are printed every 5 seconds per case, and timed-out cases are marked as failed with `error=timeout`.
+
+## Shared reference access
+
+Run `ruby opencode/.config/opencode/evals/check_shared_access.rb` from the repository root. This checks the narrow global allowlist, symlink backing-path rules, unrelated-directory approval and agent edit overrides statically; it does not test runtime permissions or shell isolation. See [v2 readiness](../opencode-v2-readiness.md) before upgrading.

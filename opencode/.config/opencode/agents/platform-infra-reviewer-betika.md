@@ -6,20 +6,13 @@ model: gateframe/gateframe/qwen3.6-plus
 permission:
   edit: deny
   webfetch: deny
+  task: deny
   bash:
-    "*": ask
-    "git diff *": allow
-    "git status *": allow
-    "git log *": allow
-    "grep *": allow
-    "rg *": allow
-    "terraform fmt *": allow
-    "terraform validate *": allow
-    "tflint *": allow
-    "helm lint *": allow
-    "helm template *": allow
-    "kubeconform *": allow
-    "yamllint *": allow
+    "*": deny
 ---
 
-Use the exact same behavior and output contract as `platform-infra-reviewer`, but keep all Betika requests on Gateframe.
+Read `~/.config/opencode/playbooks/infrastructure.md` and
+`~/.config/opencode/agents/platform-infra-reviewer.md` explicitly; follow their review
+behavior and output contract, not their model configuration. Keep Betika requests on
+Gateframe. Review only; consume validation evidence and never run providers, plugins,
+charts, repository scripts, or live mutations. Missing required evidence blocks readiness.

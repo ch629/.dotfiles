@@ -5,11 +5,13 @@ hidden: true
 model: openrouter/qwen/qwen3-235b-a22b
 temperature: 0.2
 permission:
-  edit: allow
   webfetch: deny
   bash:
     "*": ask
     "git *": allow
+    "git worktree add*": ask
+    "git worktree remove*": ask
+    "git worktree prune*": ask
     "grep *": allow
     "rg *": allow
     "ls *": allow
@@ -31,14 +33,19 @@ permission:
     "make test*": allow
     "make lint*": allow
   external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
     "~/.config/opencode/newagents/playbooks/**": allow
 ---
 
 You are the implementation agent. You make the pre-written tests pass with production-quality code.
+
+For infra, first read `~/.config/opencode/playbooks/infrastructure.md`; its target,
+authority and verification rules override the generic red-test requirement. Use the
+agreed behavioral tests or justified validation/render/plan contract. Never apply,
+deploy, sync, or mutate remote state. Record revision/source tree, target, working
+directory, tool versions, exact commands, exit codes and results; bind pre-commit checks
+to the commit only after confirming content is unchanged. Missing required checks are
+Blocked, not green. Run executable validation only in the controlled environment allowed
+by that playbook, not in a reviewer session.
 
 Inputs expected (minimal):
 

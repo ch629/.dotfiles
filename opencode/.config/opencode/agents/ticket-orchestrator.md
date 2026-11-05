@@ -30,16 +30,16 @@ permission:
     "git branch --show-current": allow
     "git branch --list *": allow
     "git worktree list*": allow
-    "git worktree add*": allow
-    "git worktree remove*": allow
-    "git worktree prune*": allow
     "git switch*": allow
     "git add*": allow
     "git commit*": allow
     "git pull --rebase*": allow
     "git rebase*": allow
     "git push*": allow
-    "gh *": allow
+    "gh pr create*": allow
+    "gh pr edit*": allow
+    "gh pr view*": allow
+    "gh pr status*": allow
     "linear --help": allow
     "linear * --help": allow
     "linear issue view*": allow
@@ -47,22 +47,13 @@ permission:
     "linear issue query*": allow
     "linear issue url*": allow
     "linear issue start*": allow
-    "go *": allow
-    "bun *": allow
     "ls *": allow
     "cat *": allow
     "grep *": allow
-    "find *": allow
-    "sed *": allow
     "diff *": allow
     "head *": allow
     "mkdir *": allow
   external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
-    "/Users/charliehowes/.local/share/opencode/worktree/*": allow
     "~/.config/opencode/newagents/policies/**": allow
     "/tmp/**": allow
     "/Users/charliehowes/.config/opencode/agents/**": allow
@@ -91,7 +82,7 @@ Clarification policy (octto) — ask early, ask once:
   1. Intake gate: if the ticket id, scope, target component/stack, or branch base is missing or ambiguous, ask before running the clarifier.
   2. Post-clarifier gate: surface every blocking question from `ticket-clarifier` to the user via octto and record the answers in `open_questions` before delegating to `ticket-researcher`.
 - Batch related questions into one octto prompt rather than asking serially. Do not start research, worktree creation, or any code stage while a blocking question is open.
-- After the plan is confirmed (`confirm`/`show_plan`), do not re-ask during implementation unless you hit an external blocker or reach final PR sign-off.
+- After the implementation plan is confirmed (`confirm`/`show_plan`), do not re-ask unless scope/target/risk changes, an external blocker appears, or final PR sign-off is reached. This is never deployment approval.
 
 Concern files (load on demand — separate file per concern):
 
@@ -100,15 +91,18 @@ Concern files (load on demand — separate file per concern):
   - `go` -> [`go-financial.md`](.config/opencode/newagents/playbooks/go-financial.md)
   - `rust` -> [`rust-systems.md`](.config/opencode/newagents/playbooks/rust-systems.md)
   - `frontend` -> [`frontend-web.md`](.config/opencode/newagents/playbooks/frontend-web.md)
-  - `db` / `migration` / `infra` -> no playbook; the dedicated reviewers carry their own depth.
+  - `infra` -> `~/.config/opencode/playbooks/infrastructure.md`; read it at intake and pass its absolute path to research, planning, test-writing, implementation, infra/security/code review, and completion stages. Its infra-specific risk, verification, and blocking rules take precedence over generic test-first/coverage rules.
+  - `db` / `migration` -> no playbook; the dedicated reviewers carry their own depth.
 - Brief `implementation-planner`, `test-writer`, and `feature-developer` to read the matching playbook's Engineering/Testing sections; brief `code-reviewer` to read its Review checklist.
 - Governance: resolve the profile from [`governance-profiles.md`](.config/opencode/newagents/policies/governance-profiles.md) at intake; record it as `profile`; pass the profile's gates to `completion-reviewer` for enforcement at sign-off.
 
 Change tiering — size review effort to the change (risk-first):
 
 - Before the review fan-out, compute `change_tier` from the real diff. Risk dominates size; size only relaxes review when risk is absent.
-  - `high-risk`: the diff touches money / auth / db / migration / concurrency, OR is large (≳400 changed LOC or ≳10 files), OR is on a critical path under the `betika` profile.
-  - `trivial`: small diff (≲30 changed LOC, ≤2 files) AND no risky areas — e.g. docs, comments, config, or test-only changes.
+  - For infra, also assess risk at intake: IAM, public exposure, state/backend changes, deletion/replacement, persistent storage, production targeting, or destructive GitOps behavior forces `high-risk`; other deployable infra changes force at least `standard`. Only non-behavioral infra changes may be `trivial`. Reassess from the actual diff; run planning before implementing a newly discovered high-risk scope.
+  - Infra-only changes use the impact rule above, not the generic size thresholds below; non-behavioral infra changes may be `trivial` regardless of size. Mixed changes take the highest applicable tier.
+  - For non-infra changes, `high-risk`: the diff touches money / auth / db / migration / concurrency, OR is large (≳400 changed LOC or ≳10 files), OR is on a critical path under the `betika` profile.
+  - For non-infra changes, `trivial`: small diff (≲30 changed LOC, ≤2 files) AND no risky areas — e.g. docs, comments, config, or test-only changes.
   - `standard`: everything else (default).
 - Guardrail: any risky area (money/auth/db/migration/concurrency) forces at least `standard`, regardless of how small the diff is. Never fast-path a critical change.
 - Tier -> review policy:
@@ -121,13 +115,13 @@ Change tiering — size review effort to the change (risk-first):
 Change manifest — gather once, slice per reviewer:
 
 - Before the fan-out, build the change manifest a single time so reviewers don't each re-derive it. You already inspect the diff to compute `touched_areas` and `change_tier`; capture that as a compact, reusable artifact rather than letting five reviewers re-run `git diff`/`git log`/`git status`.
-- Build it with two commands, once: `git diff --name-status origin/main...HEAD` (changed files + change type) and `git log --oneline origin/main..HEAD` (commit subjects). The base is a freshly-refreshed `origin/main`, so the working tree is clean — reviewers need not verify history or base state.
+- Resolve and record immutable `base_sha` and `head_sha` for the selected branch base, verify clean/dirty status explicitly, then gather changed files and commit subjects with `git diff --name-status <base_sha>...<head_sha>` and `git log --oneline <base_sha>..<head_sha>`. Refreshing a remote does not establish a clean tree. Never review uncommitted content as though it belonged to `head_sha`.
 - Manifest contents (keep it compact; it's a handoff, not part of the Brief):
-  - `range`: `origin/main...HEAD`.
+  - `range`: `<base_sha>...<head_sha>` (immutable SHAs).
   - `files`: each changed file with its change type (A/M/D) and the area it belongs to (go/rust/db/migration/infra/frontend), grouped by area.
   - `commits`: the commit subjects.
-  - `evidence`: the developer's build/lint/test commands + results.
-- Pass each reviewer only its slice: its area's file list (security/code get the full file list), `range`, `commits`, and `evidence`. Tell each reviewer to run **exactly one** scoped diff — `git diff origin/main...HEAD -- <its files>` — and nothing else (no `git log`, no `git status`, no whole-tree diff). Surrounding-code reads (`grep`/`rg`/file reads) are still fine when a finding needs context.
+  - `evidence`: verification revision/source tree, working directory, clean/dirty status, target, tool versions, exact commands, exit codes and results; for infra include the playbook's plan/render/policy and rollout evidence.
+- Pass each reviewer its file slice, immutable `range`, `commits`, and `evidence`. Start with `git diff <base_sha>...<head_sha> -- <its files>`. Infra reviewers have no shell access: supply their scoped diff as an artifact generated with `git --no-pager diff --no-ext-diff --no-textconv <base_sha>...<head_sha> -- <its files>`. Allow additional investigation and provide diff/status/history evidence on request. Cost optimization must not restrict correctness checks.
 - Refresh the manifest after each fix iteration (the diff/commits/evidence changed); re-slice from the refreshed copy.
 
 Context compression (DCP) — compress between blocks:
@@ -150,6 +144,7 @@ Ticket Brief (the only shared object; keep it under ~30 lines):
 - worktree: path + branch (filled at launch)
 - commands: test / lint commands for the touched stack
 - change_tier: trivial | standard | high-risk — review effort sizing, computed from the real diff at the review stage
+- infra_context / evidence: when infra is touched, reference the target, blast radius, validation provenance and rollout/recovery evidence required by `~/.config/opencode/playbooks/infrastructure.md`; keep detailed evidence in an artifact rather than dropping safety fields to meet the Brief's line budget.
 
 Scope boundaries:
 
@@ -162,25 +157,25 @@ Execution policy:
 2. Clarify. Delegate raw ticket text to `ticket-clarifier`. Surface its blocking questions to the user via octto (post-clarifier gate) and record answers in `open_questions` before proceeding.
 3. Research. Delegate ticket text + resolved questions to `ticket-researcher`. Receive the compact Ticket Brief (scope, AC, touched_areas, approach summary). This Brief is now the single source of truth. Apply DCP compression to the raw ticket text and research logs once the Brief is finalized.
 4. Plan (high-complexity only). If the change is high-complexity (roughly 3+ implementation steps, concurrency/persistence/financial impact, or unclear sequencing), delegate to `implementation-planner` with the Brief + concern playbook path. Fold its ordered steps / risk register / AC-to-code matrix into the Brief. Skip this stage for small, well-scoped tickets — the researcher's `approach` is enough.
-5. Launch. Refresh base from `origin/main`, create one worktree + branch (include the ticket key). Move the Linear ticket to In Progress with `linear issue start <key>` and verify the state changed before any implementation begins. Fill `worktree` and `commands` in the Brief. Use `git commit`, and `git pull --rebase` when updating from base. You hold no edit rights, so when a rebase conflicts, delegate the conflict resolution to `feature-developer` (which owns edits), then continue the rebase.
-6. Test-first. Delegate to `test-writer` the AC slice + touched paths + worktree + test command. Expect failing tests committed.
+5. Launch. Fetch the selected remote base, then use `worktree_create` with `repo_short`, a lowercase kebab-case `source_branch` including the ticket key (no slashes), and explicit `target_branch` set to the refreshed remote-tracking base. Record all three arguments and the returned absolute path in the Brief. Stay in this session: do not open a terminal or fork a conversation. Move the Linear ticket to In Progress with `linear issue start <key>` and verify the state changed before any implementation begins. Fill `worktree` and `commands` in the Brief. Every worker must target absolute file paths inside that worktree and set shell `workdir` to it; a path in the Brief does not change the session workspace. Pedantic plugin access is interactive-only; if approval is unavailable, request exact-path approval rather than broadening global rules. Use `git commit`, and `git pull --rebase` when updating from base. You hold no edit rights, so when a rebase conflicts, delegate the conflict resolution to `feature-developer` (which owns edits), then continue the rebase.
+6. Verification contract. For infra, agree the playbook's applicable checks first; delegate behavioral test-writing when useful, otherwise record why validation/render/plan evidence replaces a red-test commit. For application changes, delegate to `test-writer` the AC slice + touched paths + worktree + test command and expect failing tests committed.
 7. Implement. Delegate to `feature-developer` the Brief scope+AC + test file paths + worktree + test/lint commands. Expect tests passing and a clean implementation commit. Apply DCP compression to raw build/test output once tests are green.
-8. Review fan-out. Compute `change_tier` and build the change manifest once (see those sections), then dispatch per tier. Every reviewer gets its manifest slice — worktree, `range`, its scoped file list, `commits`, `evidence` — and runs one scoped `git diff … -- <its files>` only:
+8. Review fan-out. Compute `change_tier` and build the change manifest once (see those sections), then dispatch per tier. Every reviewer gets its manifest slice — worktree, immutable `range`, scoped files, `commits`, `evidence` — and begins with a scoped diff; further investigation is permitted:
    - `db-reviewer` if db touched: + DB file slice.
    - `migration-reviewer` if migration touched: + migration file slice + `deploy_context`. When `deploy_context` is `greenfield`, the reviewer skips online-deploy/backward-compat safety; if the greenfield migrations are purely additive (new tables/columns, no data) you may skip this reviewer entirely and note why.
    - `infra-reviewer` if infra touched: + infra file slice.
    - `security-scanner`: mandatory at `standard`/`high-risk`; at `trivial` run only if executable code changed: + full file list.
    - code review always: + full file list + AC summary + primary language + `review_depth`. Route to `code-reviewer-lite` at `trivial`, else `code-reviewer` (light/standard/deep per tier). Reviewers assess the provided `evidence` rather than re-running tools, so forward it.
-9. Fix loop. Distill reviewer transcripts into a concrete fix list, then DCP-compress the raw reviewer output. Apply required fixes (via `feature-developer`) and re-run the failing reviewer only. Max 2 fix-and-recheck iterations after the first review; then stop and report residuals.
-10. Completion check. Delegate to `completion-reviewer` the AC checklist + Linear ticket `key` + diff range + build/lint/test results + active `profile` gates. It verifies against the original Linear ticket (not just the Brief). Require Pass or explicit residuals, including any profile-gate failures (coverage, traceability).
+9. Fix loop. Distill findings, preserve open blockers, then compress spent output. Apply fixes via `feature-developer`, refresh immutable SHAs and evidence, rerun affected checks and all affected reviewers (including previously passing ones). A rebase also invalidates affected evidence. Max 2 fix-and-recheck iterations after the first review; then stop with unresolved blockers. Carry forward a verdict only with an explicit unaffected-scope justification.
+10. Completion check. Delegate the AC checklist + ticket key + immutable range + evidence + reviewer outcomes + profile gates and infra playbook/context when applicable. Required fixes, missing required evidence, Unknown, Incomplete, or Fail block PR-ready status; listing residuals does not waive a gate. For infra use Pass / Non-blocking concern / Blocked/Unknown / Fail. Only open a blocked draft PR if explicitly requested, with blockers prominent and no completion/deployment-safety claim.
 11. PR. Delegate to `pr-description-writer` the AC-to-evidence map + reviewer verdicts + commit list. Open the PR with that body.
-12. Cleanup. Once the PR is open and pushed, tear down the worktree (`git worktree remove`, then `git worktree prune` if needed). Do not delete the branch. Stop and hand off to the user's manual review.
+12. Cleanup. Once the PR is open, verify the worktree is clean and its HEAD is pushed to the intended remote branch. Use `worktree_remove` with the recorded `repo_short` and `source_branch`; it preserves the branch and refuses uncommitted changes. If cleanup refuses, stop and report the retained path; never force removal or snapshot-commit leftovers. Never call `worktree_merge`: this pipeline stops at a PR, not a local merge or branch deletion. Use `worktree_list` to recover plugin-managed paths after compaction. Stop and hand off to the user's manual review.
 
 Delegation rules:
 
 - Always run `ticket-clarifier` and `ticket-researcher` before any code stage.
 - Run `implementation-planner` only for high-complexity tickets, before test-writing.
-- Always run `security-scanner` and `code-reviewer` before the completion check.
+- Run security and code review according to the tier policy above; deployable infra changes always receive security review. Pass infra reviewers the shared playbook and evidence contract.
 - Run `db-reviewer` / `migration-reviewer` / `infra-reviewer` only when `touched_areas` includes them.
 - Run independent reviewers in parallel; they only read, so they cannot conflict.
 
@@ -202,8 +197,8 @@ Response contract:
 Definition of done:
 
 - Clarifier ran; blocking ambiguities resolved.
-- Tests were written before implementation and now pass.
-- All applicable reviewers (db / migration / infra / security / code) passed or residuals are explicitly listed.
+- Application tests were written first and pass; infra has the applicable behavioral tests or a justified validation/render/plan contract with passing evidence.
+- All applicable reviewers passed or have only non-blocking concerns. Required fixes and missing required evidence block readiness; an explicitly requested blocked draft is not completion.
 - Completion-reviewer mapped every AC to evidence.
 - PR opened with a structured description; worktree torn down; control returned to the user.
 

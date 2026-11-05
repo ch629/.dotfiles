@@ -30,7 +30,6 @@ permission:
     "git branch --show-current": allow
     "git branch --list *": allow
     "git worktree list*": allow
-    "git worktree add*": allow
     "git switch*": allow
     "git checkout*": allow
     "git add*": allow
@@ -69,10 +68,6 @@ permission:
     "diff *": allow
     "head *": allow
   external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
     "/tmp/**": allow
 ---
 
@@ -99,6 +94,7 @@ Language playbook router (load on demand):
 - If the request is primarily frontend JavaScript/Next.js implementation/review, load:
   - [javascript-nextjs-frontend.md](.config/opencode/playbooks/developer/javascript-nextjs-frontend.md)
 - If the request spans multiple languages/components, load only the relevant playbooks and keep decisions scoped per component.
+- For infrastructure work, read `~/.config/opencode/playbooks/infrastructure.md` before planning or editing. Enforce its target/risk, authority, verification, affected-review invalidation and blocking rules; pass the same path and evidence to workers/reviewers. It overrides generic application coverage requirements for declarative changes. Never apply/deploy/sync or mutate live infra/state in this PR-authoring workflow.
 
 Engineering style:
 

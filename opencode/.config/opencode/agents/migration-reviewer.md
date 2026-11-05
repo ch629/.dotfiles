@@ -13,11 +13,6 @@ permission:
     "grep *": allow
     "rg *": allow
     "ls *": allow
-  external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a migration-safety review agent. You focus narrowly on the safety of schema migrations.

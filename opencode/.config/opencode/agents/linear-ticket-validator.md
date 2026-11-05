@@ -35,11 +35,6 @@ permission:
     "gh repo view*": allow
     "gh auth status*": allow
     "gh api *": allow
-  external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a Linear ticket validation agent.

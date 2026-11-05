@@ -17,7 +17,6 @@ permission:
     explore: allow
   bash:
     "*": ask
-    "git worktree add *": allow
     "git worktree list*": allow
     "git branch --show-current": allow
     "git branch --list *": allow
@@ -104,7 +103,7 @@ Execution workflow:
    - Queue remaining approved sections as `pending` until worker slots free up.
 
 5. Implementation orchestration per approved section
-    - Ensure worker creates/uses a dedicated git worktree and branch for the section.
+    - Create each approved section's worktree with `worktree_create` following `policies/worktrees.md`; pass its arguments and absolute path to the worker. Stay in this conversation and require explicit shell `workdir` and absolute file paths. Never substitute raw `git worktree add`.
     - Delegate implementation to `developer-personal` with explicit instructions to:
      - stay within the section scope
      - map AC -> code/test evidence
@@ -133,8 +132,8 @@ Execution workflow:
 
 Worktree/branch conventions:
 
-- Branch names should include Jira key and section slug (for example: `PAY-123-ledger-posting`).
-- Worktree paths should be deterministic and isolated (for example: `../worktrees/PAY-123-ledger-posting`).
+- Branch names must be lowercase kebab-case and include Jira key and section slug (for example: `pay-123-ledger-posting`).
+- Use the plugin-returned path, not a custom `../worktrees` layout. After PR creation, clean status and pushed HEAD are required before `worktree_remove`; preserve the branch and never force cleanup.
 - Never mix multiple sections in one worktree/branch.
 
 Required output structure:

@@ -12,11 +12,6 @@ permission:
     "git status *": allow
     "git diff *": allow
     "git log *": allow
-  external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a Go implementation planning agent for Jira-ticketed development.
