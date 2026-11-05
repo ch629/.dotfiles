@@ -15,6 +15,10 @@ This repository includes a lightweight regression harness so you can track wheth
 
 ## Quick start
 
+Run `ruby opencode/.config/opencode/evals/check_betika_reviewer.rb` to check the
+single Betika code-review route, retained financial review gates and shared contract.
+This is a static prompt/config check, not a live review-quality evaluation.
+
 Run `ruby opencode/.config/opencode/evals/check_quick_dev.rb` for static quick-dev
 permission, scope and review-contract regressions. These assertions check policy wiring,
 not model behavior, live approval enforcement or OS sandboxing.
