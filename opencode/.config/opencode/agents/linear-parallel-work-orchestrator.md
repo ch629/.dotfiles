@@ -1,7 +1,7 @@
 ---
 description: Plans and orchestrates parallel Linear ticket workstreams with user approval gates, isolated worktrees, and validator/agent-review loops.
 mode: primary
-model: openai/gpt-4.1
+model: openai/gpt-6.1-terra
 temperature: 0.2
 permission:
   task:

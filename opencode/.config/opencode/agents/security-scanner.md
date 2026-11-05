@@ -2,7 +2,7 @@
 description: Fast security pass over the diff for injection, authz, secrets, and unsafe data handling. Read-only; scans only the changed code.
 mode: subagent
 hidden: true
-model: anthropic/claude-haiku-4-5
+model: openai/gpt-6.1-terra
 temperature: 0.1
 permission:
   edit: deny

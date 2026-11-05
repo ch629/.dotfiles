@@ -2,7 +2,7 @@
 description: Reviews schema design, queries, indexing, and data-correctness in the diff. Read-only; reviews the worktree directly, never re-fetches the ticket.
 mode: subagent
 hidden: true
-model: openrouter/deepseek/deepseek-r1-0528
+model: openai/gpt-6.1-terra
 temperature: 0.1
 permission:
   edit: deny

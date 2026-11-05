@@ -2,7 +2,7 @@
 description: Checks database migration safety for online/zero-downtime deploys, reversibility, and ordering. Read-only; looks only at migration files in the diff.
 mode: subagent
 hidden: true
-model: anthropic/claude-haiku-4-5
+model: openai/gpt-6.1-terra
 temperature: 0.1
 permission:
   edit: deny

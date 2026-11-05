@@ -2,7 +2,7 @@
 description: Writes failing tests first from acceptance criteria, before any implementation exists. Commits red tests that encode the AC.
 mode: subagent
 hidden: true
-model: openrouter/qwen/qwen3-235b-a22b
+model: openai/gpt-6.1-terra
 temperature: 0.1
 permission:
   webfetch: deny

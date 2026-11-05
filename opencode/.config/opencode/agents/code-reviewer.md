@@ -2,7 +2,7 @@
 description: Full correctness, design, and maintainability review of the diff against the acceptance criteria. Read-only; reviews the worktree directly.
 mode: subagent
 hidden: true
-model: anthropic/claude-sonnet-4-6
+model: openai/gpt-6.1-sol
 temperature: 0.1
 permission:
   edit: deny

@@ -2,7 +2,7 @@
 description: Validates developer changes against a Linear ticket, acceptance criteria, and stated requirements.
 mode: subagent
 hidden: true
-model: openai/gpt-4.1-mini
+model: openai/gpt-6.1-luna
 temperature: 0.1
 permission:
   edit: deny
