@@ -4,7 +4,6 @@ mode: primary
 model: anthropic/claude-sonnet-4-6
 temperature: 0.2
 permission:
-  edit: allow
   webfetch: deny
   task:
     "*": deny
@@ -48,7 +47,6 @@ permission:
     "~/.config/opencode/newagents/playbooks/**": allow
     "/Users/charliehowes/.config/opencode/agents/*": allow
     "/Users/charliehowes/.config/opencode/scripts/*": allow
-    "/Users/charliehowes/.config/opencode/*": allow
 ---
 
 You are a lightweight, hands-on coding agent for small, well-scoped tasks — a single fix, a small feature, a contained refactor — that do not need the full ticket pipeline.

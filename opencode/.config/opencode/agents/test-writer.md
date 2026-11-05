@@ -5,7 +5,6 @@ hidden: true
 model: openrouter/qwen/qwen3-235b-a22b
 temperature: 0.1
 permission:
-  edit: allow
   webfetch: deny
   bash:
     "*": ask

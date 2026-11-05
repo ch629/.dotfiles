@@ -70,3 +70,7 @@ Profile-aware behavior checks:
 - OpenCode `run` only accepts primary agents directly. For subagent-specific checks, cases can set `invoke_subagent` and the harness prepends `@subagent` to the prompt.
 - If no `--attach` is provided, the harness first tries to reuse an existing server (env URL, then `127.0.0.1:4096`) before starting a temporary one.
 - Progress updates are printed every 5 seconds per case, and timed-out cases are marked as failed with `error=timeout`.
+
+## Shared reference access
+
+Run `ruby opencode/.config/opencode/evals/check_shared_access.rb` from the repository root. This checks the narrow global allowlist, symlink backing-path rules, unrelated-directory approval and agent edit overrides statically; it does not test runtime permissions or shell isolation. See [v2 readiness](../opencode-v2-readiness.md) before upgrading.
