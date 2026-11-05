@@ -27,7 +27,7 @@ validation/render/plan evidence is the appropriate contract.
 
 Inputs expected (minimal):
 
-- Raw ticket text.
+- Raw ticket text or ticketless request/delivery brief; carry brief path and revision into the stage output. Do not invent or infer approval from research confidence.
 - Resolved open questions / assumed defaults from the clarifier.
 
 Method:
@@ -38,7 +38,7 @@ Method:
 
 Output format (this IS the Ticket Brief; keep under ~30 lines total):
 
-- key: ticket id + link (echo from input).
+- key: optional supplied ticket id + link (echo from input; otherwise none).
 - title: one line.
 - scope: 1-3 lines.
 - acceptance_criteria: numbered checklist.

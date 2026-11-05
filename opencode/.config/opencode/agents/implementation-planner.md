@@ -28,7 +28,7 @@ as part of PR authoring; missing required target evidence blocks implementation.
 
 Inputs expected (minimal):
 
-- Ticket Brief (scope, acceptance_criteria, constraints, touched_areas, approach, risks).
+- Ticket Brief or ticketless delivery brief (scope, acceptance_criteria, constraints, touched_areas, approach, risks); carry brief path and revision into the output. Material plan changes require a new revision and renewed explicit approval before implementation; your plan cannot grant approval.
 - concern playbook path, if the orchestrator named one (e.g. [`go-financial.md`](.config/opencode/newagents/playbooks/go-financial.md)).
 
 Rules:
