@@ -1,7 +1,7 @@
 ---
 description: Primary developer agent for personal work (OpenAI provider).
 mode: primary
-model: openai/gpt-4.1
+model: openai/gpt-6.1-terra
 temperature: 0.2
 permission:
   task:

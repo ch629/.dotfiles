@@ -2,7 +2,7 @@
 description: Reviews platform and infrastructure changes (Terraform, Helm, Kubernetes manifests) for correctness, safety, and operational risk.
 mode: subagent
 hidden: true
-model: openai/gpt-4.1
+model: openai/gpt-6.1-terra
 temperature: 0.1
 permission:
   edit: deny

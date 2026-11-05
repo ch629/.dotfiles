@@ -2,7 +2,7 @@
 description: Produces implementation plans for Rust low-level systems work with risk-first sequencing and test strategy.
 mode: subagent
 hidden: true
-model: openai/gpt-4.1
+model: openai/gpt-6.1-terra
 temperature: 0.1
 permission:
   edit: deny

@@ -1,7 +1,7 @@
 ---
 description: Lightweight primary for bounded fixes and features — preserves existing work, verifies the touched scope and routes review by risk. Use when full ticket orchestration is unnecessary.
 mode: primary
-model: anthropic/claude-sonnet-4-6
+model: openai/gpt-6.1-terra
 temperature: 0.2
 permission:
   webfetch: deny

@@ -1,7 +1,7 @@
 ---
 description: Primary product planning agent for project inception, MVP definition, and roadmap shaping.
 mode: primary
-model: openai/gpt-4.1-mini
+model: openai/gpt-6.1-luna
 temperature: 0.2
 permission:
   task:
