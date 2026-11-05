@@ -9,6 +9,9 @@ permission:
   bash:
     "*": ask
     "git *": allow
+    "git worktree add*": ask
+    "git worktree remove*": ask
+    "git worktree prune*": ask
     "grep *": allow
     "rg *": allow
     "ls *": allow
@@ -30,10 +33,6 @@ permission:
     "make test*": allow
     "make lint*": allow
   external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
     "~/.config/opencode/newagents/playbooks/**": allow
 ---
 

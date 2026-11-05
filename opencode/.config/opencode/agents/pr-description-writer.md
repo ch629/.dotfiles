@@ -16,10 +16,6 @@ permission:
     "ls .github*": allow
   external_directory:
     "/tmp/*": allow
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a PR description writer. You produce the PR body text; the orchestrator opens the PR.

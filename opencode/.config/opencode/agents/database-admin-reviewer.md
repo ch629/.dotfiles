@@ -14,11 +14,6 @@ permission:
     "git log *": allow
     "grep *": allow
     "rg *": allow
-  external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a senior database administration and data-layer review agent.

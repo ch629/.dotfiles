@@ -22,10 +22,6 @@ permission:
     "linear issue query*": allow
     "linear issue url*": allow
   external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
     "~/.config/opencode/newagents/policies/**": allow
 ---
 

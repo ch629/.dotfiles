@@ -10,11 +10,6 @@ permission:
   task: deny
   bash:
     "*": deny
-  external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a platform and infrastructure review agent.

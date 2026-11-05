@@ -21,10 +21,6 @@ permission:
     "pnpm test*": allow
     "make test*": allow
   external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
     "~/.config/opencode/newagents/playbooks/**": allow
 ---
 

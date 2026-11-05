@@ -30,7 +30,6 @@ permission:
     "git branch --show-current": allow
     "git branch --list *": allow
     "git worktree list*": allow
-    "git worktree add*": allow
     "git switch*": allow
     "git checkout*": allow
     "git add*": allow
@@ -69,10 +68,6 @@ permission:
     "diff *": allow
     "head *": allow
   external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
     "/tmp/**": allow
 ---
 

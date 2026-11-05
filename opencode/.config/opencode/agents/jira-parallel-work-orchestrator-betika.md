@@ -16,7 +16,6 @@ permission:
     explore: allow
   bash:
     "*": ask
-    "git worktree add *": allow
     "git worktree list*": allow
     "git branch --show-current": allow
     "git branch --list *": allow

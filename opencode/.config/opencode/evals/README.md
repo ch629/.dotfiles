@@ -15,6 +15,9 @@ This repository includes a lightweight regression harness so you can track wheth
 
 ## Quick start
 
+For the pinned worktree plugin's Git lifecycle and mocked permission-event check, see
+[`../worktree-plugin.md`](../worktree-plugin.md#check-the-pinned-release). It is not a live TUI test.
+
 Static infrastructure policy checks (Ruby stdlib only; no model/network calls):
 
 ```bash

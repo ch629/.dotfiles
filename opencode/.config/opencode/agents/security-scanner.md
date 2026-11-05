@@ -13,11 +13,6 @@ permission:
     "grep *": allow
     "rg *": allow
     "ls *": allow
-  external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
 ---
 
 You are a focused security review agent. You do a fast, high-signal pass over the diff only.

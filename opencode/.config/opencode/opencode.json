@@ -1,8 +1,9 @@
 {
   "$schema": "https://opencode.ai/config.json",
   "default_agent": "quick-dev",
-  "instructions": ["policies/governance-profiles.md"],
+  "instructions": ["policies/governance-profiles.md", "policies/worktrees.md"],
   "permission": {
+    "worktree_merge": "deny",
     "external_directory": {
       "*": "ask",
       "~/.config/opencode/agents/*": "allow",
@@ -127,6 +128,7 @@
     }
   },
   "plugin": [
+    ["https://github.com/afwlehmann/opencode-worktree-plugin/releases/download/v0.7.0/opencode-worktree-plugin-0.7.0.tgz", {"permissionMode": "pedantic"}],
     "@mohak34/opencode-notifier",
     "@tarquinen/opencode-dcp@latest",
     "octto",

@@ -30,9 +30,6 @@ permission:
     "git branch --show-current": allow
     "git branch --list *": allow
     "git worktree list*": allow
-    "git worktree add*": allow
-    "git worktree remove*": allow
-    "git worktree prune*": allow
     "git switch*": allow
     "git add*": allow
     "git commit*": allow
@@ -57,11 +54,6 @@ permission:
     "head *": allow
     "mkdir *": allow
   external_directory:
-    "**/worktrees": allow
-    "**/worktrees/**": allow
-    "~/.local/share/opencode/worktree": allow
-    "~/.local/share/opencode/worktree/**": allow
-    "/Users/charliehowes/.local/share/opencode/worktree/*": allow
     "~/.config/opencode/newagents/policies/**": allow
     "/tmp/**": allow
     "/Users/charliehowes/.config/opencode/agents/**": allow
@@ -165,7 +157,7 @@ Execution policy:
 2. Clarify. Delegate raw ticket text to `ticket-clarifier`. Surface its blocking questions to the user via octto (post-clarifier gate) and record answers in `open_questions` before proceeding.
 3. Research. Delegate ticket text + resolved questions to `ticket-researcher`. Receive the compact Ticket Brief (scope, AC, touched_areas, approach summary). This Brief is now the single source of truth. Apply DCP compression to the raw ticket text and research logs once the Brief is finalized.
 4. Plan (high-complexity only). If the change is high-complexity (roughly 3+ implementation steps, concurrency/persistence/financial impact, or unclear sequencing), delegate to `implementation-planner` with the Brief + concern playbook path. Fold its ordered steps / risk register / AC-to-code matrix into the Brief. Skip this stage for small, well-scoped tickets — the researcher's `approach` is enough.
-5. Launch. Refresh base from `origin/main`, create one worktree + branch (include the ticket key). Move the Linear ticket to In Progress with `linear issue start <key>` and verify the state changed before any implementation begins. Fill `worktree` and `commands` in the Brief. Use `git commit`, and `git pull --rebase` when updating from base. You hold no edit rights, so when a rebase conflicts, delegate the conflict resolution to `feature-developer` (which owns edits), then continue the rebase.
+5. Launch. Fetch the selected remote base, then use `worktree_create` with `repo_short`, a lowercase kebab-case `source_branch` including the ticket key (no slashes), and explicit `target_branch` set to the refreshed remote-tracking base. Record all three arguments and the returned absolute path in the Brief. Stay in this session: do not open a terminal or fork a conversation. Move the Linear ticket to In Progress with `linear issue start <key>` and verify the state changed before any implementation begins. Fill `worktree` and `commands` in the Brief. Every worker must target absolute file paths inside that worktree and set shell `workdir` to it; a path in the Brief does not change the session workspace. Pedantic plugin access is interactive-only; if approval is unavailable, request exact-path approval rather than broadening global rules. Use `git commit`, and `git pull --rebase` when updating from base. You hold no edit rights, so when a rebase conflicts, delegate the conflict resolution to `feature-developer` (which owns edits), then continue the rebase.
 6. Verification contract. For infra, agree the playbook's applicable checks first; delegate behavioral test-writing when useful, otherwise record why validation/render/plan evidence replaces a red-test commit. For application changes, delegate to `test-writer` the AC slice + touched paths + worktree + test command and expect failing tests committed.
 7. Implement. Delegate to `feature-developer` the Brief scope+AC + test file paths + worktree + test/lint commands. Expect tests passing and a clean implementation commit. Apply DCP compression to raw build/test output once tests are green.
 8. Review fan-out. Compute `change_tier` and build the change manifest once (see those sections), then dispatch per tier. Every reviewer gets its manifest slice — worktree, immutable `range`, scoped files, `commits`, `evidence` — and begins with a scoped diff; further investigation is permitted:
@@ -177,7 +169,7 @@ Execution policy:
 9. Fix loop. Distill findings, preserve open blockers, then compress spent output. Apply fixes via `feature-developer`, refresh immutable SHAs and evidence, rerun affected checks and all affected reviewers (including previously passing ones). A rebase also invalidates affected evidence. Max 2 fix-and-recheck iterations after the first review; then stop with unresolved blockers. Carry forward a verdict only with an explicit unaffected-scope justification.
 10. Completion check. Delegate the AC checklist + ticket key + immutable range + evidence + reviewer outcomes + profile gates and infra playbook/context when applicable. Required fixes, missing required evidence, Unknown, Incomplete, or Fail block PR-ready status; listing residuals does not waive a gate. For infra use Pass / Non-blocking concern / Blocked/Unknown / Fail. Only open a blocked draft PR if explicitly requested, with blockers prominent and no completion/deployment-safety claim.
 11. PR. Delegate to `pr-description-writer` the AC-to-evidence map + reviewer verdicts + commit list. Open the PR with that body.
-12. Cleanup. Once the PR is open and pushed, tear down the worktree (`git worktree remove`, then `git worktree prune` if needed). Do not delete the branch. Stop and hand off to the user's manual review.
+12. Cleanup. Once the PR is open, verify the worktree is clean and its HEAD is pushed to the intended remote branch. Use `worktree_remove` with the recorded `repo_short` and `source_branch`; it preserves the branch and refuses uncommitted changes. If cleanup refuses, stop and report the retained path; never force removal or snapshot-commit leftovers. Never call `worktree_merge`: this pipeline stops at a PR, not a local merge or branch deletion. Use `worktree_list` to recover plugin-managed paths after compaction. Stop and hand off to the user's manual review.
 
 Delegation rules:
 
