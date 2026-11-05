@@ -62,12 +62,13 @@ python3 opencode/.config/opencode/evals/run_evals.py --compare-baseline
 
 ## Baseline workflow (recommended)
 
-### Phase 1 delivery-brief pilot
+### Delivery-brief pilot (Phase 1 and routing extension)
 
 Contract: [delivery-brief.md](../policies/delivery-brief.md). Start/resume with the
 [versioned pilot index](../../../../docs/work-plans/local-workflow-pilot/README.md).
 The ten `workflow-` cases are committed planning scenarios, not proof of policy
-loading or runtime enforcement. Phase 1 adds no agent routing or permission changes.
+loading or runtime enforcement. Phase 1 added no routing changes; the extension
+changes routing but preserves permissions. Both require genuine behavioral evidence.
 
 The pre-contract baseline is **Blocked / not run**, not red or green: OpenCode
 1.18.34 readiness failed before model output (`err_d4eb727f`); the implementation
@@ -81,10 +82,37 @@ cases and the agent configuration, unchanged from pre-contract revision
 Resolve the runtime blocker without changing routing/model, then start a **fresh**
 loopback server with that checkout's `OPENCODE_CONFIG_DIR`. From that checkout's
 repository root, verify readiness before running the command below, replacing the
-paths and port:
+paths and port. Allocate a unique isolated evidence directory for this evaluation
+pair and an absolute, previously nonexistent baseline path within it (for example
+`/absolute/isolated/workflow-UNIQUE/baseline.json`). Never use the harness's default
+baseline: it may belong to another suite. Keep this same path for the post-run.
+First run without setting a baseline:
 
 ```bash
-python3 opencode/.config/opencode/evals/run_evals.py --cases opencode/.config/opencode/evals/cases.json --suite offline --only '^workflow-' --workspace /absolute/worktree --attach http://127.0.0.1:PORT --out-dir /absolute/worktree/opencode/.config/opencode/evals/results/workflow-pre-contract-v1
+python3 opencode/.config/opencode/evals/run_evals.py --cases opencode/.config/opencode/evals/cases.json --suite offline --only '^workflow-' --workspace /absolute/pre-routing-worktree --attach http://127.0.0.1:PRE_PORT --baseline /absolute/isolated/workflow-UNIQUE/baseline.json --out-dir /absolute/isolated/workflow-UNIQUE/preflight
+```
+
+Check all ten case IDs, actual model output and errors, and case/config provenance
+before baseline capture: cases must come from the named test revision and agents
+must be the unchanged pre-routing configuration. Static checks, readiness alone,
+empty output and runtime failures are not a baseline. Only after that inspection,
+capture genuine pre-routing output with the same configuration and filter:
+
+```bash
+python3 opencode/.config/opencode/evals/run_evals.py --cases opencode/.config/opencode/evals/cases.json --suite offline --only '^workflow-' --workspace /absolute/pre-routing-worktree --attach http://127.0.0.1:PRE_PORT --baseline /absolute/isolated/workflow-UNIQUE/baseline.json --set-baseline --out-dir /absolute/isolated/workflow-UNIQUE/pre-routing
+```
+
+The harness writes the baseline even on failed runs: inspect the capture's output
+and provenance again before accepting it. If genuine output is missing, mark the
+capture invalid and keep **Blocked / not run**; never compare against it. Genuine
+model responses may fail behavioral assertions without being runtime failures.
+
+For the post-run, start a fresh server with the candidate checkout's configuration,
+verify readiness and the same ten case definitions/filter, and compare using the
+exact same absolute baseline path (do not set or overwrite it):
+
+```bash
+python3 opencode/.config/opencode/evals/run_evals.py --cases opencode/.config/opencode/evals/cases.json --suite offline --only '^workflow-' --workspace /absolute/post-routing-worktree --attach http://127.0.0.1:POST_PORT --baseline /absolute/isolated/workflow-UNIQUE/baseline.json --compare-baseline --out-dir /absolute/isolated/workflow-UNIQUE/post-routing
 ```
 
 Record the revisions supplying cases and agent configuration, source SHA/tree,
@@ -101,9 +129,11 @@ denials. Those require a separately authorized disposable integration environmen
 No ticket access or publication is needed. A blocked model run remains Blocked until
 genuine evidence exists; independent review is still required.
 
-1. Set baseline on your current known-good config.
+For other suites (not a replacement for the pilot procedure above):
+
+1. Set a unique isolated `--baseline` on your current known-good config after checking output and provenance.
 2. Make prompt/model/permission changes.
-3. Run with `--compare-baseline`.
+3. Run with `--compare-baseline`, the same `--baseline` path and identical case selection.
 4. Keep changes only if score and pass counts improve (or are intentionally unchanged).
 
 Profile-aware behavior checks:

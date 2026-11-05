@@ -1,25 +1,27 @@
 # Local workflow pilot
 
 - Contract: [delivery brief v1](../../../opencode/.config/opencode/policies/delivery-brief.md).
-- Current brief: [brief-v1.md](brief-v1.md), **Proposed delivery**; artifact approval
-  outstanding. The user's Phase 1 implementation authorization is recorded there,
-  not retroactively presented as approval of this newly authored brief.
+- Current brief: [brief-v2.md](brief-v2.md), **Blocked** for behavioral sign-off;
+  exact-content artifact approval outstanding. Local routing implementation is
+  explicitly authorized despite the runtime blocker, not evidence of full acceptance.
 - Evidence: [baseline-v1.md](baseline-v1.md) (test-writer's unchanged record),
-  [verification-v1.md](verification-v1.md) (implementation checks and readiness retry).
-- Supersession: no predecessor or successor yet. On replacement, retain v1 and add
-  both `v1 -> v2` and `v2 <- v1` links here, marking v1 Superseded. Do not overwrite
-  its approval history.
+  [verification-v1.md](verification-v1.md) (Phase 1 checks),
+  [verification-v2.md](verification-v2.md) (routing readiness and static checks).
+- Lifecycle record: [v1](brief-v1.md) -> [v2](brief-v2.md);
+  [v2](brief-v2.md) <- [v1](brief-v1.md). v1 is **Superseded**; its body and
+  historical approval record remain unchanged. No successor to v2 yet.
 
 ## Copyable ticketless continuation
 
-Path: `docs/work-plans/local-workflow-pilot/brief-v1.md` (repository-local artifact).
-Summary: define the delivery contract and sanitized pilot; retain unchanged routing,
-permissions and runner. No tickets or publication.
-State / revision: Proposed delivery, brief v1 / contract v1; artifact approval pending.
-Evidence: baseline-v1.md and verification-v1.md; model baseline Blocked / not run.
-Remaining decision: independent review and explicit approval of this artifact's
-exact content; runtime diagnosis requires a separately authorized follow-up.
-Next action: reviewer reads these paths and the scoped commit; do not interpret
-static checks as model-backed acceptance or begin routing changes.
-Publication authority: none. If task handoff is denied, the user can copy this
-path-plus-summary into a permitted session; do not bypass the restriction.
+Path: `docs/work-plans/local-workflow-pilot/brief-v2.md` (saved repository-local artifact).
+Summary: activate ticketless delivery routing, lifecycle and safe continuation;
+preserve permissions, model selection and runner. No tickets or publication.
+State / revision: Blocked for behavioral sign-off, brief v2 / contract v1.
+Approval: exact-content artifact approval pending; local implementation authorized
+by the user's routing-extension request. No inherited or fabricated approval.
+Evidence: verification-v2.md; genuine model baseline/comparison Blocked / not run.
+Remaining decision: independent review and revision/content-bound artifact approval;
+runtime repair requires separately authorized follow-up.
+Next action: reviewer reads the paths and local commit; static checks are not model
+acceptance. Publication authority: none. If task handoff is denied, copy this
+continuation for a manual primary switch; never bypass the restriction.

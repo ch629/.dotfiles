@@ -28,7 +28,7 @@ as part of PR authoring; missing required target evidence blocks implementation.
 
 Inputs expected (minimal):
 
-- Ticket Brief (scope, acceptance_criteria, constraints, touched_areas, approach, risks).
+- Ticket Brief or ticketless delivery brief (scope, acceptance_criteria, constraints, touched_areas, approach, risks); carry brief path and revision into the output. Material plan changes require a new revision and renewed explicit approval before implementation; your plan cannot grant approval.
 - concern playbook path, if the orchestrator named one (e.g. [`go-financial.md`](.config/opencode/newagents/playbooks/go-financial.md)).
 
 Rules:
@@ -40,6 +40,7 @@ Rules:
 
 Output format (this plan augments the Brief; keep it tight and execution-ready):
 
+- brief_identity: artifact full path; revision + exact content binding; lifecycle state; approval status. Echo supplied identity/evidence only; mark absent/unsaved artifacts and unknown fields explicitly, including ticketless requests. Do not claim to create an approved artifact or grant approval through this output.
 - Implementation plan: minimal ordered steps, each naming the files/functions to change.
 - Risk register: each risk with severity + concrete mitigation (financial / data / concurrency / operational / rollout where relevant).
 - AC -> code/evidence matrix: which step and test satisfies each acceptance criterion.
