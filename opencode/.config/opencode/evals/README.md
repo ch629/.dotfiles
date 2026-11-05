@@ -15,6 +15,10 @@ This repository includes a lightweight regression harness so you can track wheth
 
 ## Quick start
 
+Run `ruby opencode/.config/opencode/evals/check_quick_dev.rb` for static quick-dev
+permission, scope and review-contract regressions. These assertions check policy wiring,
+not model behavior, live approval enforcement or OS sandboxing.
+
 For the pinned worktree plugin's Git lifecycle and mocked permission-event check, see
 [`../worktree-plugin.md`](../worktree-plugin.md#check-the-pinned-release). It is not a live TUI test.
 
