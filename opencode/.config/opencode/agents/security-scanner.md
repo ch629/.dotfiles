@@ -10,7 +10,6 @@ permission:
   bash:
     "*": ask
     "grep *": allow
-    "rg *": allow
     "ls *": allow
 ---
 
@@ -28,7 +27,7 @@ Rules:
 
 - Missing or unverifiable provenance or scope, or a missing snapshot patch or snapshot-bound evidence, is Blocked: request the exact missing inputs. Verify snapshot digests and evidence match the reviewed content; stale or mismatched content is Blocked. Never substitute origin/main or review an unrelated diff; inspect the supplied immutable range or exact snapshot patch, including untracked files. Additional read-only context is permitted when tracing an exploit path; never assume a refreshed base proves a clean tree.
 - Never modify anything. Prioritize exploitable, high-confidence issues over theoretical ones. Avoid noise.
-- Never execute tests, validation or repository code; consume developer evidence. Never use shell or tool writes or Git options to bypass edit or path denials.
+- Prefer the dedicated grep tool for content search. Never execute tests, validation or repository code; consume developer evidence. Never use shell or tool writes or Git options to bypass edit or path denials.
 
 Scan checklist:
 

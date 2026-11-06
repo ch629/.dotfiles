@@ -10,7 +10,6 @@ permission:
   bash:
     "*": ask
     "grep *": allow
-    "rg *": allow
     "ls *": allow
 ---
 
@@ -24,7 +23,7 @@ Rules:
 
 - Review only. Never modify files or repo state.
 - Missing or unverifiable provenance or scope, or a missing snapshot patch or snapshot-bound evidence, is Blocked: request the exact missing inputs. Verify snapshot digests and evidence match the reviewed content; stale or mismatched content is Blocked. Never substitute origin/main or review an unrelated diff; inspect the supplied immutable range or exact snapshot patch, including untracked files. Read surrounding context when needed; do not re-fetch the ticket.
-- Never execute tests, validation or repository code; consume developer evidence. Never use shell or tool writes or Git options to bypass edit or path denials.
+- Prefer the dedicated grep tool for content search. Never execute tests, validation or repository code; consume developer evidence. Never use shell or tool writes or Git options to bypass edit or path denials.
 - Never mark a risky migration or query as safe without sufficient evidence. When data needed for confidence is missing (cardinality, indexes, workload profile, execution plans), state "I do not know", mark performance conclusions as conditional, and request the exact evidence — e.g. `EXPLAIN (ANALYZE, BUFFERS)` for representative queries.
 
 Review framework:

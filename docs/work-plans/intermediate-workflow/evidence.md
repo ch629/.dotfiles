@@ -65,3 +65,27 @@ d4efd8331ef8945b620e7b739a37867121c1339dc53870afdd2d77b8407a398d  docs/work-plan
 `agents/` and `evals/` in that listing are relative to `opencode/.config/opencode/`. Reviewer contracts now require range or snapshot provenance, block missing/stale inputs and do not substitute a remote base; caller manifests provide snapshot fields. Static task-map checks require the exact ordered seven-worker map and test removal of each specialist; permission checks exercise `--output` pattern examples but do not prove runtime matching.
 
 Infra residual: `infra-reviewer.md` still explicitly requires an immutable range and scoped diff, while `playbooks/infrastructure.md` permits recording a source tree before a commit but requires immutable base/head SHAs. It is not clearly snapshot-compatible. It was outside the approved three-reviewer extension and was not modified; uncommitted infra review must remain blocked if its provenance contract cannot be satisfied. This is not an infrastructure review or validation result.
+
+## Review-fix cycle 2
+
+Starting HEAD `8379bee`, worktree `/Users/charliehowes/.local/state/opencode/worktrees/dotfiles-planned-dev`, 2026-11-06; Ruby `2.6.10p210`, universal.arm64e-darwin26. Security re-review found HIGH: silent `rg *` permits `--pre` program execution. Removed that allowance in planned-dev, feature-developer, security-scanner, db-reviewer and migration-reviewer; their existing `*` shell fallback remains `ask`. Use the dedicated grep tool for search. No other rights added. Other shell search allowances in these surfaces are `grep *` and `ls *`; neither normally provides ripgrep's program-preprocessor execution option. Shell parsing and actual runtime enforcement were not tested and are not asserted safe by that observation.
+
+Code re-review of cycle 1 approved and noted the infra immutable-range requirements safely block missing provenance. That remains a residual gate, not an unresolved code finding; uncommitted infra support is not claimed. Independent code, security and completion re-reviews of cycle 2 are pending.
+
+Commands from the worktree root, before and after the permission fix:
+
+- Added regressions first: `ruby opencode/.config/opencode/evals/check_planned_dev.rb` — exit 1, 71/86 passed, 15 failed: three rg examples per agent (`--pre` separated, `--pre=` and ordinary invocation potentially using rg configuration).
+- `ruby opencode/.config/opencode/evals/check_planned_dev.rb && ruby -c opencode/.config/opencode/evals/check_planned_dev.rb && ruby opencode/.config/opencode/evals/check_quick_dev.rb && ruby opencode/.config/opencode/evals/check_shared_access.rb && ruby opencode/.config/opencode/evals/check_infra_policy.rb` — exit 0; planned-dev 86/86, syntax OK, quick-dev/shared-access/infra static checks passed.
+- `ruby opencode/.config/opencode/evals/check_delivery_workflow.rb` — exit 1, 96/98: same baseline failures `ticket-orchestrator: permissions unchanged` and `developer-personal: permissions unchanged`, baseline delta zero.
+- `ruby -r yaml -r json -e 'ARGV.each { |f| YAML.safe_load(File.read(f).split(/^---\s*$\n?/,3)[1]); puts "YAML OK #{f}" }; JSON.parse(File.read("opencode/.config/opencode/opencode.json")); puts "JSON OK opencode/.config/opencode/opencode.json"' opencode/.config/opencode/agents/planned-dev.md opencode/.config/opencode/agents/feature-developer.md opencode/.config/opencode/agents/security-scanner.md opencode/.config/opencode/agents/db-reviewer.md opencode/.config/opencode/agents/migration-reviewer.md && shasum -a 256 opencode/.config/opencode/agents/planned-dev.md opencode/.config/opencode/agents/feature-developer.md opencode/.config/opencode/agents/security-scanner.md opencode/.config/opencode/agents/db-reviewer.md opencode/.config/opencode/agents/migration-reviewer.md opencode/.config/opencode/evals/check_planned_dev.rb docs/work-plans/intermediate-workflow/brief-v2.md docs/work-plans/intermediate-workflow/brief-v3.md` — exit 0; all five YAML frontmatters and JSON parsed. Tested source SHA-256:
+
+```text
+138f051fcc0db4c341ff74e5b2e2b6974c93bf17b2ea2728b0cad30ef7caf740  agents/planned-dev.md
+f0b36c0b2cc739764060d03896d6441c68673d0aec4c315fd9a75ebe47262b46  agents/feature-developer.md
+1ea9f5af329913da305c154841562e62559cc821b483b10e0d0035c5215a2968  agents/security-scanner.md
+3df13091cf492406d95af1e8b0c8de84947ef0a10f396a19f4a23073ff8559cc  agents/db-reviewer.md
+1c2723c60f72970b31695acb9b770ab9ad25d4861fe807492c0bbdb5c0669043  agents/migration-reviewer.md
+9e79eb403e1666b5d998258ac820973aabf48df57d8fa0f294876fa016f8e35a  evals/check_planned_dev.rb
+```
+
+Paths are relative to `opencode/.config/opencode/`. The same command confirmed v2 and v3 hashes unchanged from cycle 1. The Ruby `File.fnmatch?` check is a static approximation, not proof of effective tool permissions; no executable attack or model tests were run. Build and separate lint are not applicable to these prompt/config changes.

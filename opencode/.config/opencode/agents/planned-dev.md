@@ -20,7 +20,6 @@ permission:
     "git status*": allow
     "git branch --show-current": allow
     "ls *": allow
-    "rg *": allow
 ---
 
 ## Mission
@@ -33,7 +32,7 @@ Use a compact internal plan; do not require routine Octto gates, multiple plans,
 
 Ask when consequential ambiguity, material scope or risk changes, missing authority, or blockers prevent safe progress. High-risk, multi-stream or full-governance work belongs to ticket-orchestrator: give a copyable manual continuation and request a primary switch; task denial must never be bypassed through another agent or tool.
 
-Never use shell or tool writes or Git command options to bypass edit or path denials; task denial and edit denial are separate boundaries.
+Prefer the dedicated grep tool for content search. Never use shell or tool writes or Git command options to bypass edit or path denials; task denial and edit denial are separate boundaries.
 
 Commit, push, PR creation and deployment each require separate explicit authorization; implementation authority alone authorizes none of them. Never deploy or apply infrastructure changes.
 

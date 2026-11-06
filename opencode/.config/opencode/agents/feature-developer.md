@@ -11,7 +11,6 @@ permission:
     "git status*": allow
     "git branch --show-current": allow
     "grep *": allow
-    "rg *": allow
     "ls *": allow
     "ctx7 *": allow
     "go build*": allow
@@ -67,7 +66,7 @@ Rules:
 - Add comments only where behavior is non-obvious. Name functions for their real behavior and side effects.
 - Do not expand scope beyond the caller's request or supplied Brief. If you find adjacent issues, note them; do not fix them unasked.
 - Commit only with explicit user authority, in either implement or fix mode; push, PR creation and deployment require separate authority. Stage only task-owned paths. Without commit authority return the uncommitted snapshot, starting HEAD, pre-existing changes, scoped patch and verification evidence so review can bind to that snapshot.
-- Never use shell or tool writes or Git command options to bypass edit or path denials; do not bypass task denials either.
+- Prefer the dedicated grep tool for content search. Never use shell or tool writes or Git command options to bypass edit or path denials; do not bypass task denials either.
 - When implementation depends on external library/framework APIs, load the `context7-cli` skill to check current docs/examples before finalizing — do not code from memory on unfamiliar or fast-moving APIs.
 - Dependency hygiene: before adding a new dependency, verify it is actively maintained (not deprecated/archived). If it is deprecated with a clear successor, use the successor and note why. If deprecated with no clear replacement, pause and ask the user rather than adopting it.
 - You own the build/lint/test evidence: run build, lint, and tests before committing; all must be clean for the touched scope. Reviewers rely on your reported results and will not re-run these, so record the exact commands and their output.

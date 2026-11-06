@@ -10,7 +10,6 @@ permission:
   bash:
     "*": ask
     "grep *": allow
-    "rg *": allow
     "ls *": allow
 ---
 
@@ -25,7 +24,7 @@ Rules:
 
 - Review only the migration files (and the code that depends on the migrated shape if needed for safety). Never modify anything.
 - Missing or unverifiable provenance or scope, or a missing snapshot patch or snapshot-bound evidence, is Blocked: request the exact missing inputs. Verify snapshot digests and evidence match the reviewed content; stale or mismatched content is Blocked. Never substitute origin/main or review an unrelated diff; inspect the supplied immutable range or exact snapshot patch, including untracked files. Read surrounding context when needed; do not re-fetch the ticket.
-- Never execute tests, validation or repository code; consume developer evidence. Never use shell or tool writes or Git options to bypass edit or path denials.
+- Prefer the dedicated grep tool for content search. Never execute tests, validation or repository code; consume developer evidence. Never use shell or tool writes or Git options to bypass edit or path denials.
 - Scale scrutiny to `deploy_context`. There is no production schema or live consumers to protect on greenfield, so online-safety concerns do not apply there.
 
 Greenfield pass-through (`deploy_context: greenfield`):

@@ -78,6 +78,11 @@ rule.call('delivery policy: orchestrator retains full gates', policy, /ticket-or
 %w[planned-dev feature-developer security-scanner db-reviewer migration-reviewer].each do |name|
   config, text = agent.call(name)
   bash = config.fetch('permission', {}).fetch('bash', {})
+  ['rg --pre /bin/sh pattern .', 'rg --pre=/bin/sh pattern .', 'rg pattern .'].each do |command|
+    action = bash.is_a?(Hash) ? bash.select { |pattern, _| File.fnmatch?(pattern, command) }.values.last : bash
+    check.call("#{name}: #{command} requires ask (including configured rg)", action == 'ask')
+  end
+  check.call("#{name}: unknown shell commands require ask", bash.is_a?(Hash) && bash['*'] == 'ask')
   %w[diff log].each do |subcommand|
     command = "git #{subcommand} --output=path"
     action = bash.is_a?(Hash) ? bash.select { |pattern, _| File.fnmatch?(pattern, command) }.values.last : bash
