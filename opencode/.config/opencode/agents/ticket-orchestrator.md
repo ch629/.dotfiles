@@ -29,7 +29,6 @@ permission:
     "git fetch*": allow
     "git branch --show-current": allow
     "git branch --list *": allow
-    "git worktree list*": allow
     "git switch*": allow
     "git add*": allow
     "git commit*": allow

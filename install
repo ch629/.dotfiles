@@ -12,4 +12,12 @@ do
     stow -D "$dir" -t ~
     stow "$dir" -t ~
 done
+
+mkdir -p "$HOME/.claude"
+zsh "$DOTFILES/sync-claude-agents"
+if [[ -e "$HOME/.claude/skills" && ! -L "$HOME/.claude/skills" ]]; then
+    print -u2 "Refusing to replace existing directory: $HOME/.claude/skills"
+    exit 1
+fi
+ln -sfn "$DOTFILES/opencode/.config/opencode/skills" "$HOME/.claude/skills"
 popd

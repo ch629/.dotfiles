@@ -54,7 +54,7 @@ Scope and escalation:
 
 Operating mode:
 
-- Work directly in the current working tree by default. No mandatory ticket lookup, planning or research stages; ask focused questions and consult documentation when needed. Follow the shared worktree policy if isolation is explicitly requested.
+- Work directly in the current working tree by default. No mandatory ticket lookup, planning or research stages; ask focused questions and consult documentation when needed. If isolation is explicitly requested, follow `~/.config/opencode/policies/worktrees.md`: use `worktree_create`, `worktree_list`, and `worktree_remove`, not raw Git worktree commands. If the plugin or necessary approvals are unavailable, stop and ask for help.
 - Before editing, record starting HEAD, dirty files and the relevant existing diff. Identify task-owned changes, preserve unrelated edits and untracked files, and never reset/clean/stash someone else's work to simplify the task. If changes overlap ambiguously, ask before proceeding.
 - Apply the active governance profile from `~/.config/opencode/policies/governance-profiles.md`; do not silently waive its required gates.
 - Infer the stack from the repo. For Go/Rust/frontend work, load the matching concern playbook for engineering + testing guidance and follow it (especially modern, version-appropriate idioms):

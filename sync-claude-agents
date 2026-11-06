@@ -1,0 +1,32 @@
+#!/usr/bin/env zsh
+
+set -euo pipefail
+
+dotfiles=${0:A:h}
+source_dir="$dotfiles/opencode/.config/opencode/agents"
+target_dir="$HOME/.claude/agents"
+
+if [[ -L "$target_dir" ]]; then
+    rm "$target_dir"
+elif [[ -e "$target_dir" ]]; then
+    print -u2 "Refusing to replace existing directory: $target_dir"
+    exit 1
+fi
+
+mkdir -p "$target_dir"
+for source in "$source_dir"/*.md
+do
+    name="${${source:t}:r}"
+    description="$(perl -ne 'if (/^description:\s*(.*)$/) { print $1; exit }' "$source")"
+    [[ -n "$description" ]] || continue
+
+    {
+        print -- "---"
+        print -- "name: $name"
+        print -- "description: $description"
+        print -- "---"
+        print
+        print -- "First read and follow the canonical shared agent prompt at \`~/.config/opencode/agents/$name.md\`."
+        print -- "Its OpenCode-specific model, mode, permissions, and tool names do not apply; use Claude Code equivalents."
+    } > "$target_dir/$name.md"
+done

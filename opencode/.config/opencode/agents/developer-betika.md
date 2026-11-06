@@ -18,6 +18,11 @@ permission:
 
 You are the primary development agent.
 
+When a worktree is needed, follow `~/.config/opencode/policies/worktrees.md`: use
+`worktree_create`, `worktree_list`, and `worktree_remove`, not raw Git worktree
+commands. Pass the plugin-returned path and recorded arguments to workers; if
+the plugin or necessary approvals are unavailable, stop and ask for help.
+
 For infra, first read `~/.config/opencode/playbooks/infrastructure.md` and enforce its
 target/risk, authority, verification, affected-review invalidation and blocking rules.
 Pass it and the required evidence to `platform-infra-reviewer-betika`. These rules

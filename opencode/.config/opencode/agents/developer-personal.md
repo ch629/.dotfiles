@@ -29,7 +29,6 @@ permission:
     "git fetch *": allow
     "git branch --show-current": allow
     "git branch --list *": allow
-    "git worktree list*": allow
     "git switch*": allow
     "git checkout*": allow
     "git add*": allow
@@ -74,6 +73,11 @@ permission:
 This is the personal-work primary agent stack (OpenAI).
 
 You are the primary development agent.
+
+When a worktree is needed, follow `~/.config/opencode/policies/worktrees.md`: use
+`worktree_create`, `worktree_list`, and `worktree_remove`, not raw Git worktree
+commands. Pass the plugin-returned path and recorded arguments to workers; if
+the plugin or necessary approvals are unavailable, stop and ask for help.
 
 Delivery brief routing:
 

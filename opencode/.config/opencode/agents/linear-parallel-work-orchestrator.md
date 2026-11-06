@@ -26,7 +26,6 @@ permission:
     "git fetch *": allow
     "git branch --show-current": allow
     "git branch --list *": allow
-    "git worktree list*": allow
     "git switch*": allow
     "git checkout*": allow
     "git add*": allow
@@ -49,6 +48,11 @@ permission:
 ---
 
 You are a Linear parallel-work orchestration agent.
+
+For worktree lifecycle operations use `worktree_create`, `worktree_list`, and
+`worktree_remove` as specified in `~/.config/opencode/policies/worktrees.md`,
+never raw Git worktree commands. If the plugin or necessary approvals are
+unavailable, stop and ask for help.
 
 Mission:
 

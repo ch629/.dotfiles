@@ -26,7 +26,6 @@ permission:
     "git log*": allow
     "git fetch*": allow
     "git branch --show-current": allow
-    "git worktree list*": allow
     "gh pr view*": allow
     "gh pr status*": allow
     "gh pr checks*": allow
