@@ -35,11 +35,13 @@ permission = planned['permission'].is_a?(Hash) ? planned['permission'] : {}
 check.call('planned-dev: edit denied', permission['edit'] == 'deny')
 tasks = permission['task'].is_a?(Hash) ? permission['task'] : {}
 allowed = %w[feature-developer code-reviewer code-reviewer-lite security-scanner db-reviewer migration-reviewer infra-reviewer]
+expected_tasks = [['*', 'deny']] + allowed.map { |name| [name, 'allow'] }
+valid_tasks = lambda { |map| map.to_a == expected_tasks }
 check.call('planned-dev: ordered task deny-all and named workers only',
-           tasks.to_a.first == ['*', 'deny'] &&
-           tasks.keys.all? { |key| key == '*' || allowed.include?(key) } &&
-           tasks.drop(1).all? { |key, value| allowed.include?(key) && value == 'allow' } &&
-           %w[feature-developer code-reviewer code-reviewer-lite].all? { |name| tasks[name] == 'allow' })
+           valid_tasks.call(tasks))
+%w[security-scanner db-reviewer migration-reviewer infra-reviewer].each do |name|
+  check.call("planned-dev: missing #{name} rejected", valid_tasks.call(expected_tasks.to_h) && !valid_tasks.call(expected_tasks.to_h.reject { |key, _| key == name }))
+end
 rule.call('planned-dev: ordinary request authorizes in-scope execution', body, /ordinary|normal/i, /request/i, /authoriz/i, /implement|execut/i)
 rule.call('planned-dev: compact internal planning without routine ceremonies', body, /internal/i, /plan/i, /no|not|without/i, /brief|approval|octto/i)
 rule.call('planned-dev: ask on material uncertainty or authority blockers', body, /ask|clarif/i, /ambig|uncertain/i, /scope|risk/i, /authorit|block/i)
@@ -72,6 +74,27 @@ policy = read.call('policies/delivery-brief.md')
 rule.call('delivery policy: ordinary planned-dev exempt from required saved brief', policy, /planned-dev/i, /ordinary/i, /not|no|without|exempt/i, /brief/i)
 rule.call('delivery policy: supplied brief retains approval and resumption', policy, /supplied|provided/i, /brief/i, /approv/i, /resum/i)
 rule.call('delivery policy: orchestrator retains full gates', policy, /ticket-orchestrator/i, /brief/i, /approv|contract/i)
+
+%w[planned-dev feature-developer security-scanner db-reviewer migration-reviewer].each do |name|
+  config, text = agent.call(name)
+  bash = config.fetch('permission', {}).fetch('bash', {})
+  %w[diff log].each do |subcommand|
+    command = "git #{subcommand} --output=path"
+    action = bash.is_a?(Hash) ? bash.select { |pattern, _| File.fnmatch?(pattern, command) }.values.last : bash
+    check.call("#{name}: #{subcommand} output not silently allowed", action != 'allow')
+  end
+  rule.call("#{name}: no permission bypass via writes", text, /shell|tool/i, /write/i, /bypass/i, /deni/i)
+end
+
+%w[security-scanner db-reviewer migration-reviewer].each do |name|
+  config, text = agent.call(name)
+  check.call("#{name}: read-only", config.fetch('permission', {})['edit'] == 'deny')
+  rule.call("#{name}: accepts immutable range or uncommitted snapshot", text, /immutable/i, /range/i, /uncommitted/i, /snapshot/i)
+  rule.call("#{name}: snapshot provenance", text, /worktree/i, /starting HEAD/i, /patch/i, /digest/i, /untracked/i, /pre.existing/i, /verification/i)
+  rule.call("#{name}: missing provenance blocks", text, /missing/i, /provenance/i, /block/i)
+  rule.call("#{name}: no origin main substitution", text, /never/i, /origin\/main/i, /substitut/i)
+  rule.call("#{name}: no executable validation", text, /never/i, /execut/i, /validation|tests/i)
+end
 
 failures.each { |failure| warn "FAIL: #{failure}" }
 puts "Planned-dev static checks: #{checks - failures.length}/#{checks} passed; #{failures.length} failed."

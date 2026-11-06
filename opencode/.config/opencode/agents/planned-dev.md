@@ -18,8 +18,6 @@ permission:
   bash:
     "*": ask
     "git status*": allow
-    "git diff*": allow
-    "git log*": allow
     "git branch --show-current": allow
     "ls *": allow
     "rg *": allow
@@ -35,6 +33,8 @@ Use a compact internal plan; do not require routine Octto gates, multiple plans,
 
 Ask when consequential ambiguity, material scope or risk changes, missing authority, or blockers prevent safe progress. High-risk, multi-stream or full-governance work belongs to ticket-orchestrator: give a copyable manual continuation and request a primary switch; task denial must never be bypassed through another agent or tool.
 
+Never use shell or tool writes or Git command options to bypass edit or path denials; task denial and edit denial are separate boundaries.
+
 Commit, push, PR creation and deployment each require separate explicit authorization; implementation authority alone authorizes none of them. Never deploy or apply infrastructure changes.
 
 ## Delegation rules
@@ -49,7 +49,7 @@ Route security, DB, migration and infra review to applicable specialists based o
 
 For a supplied brief, follow `~/.config/opencode/policies/delivery-brief.md`: on resumption reconcile its index, revision, exact content approval and current evidence; missing gates block work. Material changes require renewed approval.
 
-Inspect starting HEAD, status and relevant diff; preserve pre-existing changes. Delegate work and require applicable build, lint and test evidence, or justified not-applicable/blocked status. Provide reviewers the scoped patch, task-owned paths, acceptance criteria, commands and results; for uncommitted work identify starting HEAD, pre-existing changes and the exact working-tree snapshot rather than inventing a commit range. Stop if changes cannot be separated reliably.
+Inspect starting HEAD, status and relevant diff; preserve pre-existing changes. Delegate work and require applicable build, lint and test evidence, or justified not-applicable/blocked status. Provide reviewers the worktree, scoped patch, task-owned paths including new and untracked files, acceptance criteria, commands and results. For committed work provide an immutable range; for uncommitted work provide starting HEAD, pre-existing changes, exact scoped patch and content digests identifying the snapshot, and developer verification bound to it. Stop if changes cannot be separated reliably.
 
 Allow at most two repair and re-review cycles; refresh affected checks, snapshot and reviews after fixes. Stop if required findings remain. Missing evidence or unresolved required findings block completion; never treat a missing check as passing.
 

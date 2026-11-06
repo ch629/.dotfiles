@@ -1,5 +1,7 @@
 # Implementation evidence (reviews pending)
 
+The following initial implementation evidence is historical for the `d48ef40` snapshot, not the later review-fix snapshot documented below.
+
 2026-11-06. Worktree `/Users/charliehowes/.local/state/opencode/worktrees/dotfiles-planned-dev`, branch `planned-dev`, starting HEAD `10cea7b` (red tests), parent `c8c2bcb8fcdec87e8113cc614ed8b3c2aaafad44`. Ruby `2.6.10p210` universal.arm64e-darwin26. All commands below run from the worktree root, against the uncommitted implementation snapshot identified by SHA-256 below. No infrastructure target or deployment involved.
 
 ## Checks
@@ -36,3 +38,30 @@ Static assertions: `evals/check_planned_dev.rb` and `evals/README.md`. Approved 
 ## Limitations
 
 Model evals and runtime permission enforcement are deferred, not passed. Static checks cannot prove autonomous behavior, runtime denial or shell isolation. Independent security, deep code and completion reviews remain pending; this is not a completion verdict. Restart OpenCode to load changed agent configuration.
+
+## Review-fix cycle 1
+
+On 2026-11-06 the user approved the narrow v3 extension recorded in `brief-v3.md`: reconcile three specialist contracts, strengthen static regressions and narrow write-capable Git allowances. Code review at `d48ef40` identified high-risk specialist snapshot/range incompatibility and an incomplete task-allowlist assertion; security review identified write-capable `git diff*`/`git log*` allowances. Fresh affected code and security re-reviews and completion review remain pending.
+
+Worktree `/Users/charliehowes/.local/state/opencode/worktrees/dotfiles-planned-dev`, branch `planned-dev`, starting HEAD `d48ef40`; commands below ran from that root on the candidate source snapshot identified by hashes below. Ruby `ruby 2.6.10p210 (2022-04-12 revision 67958) [universal.arm64e-darwin26]`. No infrastructure execution or target; build and separate lint not applicable to prompt/policy changes.
+
+- Before reviewer and permission fixes, `ruby opencode/.config/opencode/evals/check_planned_dev.rb` exited 1: 39/66 passed, 27 failed (specialist provenance and permission regressions). The exact task map already contained all required entries; its four removal mutations were rejected.
+- `ruby opencode/.config/opencode/evals/check_planned_dev.rb && ruby -c opencode/.config/opencode/evals/check_planned_dev.rb && ruby opencode/.config/opencode/evals/check_quick_dev.rb && ruby opencode/.config/opencode/evals/check_shared_access.rb && ruby opencode/.config/opencode/evals/check_infra_policy.rb` — exit 0: 66/66 planned-dev checks passed, Syntax OK, quick-dev/shared-access/infra policy checks passed.
+- `ruby opencode/.config/opencode/evals/check_delivery_workflow.rb` — exit 1: 96/98; same pre-existing failures `ticket-orchestrator: permissions unchanged`, `developer-personal: permissions unchanged`, baseline delta 0. Not green.
+- `ruby -v && ruby -r yaml -r json -e 'ARGV.each { |f| YAML.safe_load(File.read(f).split(/^---\s*$\n?/,3)[1]); puts "YAML OK #{f}" }; JSON.parse(File.read("opencode/.config/opencode/opencode.json")); puts "JSON OK opencode/.config/opencode/opencode.json"' opencode/.config/opencode/agents/planned-dev.md opencode/.config/opencode/agents/feature-developer.md opencode/.config/opencode/agents/ticket-orchestrator.md opencode/.config/opencode/agents/security-scanner.md opencode/.config/opencode/agents/db-reviewer.md opencode/.config/opencode/agents/migration-reviewer.md && shasum -a 256 opencode/.config/opencode/agents/planned-dev.md opencode/.config/opencode/agents/feature-developer.md opencode/.config/opencode/agents/ticket-orchestrator.md opencode/.config/opencode/agents/security-scanner.md opencode/.config/opencode/agents/db-reviewer.md opencode/.config/opencode/agents/migration-reviewer.md opencode/.config/opencode/evals/check_planned_dev.rb docs/work-plans/intermediate-workflow/brief-v2.md docs/work-plans/intermediate-workflow/brief-v3.md` — exit 0; all six YAML frontmatters and JSON parsed; hashes:
+
+```text
+c27a2adaf09f45a5767516d385d3c71a1ef551d8d1c5297a03f0c3ddadee5612  agents/planned-dev.md
+6358769c204dc8a49ab792eed9645b53b9aca22d76c17d37f17915c8682e4714  agents/feature-developer.md
+a3efc85c4b60c9b6ebbf622f30f910e8266115a04d7c519828f207f0c1d64efa  agents/ticket-orchestrator.md
+a8f36da5d712359958c897a8f6b0edf693241381c0c060f049db0cb6dca1f71a  agents/security-scanner.md
+0485bf068f62cb91bda22a352c1525318d9e3a95b12e2af2091ee642afa8aa3d  agents/db-reviewer.md
+fc2be940c2c7d37c25ea6ec8b66aba3a87ba52213d3f73e1c6d9fc20efb5962d  agents/migration-reviewer.md
+e8842692cc853692cf3616202ed53e33c9dbf3c19e6ed60b99f0983af8748c3a  evals/check_planned_dev.rb
+b8c4a7052ed567a9ea58dcf247370e5dc746ae975c29c6876d1ad2182a05d627  docs/work-plans/intermediate-workflow/brief-v2.md
+d4efd8331ef8945b620e7b739a37867121c1339dc53870afdd2d77b8407a398d  docs/work-plans/intermediate-workflow/brief-v3.md
+```
+
+`agents/` and `evals/` in that listing are relative to `opencode/.config/opencode/`. Reviewer contracts now require range or snapshot provenance, block missing/stale inputs and do not substitute a remote base; caller manifests provide snapshot fields. Static task-map checks require the exact ordered seven-worker map and test removal of each specialist; permission checks exercise `--output` pattern examples but do not prove runtime matching.
+
+Infra residual: `infra-reviewer.md` still explicitly requires an immutable range and scoped diff, while `playbooks/infrastructure.md` permits recording a source tree before a commit but requires immutable base/head SHAs. It is not clearly snapshot-compatible. It was outside the approved three-reviewer extension and was not modified; uncommitted infra review must remain blocked if its provenance contract cannot be satisfied. This is not an infrastructure review or validation result.

@@ -125,13 +125,13 @@ Change manifest — gather once, slice per reviewer:
 
 - Before the fan-out, build the change manifest a single time so reviewers don't each re-derive it. You already inspect the diff to compute `touched_areas` and `change_tier`; capture that as a compact, reusable artifact rather than letting five reviewers re-run `git diff`/`git log`/`git status`.
 - Resolve and record immutable `base_sha` and `head_sha` for the selected branch base, verify clean/dirty status explicitly, then gather changed files and commit subjects with `git diff --name-status <base_sha>...<head_sha>` and `git log --oneline <base_sha>..<head_sha>`. Refreshing a remote does not establish a clean tree. Never review uncommitted content as though it belonged to `head_sha`.
-- When commits are not authorized, identify starting HEAD, pre-existing changes and the exact task-owned working-tree snapshot; pass a scoped patch and snapshot-bound verification to reviewers. Stop if changes cannot be separated reliably; refresh the snapshot after fixes.
+- When commits are not authorized, identify worktree, starting HEAD, pre-existing changes and the exact task-owned working-tree snapshot including new and untracked files; pass a scoped patch, content digests and snapshot-bound developer verification to reviewers. Stop if changes cannot be separated reliably; refresh the snapshot after fixes.
 - Manifest contents (keep it compact; it's a handoff, not part of the Brief):
-  - `range`: `<base_sha>...<head_sha>` (immutable SHAs).
+  - `range`: `<base_sha>...<head_sha>` (immutable SHAs) for committed work, or the snapshot provenance above for uncommitted work.
   - `files`: each changed file with its change type (A/M/D) and the area it belongs to (go/rust/db/migration/infra/frontend), grouped by area.
   - `commits`: the commit subjects.
   - `evidence`: verification revision/source tree, working directory, clean/dirty status, target, tool versions, exact commands, exit codes and results; for infra include the playbook's plan/render/policy and rollout evidence.
-- Pass each reviewer its file slice, immutable `range`, `commits`, and `evidence`. Start with `git diff <base_sha>...<head_sha> -- <its files>`. Infra reviewers have no shell access: supply their scoped diff as an artifact generated with `git --no-pager diff --no-ext-diff --no-textconv <base_sha>...<head_sha> -- <its files>`. Allow additional investigation and provide diff/status/history evidence on request. Cost optimization must not restrict correctness checks.
+- Pass each reviewer its file slice, provenance and `evidence`. For a committed range start with `git diff <base_sha>...<head_sha> -- <its files>`; for a snapshot supply its exact scoped patch and digests, including untracked files. Infra reviewers have no shell access: supply the applicable scoped diff artifact, and block if their required provenance cannot be met. Allow additional investigation and provide diff/status/history evidence on request. Cost optimization must not restrict correctness checks.
 - Refresh the manifest after each fix iteration (the diff/commits/evidence changed); re-slice from the refreshed copy.
 
 Context compression (DCP) — compress between blocks:
