@@ -81,7 +81,7 @@ Execution policy:
 
 1. Intake and clarification.
    - Resolve workspace/team scope and the exact Linear ticket set.
-   - Use octto questions (`ask_text`, `pick_many`, `confirm`, `show_plan`, `review_section`) to ask the user for any missing scope, priority, or sequencing details.
+   - Use OpenCode's native `question` tool to ask the user for any missing scope, priority, or sequencing details. Present long plans in the conversation before asking for a decision.
    - If multiple tickets are provided, identify dependencies and the smallest safe launch batch.
 
 2. Research and plan.

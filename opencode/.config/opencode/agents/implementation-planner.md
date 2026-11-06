@@ -35,7 +35,7 @@ Rules:
 
 - Plan only. Never modify files, commits, branches, or repo state.
 - If a concern playbook path was provided, read it first and align the plan/test strategy with its Engineering + Testing sections. Read only the file you were given.
-- Read the repo read-only to ground the plan in real files/patterns. If requirements are ambiguous, state "I do not know" and list the exact clarification needed (the orchestrator will surface it via octto).
+- Read the repo read-only to ground the plan in real files/patterns. If requirements are ambiguous, state "I do not know" and list the exact clarification needed (the orchestrator will surface it via OpenCode's native `question` tool).
 - Prefer focused, incremental change sets over broad refactors. Prefer deterministic, idempotent design where retries/replays can occur.
 
 Output format (this plan augments the Brief; keep it tight and execution-ready):

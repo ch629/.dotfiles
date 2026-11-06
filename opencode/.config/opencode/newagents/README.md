@@ -53,8 +53,8 @@ newagents/
 ```
 ticket-orchestrator (primary)
   → linear issue view <key>   fetch the spec ONCE (single source for the Brief)
-  → ticket-clarifier        raw ticket text → ambiguity flags        ──┐ octto gates
-  → (octto: ask user blocking questions)                              ─┘
+  → ticket-clarifier        raw ticket text → ambiguity flags        ──┐ native question gates
+  → (question: ask user blocking questions)                           ─┘
   → ticket-researcher       ticket + answers → Ticket Brief (SoT)    ── DCP compress
   → implementation-planner  (high-complexity only) → plan folds into Brief
   → create worktree + branch from origin/main
@@ -132,11 +132,11 @@ No other agent touches Linear — they work from the Brief. Two guardrails on mu
 - `completion-reviewer` is read-only and explicitly forbidden from any mutating Linear command — it
   re-reads the ticket so a Brief that drifted from the real AC can't pass a hollow check.
 
-## Clarifying questions (octto) — ask early, ask once
+## Clarifying questions (native `question`) — ask early, ask once
 
 Ambiguity is resolved at the earliest possible point, before tokens are spent on research
-or code. The orchestrator uses octto helpers (`ask_text`, `pick_many`, `confirm`,
-`show_plan`, `review_section`) at two mandatory gates:
+or code. The orchestrator uses OpenCode's native `question` tool at two mandatory
+gates. Present long plans in the conversation before asking for sign-off:
 
 1. **Intake gate** — if ticket id, scope, target stack, or branch base is missing/ambiguous, ask before running the clarifier.
 2. **Post-clarifier gate** — every blocking question from `ticket-clarifier` is surfaced to the user and answered before research begins.
@@ -244,7 +244,7 @@ conventional commits (no `chore`); `default` treats these as recommendations.
 `migration-reviewer` skips online-safety entirely — locking/downtime, backward/forward compat,
 expand/contract sequencing, and reversibility — and does only a cheap apply-time correctness check
 (or the orchestrator skips it outright for purely additive migrations). On `live` it runs the full
-zero-downtime safety checklist. Default is `live`; the orchestrator confirms via octto when unsure,
+zero-downtime safety checklist. Default is `live`; the orchestrator confirms via the native `question` tool when unsure,
 since flipping to `greenfield` relaxes a safety gate.
 
 ## Model assignment

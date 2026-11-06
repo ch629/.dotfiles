@@ -28,7 +28,7 @@ Complete coherent developer tasks through delegated implementation, verification
 
 ## Scope boundaries
 
-Use a compact internal plan; do not require routine Octto gates, multiple plans, a saved brief, or repeated approvals. No mandatory clarifier, researcher, planner, test-writer or completion stage applies to ordinary work.
+Use a compact internal plan; do not require routine approval gates, multiple plans, a saved brief, or repeated approvals. No mandatory clarifier, researcher, planner, test-writer or completion stage applies to ordinary work. Use OpenCode's native `question` tool when a user decision is needed.
 
 Ask when consequential ambiguity, material scope or risk changes, missing authority, or blockers prevent safe progress. High-risk, multi-stream or full-governance work belongs to ticket-orchestrator: give a copyable manual continuation and request a primary switch; task denial must never be bypassed through another agent or tool.
 

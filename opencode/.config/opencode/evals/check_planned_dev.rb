@@ -43,7 +43,7 @@ check.call('planned-dev: ordered task deny-all and named workers only',
   check.call("planned-dev: missing #{name} rejected", valid_tasks.call(expected_tasks.to_h) && !valid_tasks.call(expected_tasks.to_h.reject { |key, _| key == name }))
 end
 rule.call('planned-dev: ordinary request authorizes in-scope execution', body, /ordinary|normal/i, /request/i, /authoriz/i, /implement|execut/i)
-rule.call('planned-dev: compact internal planning without routine ceremonies', body, /internal/i, /plan/i, /no|not|without/i, /brief|approval|octto/i)
+rule.call('planned-dev: compact internal planning without routine ceremonies', body, /internal/i, /plan/i, /no|not|without/i, /brief|approval/i)
 rule.call('planned-dev: ask on material uncertainty or authority blockers', body, /ask|clarif/i, /ambig|uncertain/i, /scope|risk/i, /authorit|block/i)
 rule.call('planned-dev: delegates implementation and tests', body, /feature-developer/i, /delegat/i, /implement|develop/i, /test/i)
 rule.call('planned-dev: independent review with risk routing', body, /independent/i, /code.review/i, /risk/i)
