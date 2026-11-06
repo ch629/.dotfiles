@@ -20,3 +20,11 @@ When using the OpenCode agents in `opencode/.config/opencode/agents`:
 - Use `go-financial-code-reviewer` for high-risk Go and financial logic reviews (currency math, settlement, idempotency, correctness, Go style/100go).
 - Use `database-admin-reviewer` for data-layer reviews (schema design, migration safety, query/hot-path performance, data integrity, and operational DB risk).
 - Use both when a change spans Go financial logic and DB design/performance concerns.
+
+## Claude Code
+
+`./install` generates Claude-compatible agent wrappers in `~/.claude/agents`
+and links `~/.claude/skills` to the shared skills directory. The wrappers load
+the canonical prompts from `~/.config/opencode/agents`; Claude model and
+permission settings remain separate. Run `zsh ~/.dotfiles/sync-claude-agents`
+after changing an agent.

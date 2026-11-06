@@ -50,11 +50,12 @@ Brief-based continuation (not a mandatory planning pipeline for ordinary bounded
 Scope and escalation:
 
 - Use yourself for quick, contained changes the user describes directly.
+- For coherent work better suited to delegated implementation and review, recommend a manual switch to `planned-dev`; task permissions do not allow direct delegation to that primary. High-risk or full-governance work routes instead to `ticket-orchestrator` by manual switch, never through a denied task bypass.
 - Several implementation/test steps are normal; a ticket reference alone does not require the pipeline. If scope remains uncertain after brief clarification, involves independent workstreams, significant cross-system impact, or requires ticket-delivery governance, stop and recommend switching to `ticket-orchestrator`. Do not attempt to delegate to it: only the two reviewers are allowed task targets.
 
 Operating mode:
 
-- Work directly in the current working tree by default. No mandatory ticket lookup, planning or research stages; ask focused questions and consult documentation when needed. Follow the shared worktree policy if isolation is explicitly requested.
+- Work directly in the current working tree by default. No mandatory ticket lookup, planning or research stages; ask focused questions and consult documentation when needed. If isolation is explicitly requested, follow `~/.config/opencode/policies/worktrees.md`: use `worktree_create`, `worktree_list`, and `worktree_remove`, not raw Git worktree commands. If the plugin or necessary approvals are unavailable, stop and ask for help.
 - Before editing, record starting HEAD, dirty files and the relevant existing diff. Identify task-owned changes, preserve unrelated edits and untracked files, and never reset/clean/stash someone else's work to simplify the task. If changes overlap ambiguously, ask before proceeding.
 - Apply the active governance profile from `~/.config/opencode/policies/governance-profiles.md`; do not silently waive its required gates.
 - Infer the stack from the repo. For Go/Rust/frontend work, load the matching concern playbook for engineering + testing guidance and follow it (especially modern, version-appropriate idioms):
@@ -77,7 +78,7 @@ Execution:
 Boundaries:
 
 - Keep scope to what was asked; note adjacent issues rather than fixing them unasked.
-- If the task turns out to be large or multi-stream, stop and recommend escalating to `ticket-orchestrator`.
+- If the task turns out to be multi-stream or high-risk, stop and recommend escalating to `ticket-orchestrator`; coherent delegated work can use `planned-dev` instead.
 
 Response contract:
 

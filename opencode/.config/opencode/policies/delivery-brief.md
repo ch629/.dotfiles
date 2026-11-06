@@ -1,10 +1,12 @@
 # Delivery brief contract v1
 
-Use one repository-local brief as the planning and resumption contract for ticketed
-and ticketless work. A ticket is optional linkage, not a prerequisite or substitute
+For ticket-orchestrator, use one repository-local brief as the planning and resumption contract for ticketed
+and ticketless work, including its full approval gates. A ticket is optional linkage, not a prerequisite or substitute
 for the contract. This policy does not change agent routing, tool permissions or
 publication authority. Phase 1 defines the contract; automatic agent loading and
 behavioral enforcement are not claimed.
+
+Ordinary planned-dev work does not require a saved delivery brief or its approval ceremonies. A supplied brief retains this contract's exact-content approval and resumption requirements; do not use the exemption to bypass its gates.
 
 ## Required fields
 

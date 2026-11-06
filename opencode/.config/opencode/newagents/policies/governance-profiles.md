@@ -10,7 +10,7 @@ Select the first matching profile by current workspace path (`cwd`):
 1. If path contains `/betika/` -> `betika` profile.
 2. Otherwise -> `default` profile.
 
-If path matching is ambiguous, ask the user (via octto) to confirm the active profile before enforcing strict gates.
+If path matching is ambiguous, ask the user via OpenCode's native `question` tool to confirm the active profile before enforcing strict gates.
 
 ## Profiles
 

@@ -8,7 +8,7 @@ Stay on v1 until the plugin and evaluation harness migration is tested. Keeping 
 
 | Area | Impact on this setup / required action |
 | --- | --- |
-| Plugins — blocker | V1 implementations do not run on v2. Confirm v2-compatible releases of notifier, DCP and octto. Port local strip-top-p, ponytail, permission-audit and worktree integrations. V2 uses `@opencode/plugin` with `Plugin.define`/`setup`; configured local plugins resolve directories/entrypoints rather than the old `.ts` file entries. Renaming files is not a port. |
+| Plugins — blocker | V1 implementations do not run on v2. Confirm v2-compatible releases of notifier and DCP. Port local strip-top-p, ponytail, permission-audit and worktree integrations. V2 uses `@opencode/plugin` with `Plugin.define`/`setup`; configured local plugins resolve directories/entrypoints rather than the old `.ts` file entries. Renaming files is not a port. |
 | Server API — blocker | The evaluation harness uses the v1 server API. Port/verify against the v2 client/API before treating its results as evidence. |
 | External access | V2 defaults `external_directory` to **allow**. Keep the explicit global `* : ask` followed by narrow reference allowlists. Agent/project rules can override these; this is not an administrative sandbox. |
 | TUI | Global supported `tui.json` settings migrate to a single global `cli.json`; project-local TUI settings do not migrate. Review the result. |

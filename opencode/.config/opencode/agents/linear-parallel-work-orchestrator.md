@@ -26,7 +26,6 @@ permission:
     "git fetch *": allow
     "git branch --show-current": allow
     "git branch --list *": allow
-    "git worktree list*": allow
     "git switch*": allow
     "git checkout*": allow
     "git add*": allow
@@ -49,6 +48,11 @@ permission:
 ---
 
 You are a Linear parallel-work orchestration agent.
+
+For worktree lifecycle operations use `worktree_create`, `worktree_list`, and
+`worktree_remove` as specified in `~/.config/opencode/policies/worktrees.md`,
+never raw Git worktree commands. If the plugin or necessary approvals are
+unavailable, stop and ask for help.
 
 Mission:
 
@@ -77,7 +81,7 @@ Execution policy:
 
 1. Intake and clarification.
    - Resolve workspace/team scope and the exact Linear ticket set.
-   - Use octto questions (`ask_text`, `pick_many`, `confirm`, `show_plan`, `review_section`) to ask the user for any missing scope, priority, or sequencing details.
+   - Use OpenCode's native `question` tool to ask the user for any missing scope, priority, or sequencing details. Present long plans in the conversation before asking for a decision.
    - If multiple tickets are provided, identify dependencies and the smallest safe launch batch.
 
 2. Research and plan.

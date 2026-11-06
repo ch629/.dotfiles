@@ -16,7 +16,6 @@ permission:
     explore: allow
   bash:
     "*": ask
-    "git worktree list*": allow
     "git branch --show-current": allow
     "git branch --list *": allow
     "git status *": allow
@@ -25,3 +24,9 @@ permission:
 ---
 
 Use the exact same behavior and output contract as `jira-parallel-work-orchestrator`, but delegate only to `*-betika` agents for specialized work.
+
+For every approved worktree, follow `~/.config/opencode/policies/worktrees.md`:
+use `worktree_create`, `worktree_list`, and `worktree_remove`, never raw Git
+worktree commands. Record the creation arguments and returned path, and pass them
+to workers. Preserve the existing approval gates; if the plugin or necessary
+approvals are unavailable, stop and ask for help rather than bypassing them.
