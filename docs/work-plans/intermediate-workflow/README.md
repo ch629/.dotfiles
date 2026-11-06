@@ -20,6 +20,6 @@ Current: [brief-v3.md](brief-v3.md), contract v1, approved delivery scope: the i
 
 ## Evidence / next action
 
-Intake clarification, research, implementation planning, static tests and implementation completed. See `evidence.md` for results and the pre-existing baseline failures. Independent reviews are pending. Model evals are deferred by user and cannot be reported as passed; delivery is in progress, not complete.
+Implementation and the two permitted repair/re-review cycles are complete. Final reviewed source commit: `b895a3eca8c8b8a5eba1bfae190f92e44a04716f`. Independent code review **Approve**, security review **Pass (static prompt/config review only)**, completion review **Complete with Residuals — ready for local user review**. See [evidence.md](evidence.md) for commands, source hashes, final verdicts and pre-existing baseline failures. Model/runtime behavior and effective permission enforcement remain deferred/unverified, not passed. Contract state remains Approved delivery; implementation/reviews are complete, with user acceptance outstanding.
 
-Next: independent code/security reviews, bounded fixes and completion review. Final user manual review remains required. Restart OpenCode after agent/config changes.
+Next: user manually reviews the local `planned-dev` branch/worktree. It has not been merged or installed into the active dotfiles checkout; no push, PR or deployment occurred. After accepting and installing the changes, quit and restart OpenCode to load the agents/permissions. No further repair cycles or publication are authorized by this handoff.

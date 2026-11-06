@@ -1,4 +1,4 @@
-# Implementation evidence (reviews pending)
+# Implementation and final review evidence
 
 The following initial implementation evidence is historical for the `d48ef40` snapshot, not the later review-fix snapshot documented below.
 
@@ -37,11 +37,11 @@ Static assertions: `evals/check_planned_dev.rb` and `evals/README.md`. Approved 
 
 ## Limitations
 
-Model evals and runtime permission enforcement are deferred, not passed. Static checks cannot prove autonomous behavior, runtime denial or shell isolation. Independent security, deep code and completion reviews remain pending; this is not a completion verdict. Restart OpenCode to load changed agent configuration.
+Model evals and runtime permission enforcement are deferred, not passed. Static checks cannot prove autonomous behavior, runtime denial or shell isolation. At the initial snapshot the independent reviews were pending; final verdicts are recorded below. Restart OpenCode after installing changed agent configuration.
 
 ## Review-fix cycle 1
 
-On 2026-11-06 the user approved the narrow v3 extension recorded in `brief-v3.md`: reconcile three specialist contracts, strengthen static regressions and narrow write-capable Git allowances. Code review at `d48ef40` identified high-risk specialist snapshot/range incompatibility and an incomplete task-allowlist assertion; security review identified write-capable `git diff*`/`git log*` allowances. Fresh affected code and security re-reviews and completion review remain pending.
+On 2026-11-06 the user approved the narrow v3 extension recorded in `brief-v3.md`: reconcile three specialist contracts, strengthen static regressions and narrow write-capable Git allowances. Code review at `d48ef40` identified high-risk specialist snapshot/range incompatibility and an incomplete task-allowlist assertion; security review identified write-capable `git diff*`/`git log*` allowances. At this historical cycle-1 snapshot the fresh reviews were pending; final verdicts follow below.
 
 Worktree `/Users/charliehowes/.local/state/opencode/worktrees/dotfiles-planned-dev`, branch `planned-dev`, starting HEAD `d48ef40`; commands below ran from that root on the candidate source snapshot identified by hashes below. Ruby `ruby 2.6.10p210 (2022-04-12 revision 67958) [universal.arm64e-darwin26]`. No infrastructure execution or target; build and separate lint not applicable to prompt/policy changes.
 
@@ -70,7 +70,7 @@ Infra residual: `infra-reviewer.md` still explicitly requires an immutable range
 
 Starting HEAD `8379bee`, worktree `/Users/charliehowes/.local/state/opencode/worktrees/dotfiles-planned-dev`, 2026-11-06; Ruby `2.6.10p210`, universal.arm64e-darwin26. Security re-review found HIGH: silent `rg *` permits `--pre` program execution. Removed that allowance in planned-dev, feature-developer, security-scanner, db-reviewer and migration-reviewer; their existing `*` shell fallback remains `ask`. Use the dedicated grep tool for search. No other rights added. Other shell search allowances in these surfaces are `grep *` and `ls *`; neither normally provides ripgrep's program-preprocessor execution option. Shell parsing and actual runtime enforcement were not tested and are not asserted safe by that observation.
 
-Code re-review of cycle 1 approved and noted the infra immutable-range requirements safely block missing provenance. That remains a residual gate, not an unresolved code finding; uncommitted infra support is not claimed. Independent code, security and completion re-reviews of cycle 2 are pending.
+Code re-review of cycle 1 approved and noted the infra immutable-range requirements safely block missing provenance. That remains a residual gate, not an unresolved code finding; uncommitted infra support is not claimed. Cycle-2 final re-review outcomes follow below.
 
 Commands from the worktree root, before and after the permission fix:
 
@@ -89,3 +89,17 @@ f0b36c0b2cc739764060d03896d6441c68673d0aec4c315fd9a75ebe47262b46  agents/feature
 ```
 
 Paths are relative to `opencode/.config/opencode/`. The same command confirmed v2 and v3 hashes unchanged from cycle 1. The Ruby `File.fnmatch?` check is a static approximation, not proof of effective tool permissions; no executable attack or model tests were run. Build and separate lint are not applicable to these prompt/config changes.
+
+## Final review and local handoff — 2026-11-06
+
+Reviewed source range: `c8c2bcb8fcdec87e8113cc614ed8b3c2aaafad44..b895a3eca8c8b8a5eba1bfae190f92e44a04716f`. Both repair cycles are exhausted. The subsequent closeout commit changes only this evidence record and the lifecycle index; reviewed agents, policy, tests and immutable brief bodies remain unchanged.
+
+- Independent deep code reviewer (`ses_e4debc8feffeDlEaupmuOZgOEE`): **Approve**, no remaining must-fix findings. Reviewed full scope and `8379bee..b895a3e` delta; confirmed scoped working files match HEAD, six cycle-2 source hashes and both brief digests. Required contracts, risk routing, task map and provenance rules remain intact.
+- Independent security scanner (`ses_e4debc8eaffeG31KjWSJuFO8Im`): **Pass — static prompt/config security review only**, no required security fixes. Full range reviewed across cycles; final delta rechecked for removal of broad Git/ripgrep allowances. Reviewer did not rerun tests or independently verify evidence hashes. Runtime permission matching, shell parsing and executable attack paths remain unverified.
+- Completion reviewer (`ses_e4ddf1d82ffe3E3nZIftf00Giq`): **Complete with Residuals — ready for local user review**. Mapped all v2 AC and v3 additive requirements to paths/static evidence; confirmed immutable hashes and clean reviewed worktree. No must-fix. Requested lifecycle/evidence closeout, fulfilled by this documentation update. Verdict covers local delivery, not PR readiness, deployment safety or runtime enforcement.
+
+Final applicable results: planned-dev **86/86**, quick-dev/shared-access/infra policy, Ruby syntax and YAML/JSON parsing passed as recorded above. Delivery-workflow remains **96/98**, the same two pre-existing permission snapshots, baseline delta zero. It is not a green suite and no unrelated assertions were weakened. Model evals, autonomous model behavior, effective permissions, installation/restart and executable integration/attack testing were not run and are not claimed passed.
+
+Final preservation check from the original repository: `git status --short` reported only `D  zsh/.tokens`; `git status --short --ignored -- zsh/.tokens` reported `D  zsh/.tokens` and `!! zsh/.tokens`. This confirms the staged removal and ignored local file remain present without reading their contents. The original index was never mutated.
+
+Local branch/worktree retained for user manual review. No merge/install, push, PR, release or deployment performed. After accepting and installing the change, quit and restart OpenCode; the currently running session does not hot-reload the new agents or permission rules.
