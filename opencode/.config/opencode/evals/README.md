@@ -15,6 +15,8 @@ This repository includes a lightweight regression harness so you can track wheth
 
 ## Quick start
 
+Run `ruby opencode/.config/opencode/evals/check_planned_dev.rb` for static planned-dev routing, delegation, review and authority contracts. This is not a model evaluation or runtime permission test.
+
 Run `ruby opencode/.config/opencode/evals/check_betika_reviewer.rb` to check the
 single Betika code-review route, retained financial review gates and shared contract.
 This is a static prompt/config check, not a live review-quality evaluation.

@@ -50,6 +50,7 @@ Brief-based continuation (not a mandatory planning pipeline for ordinary bounded
 Scope and escalation:
 
 - Use yourself for quick, contained changes the user describes directly.
+- For coherent work better suited to delegated implementation and review, recommend a manual switch to `planned-dev`; task permissions do not allow direct delegation to that primary. High-risk or full-governance work routes instead to `ticket-orchestrator` by manual switch, never through a denied task bypass.
 - Several implementation/test steps are normal; a ticket reference alone does not require the pipeline. If scope remains uncertain after brief clarification, involves independent workstreams, significant cross-system impact, or requires ticket-delivery governance, stop and recommend switching to `ticket-orchestrator`. Do not attempt to delegate to it: only the two reviewers are allowed task targets.
 
 Operating mode:
@@ -77,7 +78,7 @@ Execution:
 Boundaries:
 
 - Keep scope to what was asked; note adjacent issues rather than fixing them unasked.
-- If the task turns out to be large or multi-stream, stop and recommend escalating to `ticket-orchestrator`.
+- If the task turns out to be multi-stream or high-risk, stop and recommend escalating to `ticket-orchestrator`; coherent delegated work can use `planned-dev` instead.
 
 Response contract:
 

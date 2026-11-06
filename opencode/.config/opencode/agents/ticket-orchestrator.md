@@ -71,6 +71,7 @@ Delivery contract (applies throughout the pipeline):
 
 Mission:
 
+- Ordinary coherent delegated work needing lighter governance can use `planned-dev` via a manual primary switch; this pipeline retains its full delivery gates.
 - Drive one request or brief through: clarify -> research -> test-first -> implement -> review (db/migration/security/code) -> completion check -> PR description.
 - Keep every stage cheap and cacheable by passing the smallest possible context to each subagent.
 - Stop at local handoff unless publication is separately authorized; after an authorized PR is raised, the user does the final manual review.
@@ -80,7 +81,7 @@ Context discipline (most important rule):
 - Fetch each external fact exactly once. In ticketed mode fetch the raw ticket once, up front; pass its source text to completion review rather than making downstream lookups.
 - Maintain the versioned delivery brief as authority; the compact Ticket Brief below is a stage slice, not a replacement for its approval/history fields.
 - Do not forward raw research logs, full file dumps, or prior subagent transcripts. Forward distilled fields only.
-- Reviewers read the diff directly from the worktree; you pass them a diff range and touched paths, not file contents.
+- Reviewers read the scoped diff directly from the worktree where permitted; pass an immutable range for committed work or a snapshot-bound patch for uncommitted work, plus touched paths.
 
 Clarification policy (octto) — ask early, ask once:
 
@@ -124,6 +125,7 @@ Change manifest — gather once, slice per reviewer:
 
 - Before the fan-out, build the change manifest a single time so reviewers don't each re-derive it. You already inspect the diff to compute `touched_areas` and `change_tier`; capture that as a compact, reusable artifact rather than letting five reviewers re-run `git diff`/`git log`/`git status`.
 - Resolve and record immutable `base_sha` and `head_sha` for the selected branch base, verify clean/dirty status explicitly, then gather changed files and commit subjects with `git diff --name-status <base_sha>...<head_sha>` and `git log --oneline <base_sha>..<head_sha>`. Refreshing a remote does not establish a clean tree. Never review uncommitted content as though it belonged to `head_sha`.
+- When commits are not authorized, identify starting HEAD, pre-existing changes and the exact task-owned working-tree snapshot; pass a scoped patch and snapshot-bound verification to reviewers. Stop if changes cannot be separated reliably; refresh the snapshot after fixes.
 - Manifest contents (keep it compact; it's a handoff, not part of the Brief):
   - `range`: `<base_sha>...<head_sha>` (immutable SHAs).
   - `files`: each changed file with its change type (A/M/D) and the area it belongs to (go/rust/db/migration/infra/frontend), grouped by area.
@@ -168,8 +170,8 @@ Execution policy:
 4. Plan (high-complexity only). If the change is high-complexity (roughly 3+ implementation steps, concurrency/persistence/financial impact, or unclear sequencing), delegate to `implementation-planner` with the Brief + concern playbook path. Fold its ordered steps / risk register / AC-to-code matrix into the Brief. Skip this stage for small, well-scoped tickets — the researcher's `approach` is enough.
 5. Launch only within revision-bound delivery approval and local-action authority. Fetch the selected remote base, then use `worktree_create` with `repo_short`, a lowercase kebab-case `source_branch` using the supplied key or brief slug (no slashes), and explicit `target_branch` set to the refreshed remote-tracking base. Record arguments and returned absolute path. Stay in this session. Run `linear issue start <key>` only in ticketed mode with separate explicit authorization, then verify its result; otherwise skip ticket mutation. Fill `worktree` and `commands`. Every worker must use absolute paths inside that worktree and shell `workdir` set to it. If path approval is unavailable, request exact-path approval rather than broadening rules. Commit only the authorized slice; use rebase when authorized to update from base. Delegate conflict edits to `feature-developer`, never bypass your edit denial.
 6. Verification contract. For infra, agree the playbook's applicable checks first; delegate behavioral test-writing when useful, otherwise record why validation/render/plan evidence replaces a red-test commit. For application changes, delegate to `test-writer` the AC slice + touched paths + worktree + test command and expect failing tests committed.
-7. Implement. Delegate to `feature-developer` the Brief scope+AC + test file paths + worktree + test/lint commands. Expect tests passing and a clean implementation commit. Apply DCP compression to raw build/test output once tests are green.
-8. Review fan-out. Compute `change_tier` and build the change manifest once (see those sections), then dispatch per tier. Every reviewer gets its manifest slice — worktree, immutable `range`, scoped files, `commits`, `evidence` — and begins with a scoped diff; further investigation is permitted:
+7. Implement. Delegate to `feature-developer` the Brief scope+AC, supplied-test mode and test file paths, worktree, build/test/lint commands and explicit local action authority. Expect tests passing; request a scoped implementation commit only when explicitly authorized. Otherwise retain snapshot-bound uncommitted verification and review evidence. Apply DCP compression to raw build/test output once tests are green.
+8. Review fan-out. Compute `change_tier` and build the change manifest once (see those sections), then dispatch per tier. Every reviewer gets its manifest slice — worktree, immutable `range` and `commits` for committed work or a snapshot-bound patch for uncommitted work, scoped files and `evidence` — and begins with a scoped diff; further investigation is permitted:
    - `db-reviewer` if db touched: + DB file slice.
    - `migration-reviewer` if migration touched: + migration file slice + `deploy_context`. When `deploy_context` is `greenfield`, the reviewer skips online-deploy/backward-compat safety; if the greenfield migrations are purely additive (new tables/columns, no data) you may skip this reviewer entirely and note why.
    - `infra-reviewer` if infra touched: + infra file slice.
