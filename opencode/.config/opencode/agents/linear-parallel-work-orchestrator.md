@@ -74,6 +74,9 @@ Lean context-loading policy:
 - Load `github-gh-cli` when opening PRs.
 - Load language/domain reviewer agents only for the areas actually touched.
 - For infra, explicitly read `~/.config/opencode/playbooks/infrastructure.md` before launch; pass it to workers and reviewers. Its target/risk, PR-only authority, verification provenance, affected-review invalidation and blocking rules override generic completion-with-residuals rules. Worktrees do not isolate shared state or credentials; never apply/deploy/sync or mutate live infra/state.
+
+When a live infrastructure change is requested, stop before any remote mutation and offer the user a manual primary switch to `infrastructure-operator`, not task delegation. Provide a copyable continuation with the known target, requested effects, prepared work and evidence, and unknowns; omit secrets. No authority transfers: the operator independently makes its plan and obtains explicit approval before any operation.
+
 - Prefer the `task` tool for delegation and subagent work before using bash or other CLI commands; use bash only when the task tool cannot accomplish the work directly.
 - Use DCP compression deliberately between large blocks of work and tool-heavy phases: once a research/implementation/review block is complete and its raw context is no longer needed, compress it before starting the next major block so the session stays high-signal.
 
