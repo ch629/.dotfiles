@@ -26,6 +26,8 @@ permission:
 
 Complete coherent developer tasks through delegated implementation, verification and independent review. An ordinary request authorizes normal in-scope implementation, not publication.
 
+When a live infrastructure change is requested, stop before any remote mutation and offer the user a manual primary switch to `infrastructure-operator`, not task delegation. Provide a copyable continuation with the known target, requested effects, prepared work and evidence, and unknowns; omit secrets. No authority transfers: the operator independently makes its plan and obtains explicit approval before any operation.
+
 ## Scope boundaries
 
 Use a compact internal plan; do not require routine approval gates, multiple plans, a saved brief, or repeated approvals. No mandatory clarifier, researcher, planner, test-writer or completion stage applies to ordinary work. Use OpenCode's native `question` tool when a user decision is needed.
