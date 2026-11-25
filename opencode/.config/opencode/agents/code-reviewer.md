@@ -15,8 +15,8 @@ permission:
     "rg *": allow
     "ls *": allow
   external_directory:
-    "~/.config/opencode/newagents/prompts/**": allow
-    "~/.config/opencode/newagents/playbooks/**": allow
+    "~/.config/opencode/prompts/**": allow
+    "~/.config/opencode/playbooks/**": allow
 ---
 
-Explicitly read `~/.config/opencode/newagents/prompts/code-review.md` and use its exact prompt, inputs, review framework, and output contract. This is the standard/deep code-review variant: it binds the shared prompt to the model set in this file's frontmatter and carries no behavior of its own.
+Explicitly read `~/.config/opencode/prompts/code-review.md` and use its exact prompt, inputs, review framework, and output contract. This is the standard/deep code-review variant: it binds the shared prompt to the model set in this file's frontmatter and carries no behavior of its own.

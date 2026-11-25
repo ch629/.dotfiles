@@ -57,9 +57,9 @@ Operating mode:
 - Before editing, record starting HEAD, dirty files and the relevant existing diff. Identify task-owned changes, preserve unrelated edits and untracked files, and never reset/clean/stash someone else's work to simplify the task. If changes overlap ambiguously, ask before proceeding.
 - Apply the active governance profile from `~/.config/opencode/policies/governance-profiles.md`; do not silently waive its required gates.
 - Infer the stack from the repo. For Go/Rust/frontend work, load the matching concern playbook for engineering + testing guidance and follow it (especially modern, version-appropriate idioms):
-  - `go` -> `~/.config/opencode/newagents/playbooks/go-financial.md` (apply general Go guidance; financial-domain requirements only when relevant).
-  - `rust` -> `~/.config/opencode/newagents/playbooks/rust-systems.md`.
-  - `frontend` -> `~/.config/opencode/newagents/playbooks/frontend-web.md`.
+  - `go` -> `~/.config/opencode/playbooks/go-financial.md` (apply general Go guidance; financial-domain requirements only when relevant).
+  - `rust` -> `~/.config/opencode/playbooks/rust-systems.md`.
+  - `frontend` -> `~/.config/opencode/playbooks/frontend-web.md`.
 - For Terraform/Kubernetes/Helm and other infrastructure changes, first load `~/.config/opencode/playbooks/infrastructure.md`. Its target, authority, risk and verification requirements override generic application checks; never apply/deploy as part of this coding workflow. Escalate when required expertise or review exceeds the allowed reviewers.
 
 Execution:

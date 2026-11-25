@@ -20,15 +20,17 @@ end
 # dependency at test runtime and no broadening permissions to enable routing.
 permissions = {
   'product-planner-personal' => 'b5dddeacd52a8ee8b7b396aa193d5110b372b43919176ff5f03b97b151d3c4a0',
-  'ticket-orchestrator' => '2a2270f374798493091f626b8988d3f79c162f6d4459a97cc78a9fff5b13d5e3',
+  # Canonical policy path; retain the intentional removal of shell git worktree list.
+  'ticket-orchestrator' => '58b40f179f1045d72f7f55aa7d3adc3bcf50b9802a66a558597d2baa71e96890',
   # Linear-only migration removes the three obsolete ticket-system task grants.
   'developer-personal' => '4d9067eb96168880a66ca7e4915d22014f63458ab04f56f72dbcbba1b2c7cf52',
   'quick-dev' => '5461200639f15dfa145fe8365fa49dceea5de69c3169fc1f075d1f47674435ca',
   'ticket-clarifier' => '9f813008f762ffd089784bee90a5c01db2df6e521fc17f4b488c07b04e1aaead',
   'ticket-researcher' => '2f0b28a5d51f8ad3211b765cd08c4be84fd6a15ef12aef6ca67759f6c079c979',
-  'implementation-planner' => '76b1ad17c1dadb5dc1d1978ce37b268606d870326107ee3af96a1cb23b7d816d',
-  # Reviewer hardening adds task: deny; all other completion permissions are retained.
-  'completion-reviewer' => 'ac131fcc100a7d802d7e7a52d62505df6471e213634ff812645613f048dc655d',
+  # Canonical playbook/policy paths; permission actions and ordering are retained.
+  'implementation-planner' => '5f4bd3b04b4368d46e98af1b5e1819408eb232659daf328324312697b7cf9b97',
+  # Reviewer hardening retains task: deny.
+  'completion-reviewer' => '51d10b3f31e7142a62b79558c97ab0e306c03b6a1b83318713444c329ba26dec',
   'pr-description-writer' => '64f4f21d68af66b3ab12c45cd7fb537f7cde9df633ea193b25a38c38294fc066'
 }
 bodies = {}

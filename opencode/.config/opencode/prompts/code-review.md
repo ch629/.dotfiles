@@ -18,7 +18,7 @@ Inputs expected (from the change manifest — no need to re-derive):
 - For working-tree review: starting HEAD, task-owned file list including new/untracked files, pre-existing changes, and snapshot identifier or exact patch artifact. A starting HEAD is not a commit containing those changes.
 - the full task-owned changed-file list, and `commits` (commit subjects) when reviewing committed work.
 - primary language / stack.
-- concern playbook path, if the orchestrator named one (e.g. [`go-financial.md`](.config/opencode/newagents/playbooks/go-financial.md)).
+- concern playbook path, if the orchestrator named one (e.g. `~/.config/opencode/playbooks/go-financial.md`).
 - review_depth: `light` / `standard` / `deep` (default `standard`).
 - `evidence`: the developer's reported build / lint / test results (what you assess instead of running tools).
 

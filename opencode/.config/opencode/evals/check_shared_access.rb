@@ -11,7 +11,7 @@ raise "Worktree policy missing" unless File.file?(File.join(root, "policies/work
 linear = File.read(File.join(root, "agents/linear-parallel-work-orchestrator.md"))
 raise "Hardcoded Linear base" if linear.include?("latest `origin/main`") || linear.include?("relative to `origin/main`")
 raise "Selected-base provenance missing" unless linear.include?("remote-tracking ref and resolved SHA") && linear.include?("relative to the recorded selected base SHA")
-references = %w[agents playbooks policies newagents/prompts newagents/playbooks newagents/policies skills]
+references = %w[agents playbooks policies prompts skills]
 paths = references.flat_map { |path| ["~/.config/opencode/#{path}", "~/.dotfiles/opencode/.config/opencode/#{path}"] }
 paths << "~/.claude/skills"
 

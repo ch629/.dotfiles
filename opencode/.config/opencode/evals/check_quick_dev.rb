@@ -28,10 +28,10 @@ raise 'Redundant directory overrides' if permission.key?('external_directory')
   'a commit request is not a push request', 'suggestions are not authoritative'
 ].each { |rule| raise "Missing quick-dev rule: #{rule}" unless text.include?(rule) }
 %w[go-financial rust-systems frontend-web].each do |book|
-  raise "Missing installed playbook: #{book}" unless text.include?("~/.config/opencode/newagents/playbooks/#{book}.md")
-  raise "Missing playbook file: #{book}" unless File.file?(File.join(root, "newagents/playbooks/#{book}.md"))
+  raise "Missing installed playbook: #{book}" unless text.include?("~/.config/opencode/playbooks/#{book}.md")
+  raise "Missing playbook file: #{book}" unless File.file?(File.join(root, "playbooks/#{book}.md"))
 end
-review = File.read(File.join(root, 'newagents/prompts/code-review.md'))
+review = File.read(File.join(root, 'prompts/code-review.md'))
 brief = File.read(File.join(root, 'policies/delivery-brief.md'))
 raise 'Missing conditional brief loading' unless text.include?('For a supplied delivery brief or brief-based resumption, read `~/.config/opencode/policies/delivery-brief.md` before acting')
 ['## Quick-dev continuation', 'exact revision and content digest/blob',

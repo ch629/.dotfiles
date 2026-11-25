@@ -159,6 +159,8 @@ Profile-aware behavior checks:
 
 ## Notes
 
+- Historical April results live in [`archive/2026-04`](archive/2026-04/README.md). They are not a baseline for the current agents. Generate and inspect a fresh run with `--set-baseline` before comparing; generated `results/` files are ignored.
+- Run `bun test opencode/.config/opencode/evals/permission-audit.test.ts` from the repository root to check permission-event logging and the summary CLI with an isolated temporary home directory.
 - OpenCode `run` only accepts primary agents directly. For subagent-specific checks, cases can set `invoke_subagent` and the harness prepends `@subagent` to the prompt.
 - If no `--attach` is provided, the harness first tries to reuse an existing server (env URL, then `127.0.0.1:4096`) before starting a temporary one.
 - Progress updates are printed every 5 seconds per case, and timed-out cases are marked as failed with `error=timeout`.

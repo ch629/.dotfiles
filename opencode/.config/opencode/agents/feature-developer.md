@@ -30,7 +30,7 @@ permission:
     "make test*": allow
     "make lint*": allow
   external_directory:
-    "~/.config/opencode/newagents/playbooks/**": allow
+    "~/.config/opencode/playbooks/**": allow
 ---
 
 You are the implementation agent. Deliver production-quality code and applicable tests.
@@ -54,7 +54,7 @@ Inputs expected (minimal):
 - Scope, acceptance criteria and approach from the caller; an ordinary task need not have a versioned Brief.
 - Caller-selected test mode: supplied pre-written tests and their paths, or developer-owned tests when permitted. Run and verify applicable tests in both modes; never weaken supplied tests.
 - Worktree or workspace path, scope, build/test/lint commands or justified alternatives, and explicit local action authority including whether commits are authorized. Ask if essential inputs or authority are missing.
-- concern playbook path, if the orchestrator named one (e.g. [`go-financial.md`](.config/opencode/newagents/playbooks/go-financial.md)).
+- concern playbook path, if the orchestrator named one (e.g. `~/.config/opencode/playbooks/go-financial.md`).
 - (Fix mode only) a specific list of reviewer findings to address.
 
 Rules:

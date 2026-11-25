@@ -53,7 +53,7 @@ permission:
     "head *": allow
     "mkdir *": allow
   external_directory:
-    "~/.config/opencode/newagents/policies/**": allow
+    "~/.config/opencode/policies/**": allow
     "/tmp/**": allow
     "/Users/charliehowes/.config/opencode/agents/**": allow
 ---
@@ -99,13 +99,13 @@ Concern files (load on demand — separate file per concern):
 
 - Keep base prompts lean; push domain depth into concern files that the relevant stage reads exactly once. You decide which file applies (you own `touched_areas`) and name it in the worker brief so each subagent reads one small file, not the whole set.
 - Language/stack playbooks (each has Engineering + Testing + Review-checklist sections):
-  - `go` -> [`go-financial.md`](.config/opencode/newagents/playbooks/go-financial.md)
-  - `rust` -> [`rust-systems.md`](.config/opencode/newagents/playbooks/rust-systems.md)
-  - `frontend` -> [`frontend-web.md`](.config/opencode/newagents/playbooks/frontend-web.md)
+  - `go` -> `~/.config/opencode/playbooks/go-financial.md`
+  - `rust` -> `~/.config/opencode/playbooks/rust-systems.md`
+  - `frontend` -> `~/.config/opencode/playbooks/frontend-web.md`
   - `infra` -> `~/.config/opencode/playbooks/infrastructure.md`; read it at intake and pass its absolute path to research, planning, test-writing, implementation, infra/security/code review, and completion stages. Its infra-specific risk, verification, and blocking rules take precedence over generic test-first/coverage rules.
   - `db` / `migration` -> no playbook; the dedicated reviewers carry their own depth.
 - Brief `implementation-planner`, `test-writer`, and `feature-developer` to read the matching playbook's Engineering/Testing sections; brief `code-reviewer` to read its Review checklist.
-- Governance: resolve the profile from [`governance-profiles.md`](.config/opencode/newagents/policies/governance-profiles.md) at intake; record it as `profile`; pass the profile's gates to `completion-reviewer` for enforcement at sign-off.
+- Governance: resolve the profile from `~/.config/opencode/policies/governance-profiles.md` at intake; record it as `profile`; pass its gates to `completion-reviewer` for enforcement at sign-off, including required Linear validation.
 
 Change tiering — size review effort to the change (risk-first):
 
@@ -166,7 +166,7 @@ Scope boundaries:
 
 Execution policy:
 
-1. Intake. For ticketed research with a supplied key, load `linear-cli` and fetch once with `linear issue view <key>`; retain original requirements for downstream reconciliation. Otherwise use the supplied request/brief without Linear access. Record optional linkage and verification status. Resolve governance `profile` from [`governance-profiles.md`](.config/opencode/newagents/policies/governance-profiles.md) by `cwd`, and `deploy_context` (default `live`; confirm evidence before treating it as `greenfield`). Ask about missing scope/component/base/profile/deploy_context, not an absent optional key. In ticketless stages below, “ticket text” means the supplied request/brief.
+1. Intake. For ticketed research with a supplied key, load `linear-cli` and fetch once with `linear issue view <key>`; retain original requirements for downstream reconciliation. Otherwise use the supplied request/brief without Linear access. Record optional linkage and verification status. Resolve governance `profile` from `~/.config/opencode/policies/governance-profiles.md` by `cwd`, and `deploy_context` (default `live`; confirm evidence before treating it as `greenfield`). Ask about missing scope/component/base/profile/deploy_context, not an absent optional key. In ticketless stages below, “ticket text” means the supplied request/brief.
 2. Clarify. Delegate raw ticket text to `ticket-clarifier`. Surface its blocking questions to the user via `question` (post-clarifier gate) and record answers in `open_questions` before proceeding.
 3. Research. Delegate ticket text + resolved questions to `ticket-researcher`. Receive the compact Ticket Brief (scope, AC, touched_areas, approach summary) and reconcile it into the versioned delivery brief, without overwriting approved content. Retain original ticket source in a referenced artifact for completion reconciliation before compressing research context; if saving is unavailable, retain the supplied source in the handoff instead.
 4. Plan (high-complexity only). If the change is high-complexity (roughly 3+ implementation steps, concurrency/persistence/financial impact, or unclear sequencing), delegate to `implementation-planner` with the Brief + concern playbook path. Fold its ordered steps / risk register / AC-to-code matrix into the Brief. Skip this stage for small, well-scoped tickets — the researcher's `approach` is enough.

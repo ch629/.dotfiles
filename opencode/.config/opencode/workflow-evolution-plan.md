@@ -26,7 +26,7 @@ Read the current files, not only this summary:
 
 - `agents/quick-dev.md`: bounded implementation, dirty-tree ownership, conditional review, verification reporting and explicit publication authority.
 - `agents/ticket-orchestrator.md`, `ticket-clarifier.md`, `ticket-researcher.md`, `implementation-planner.md`, `test-writer.md`, `feature-developer.md`, `completion-reviewer.md`: present intake and delivery contracts.
-- `newagents/prompts/code-review.md`: review of immutable commit ranges or scoped uncommitted snapshots, including new files and provenance.
+- `prompts/code-review.md`: review of immutable commit ranges or scoped uncommitted snapshots, including new files and provenance.
 - `policies/governance-profiles.md`, `policies/worktrees.md`, `playbooks/infrastructure.md`: shared governance, plugin lifecycle and infrastructure authority/evidence rules.
 - `opencode.json`: global instructions, plugin configuration, shared-reference access and permissions.
 - `evals/README.md`, `evals/cases.json`, and the existing evaluation runner: determine which checks are static, model-backed or runtime integration checks before extending them.

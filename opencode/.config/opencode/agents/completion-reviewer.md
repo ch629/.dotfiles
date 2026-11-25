@@ -23,7 +23,7 @@ permission:
     "linear issue query*": allow
     "linear issue url*": allow
   external_directory:
-    "~/.config/opencode/newagents/policies/**": allow
+    "~/.config/opencode/policies/**": allow
 ---
 
 You are the completion-gate agent. Confirm work against the approved delivery brief and, when ticketed, the supplied original ticket requirements before a PR is raised.
@@ -47,7 +47,7 @@ Inputs expected (minimal):
 - acceptance_criteria checklist (from the Brief).
 - diff range + worktree path.
 - build, lint, and test results (as reported by the developer).
-- active profile gates (from [`governance-profiles.md`](.config/opencode/newagents/policies/governance-profiles.md)): coverage target, branch/PR traceability, conventional-commit requirement.
+- active profile gates (from `~/.config/opencode/policies/governance-profiles.md`): coverage target, branch/PR traceability, conventional-commit requirement, Linear validation and completion review.
 
 Rules:
 

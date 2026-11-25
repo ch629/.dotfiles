@@ -1,6 +1,8 @@
 # OpenCode v2 readiness
 
-Research snapshot: 2026-11-05. Installed version: **1.18.34**. Evaluated v2 release: **2.2.5** (2026-10-30). This PR does **not** upgrade the binary or port plugins.
+Research snapshot: 2026-11-05. Installed version: **1.18.34**. Evaluated v2 release: **2.2.5** (2026-10-30). This document does **not** establish current plugin compatibility or upgrade the binary.
+
+2026-11-25 update: installed Ponytail 5.3.3 includes V1 and V2 adapters; its adapter tests passed, but live V2 integration remains unverified. Other migration requirements below have not been revalidated against newer releases.
 
 ## Recommendation
 
@@ -8,7 +10,7 @@ Stay on v1 until the plugin and evaluation harness migration is tested. Keeping 
 
 | Area | Impact on this setup / required action |
 | --- | --- |
-| Plugins — blocker | V1 implementations do not run on v2. Confirm v2-compatible releases of notifier and DCP. Port local strip-top-p, ponytail, permission-audit and worktree integrations. V2 uses `@opencode/plugin` with `Plugin.define`/`setup`; configured local plugins resolve directories/entrypoints rather than the old `.ts` file entries. Renaming files is not a port. |
+| Plugins — blocker | V1-only implementations do not run on v2. Confirm v2-compatible releases of notifier and DCP. Port/verify local strip-top-p, permission-audit and worktree integrations; smoke-test Ponytail's V2 adapter. V2 uses `@opencode/plugin` with `Plugin.define`/`setup`; configured local plugins resolve directories/entrypoints rather than the old `.ts` file entries. Renaming files is not a port. |
 | Server API — blocker | The evaluation harness uses the v1 server API. Port/verify against the v2 client/API before treating its results as evidence. |
 | External access | V2 defaults `external_directory` to **allow**. Keep the explicit global `* : ask` followed by narrow reference allowlists. Agent/project rules can override these; this is not an administrative sandbox. |
 | TUI | Global supported `tui.json` settings migrate to a single global `cli.json`; project-local TUI settings do not migrate. Review the result. |

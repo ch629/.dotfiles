@@ -16,7 +16,7 @@ permission:
 ---
 
 Explicitly read `~/.config/opencode/agents/code-reviewer.md`,
-`~/.config/opencode/newagents/prompts/code-review.md`, and
+`~/.config/opencode/prompts/code-review.md`, and
 `~/.config/opencode/playbooks/code-review.md`. Use the base reviewer's behavioral
 instructions and output contract, but keep the model configured here: all requests
 must use Gateframe. Agent prompts are not automatically inherited.
