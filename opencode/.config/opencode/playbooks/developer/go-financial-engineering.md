@@ -13,7 +13,7 @@ Use this playbook when the user request is primarily Go implementation/review, e
 
 ## Go planning and review rules
 
-- For Jira tickets with incomplete/ambiguous scope, run `jira-researcher` first, then `go-implementation-planner` before coding.
+- For Linear tickets with incomplete/ambiguous scope, run `linear-ticket-researcher` first, then `go-implementation-planner` before coding. Use the permitted `*-betika` counterparts for Betika work.
 - For implementation planning on medium/high-complexity Go tickets (architecture, sequencing, risk decomposition), delegate to `go-implementation-planner`.
 - For strict Go code reviews with financial scrutiny, correctness checks, Google Go style compliance, 100go pitfall detection, and lint/standards focus, delegate to `go-financial-code-reviewer`.
 - For high-risk financial Go changes, run `go-financial-code-reviewer` before final sign-off unless explicitly asked to skip.

@@ -4,13 +4,13 @@ Use this when a skill contains brittle, hardcoded command usage.
 
 ## Workflow
 
-1. Remove fixed command examples that may drift over time.
+1. Retain useful stable command examples; flag version-sensitive syntax for conditional discovery.
 2. Add runtime discovery policy in `SKILL.md`.
-3. Convert workflows to discovery-first steps (discover -> execute -> verify).
-4. Keep syntax references generic unless the user asks for pinned examples.
-5. Confirm the skill now instructs retries via help when argument mismatch occurs.
+3. Run known commands directly; use the most specific help when syntax is uncertain or arguments are rejected.
+4. Preserve target resolution, authorization and result verification.
+5. Before retrying a mutation, ensure it did not already take effect.
 
 ## Success criteria
 
-- Skill remains accurate even if CLI flags evolve.
-- Users still get clear execution flow without hardcoded commands.
+- Skill handles evolving CLI flags without routine help preflights.
+- Users get a clear execution flow with appropriate safety checks.

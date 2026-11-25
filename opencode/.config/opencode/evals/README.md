@@ -60,10 +60,14 @@ python3 opencode/.config/opencode/evals/run_evals.py --set-baseline
 python3 opencode/.config/opencode/evals/run_evals.py --compare-baseline
 ```
 
+Run `ruby evals/check_linear_migration.rb` from the OpenCode config directory to
+check Linear routing, Betika provider isolation, and the retained Confluence reference.
+Saved results are historical evidence and may still mention retired integrations.
+
 ## Useful flags
 
-- `--suite offline` - run deterministic, no external Jira dependency prompts.
-- `--suite live` - run prompts that expect real Jira access.
+- `--suite offline` - run deterministic prompts without external ticket access.
+- `--suite live` - run prompts that expect real Linear access; supply a real issue key instead of the example in `cases.json`.
 - `--only <pattern1,pattern2>` - run only matching case IDs (regex, comma-separated).
 - `--jobs <n>` - run up to `n` cases in parallel.
 - `--agent developer-personal` - override target primary agent.

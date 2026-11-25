@@ -33,6 +33,26 @@ end
 end
 
 guide = File.read(File.join(root, 'playbooks/code-review.md'))
+review_prompt = File.read(File.join(root, 'newagents/prompts/code-review.md'))
+['For `light` reviews, return only:', 'no per-AC table',
+ 'Risk escalation uses the standard/deep contract', 'affected checks Unknown'].each do |rule|
+  raise "Missing compact review rule: #{rule}" unless review_prompt.include?(rule)
+end
+lite = File.read(File.join(root, 'agents/code-reviewer-lite.md'))
+raise 'Lite reviewer lacks light default' unless lite.include?('Use `review_depth: light` by default')
+raise 'Lite reviewer lacks escalation' unless lite.include?('do not approve it as lightweight')
+raise 'Lite reviewer duplicates full review on escalation' unless lite.include?('then stop. Do not complete a duplicate full review.')
+# Every agent allowed to dispatch both tiers must choose one and serialize escalation.
+Dir.glob(File.join(root, 'agents', '*.md')).each do |path|
+  text = File.read(path)
+  config = YAML.safe_load(text.split('---', 3)[1])
+  tasks = config.fetch('permission', {}).fetch('task', {})
+  next unless tasks.is_a?(Hash) && %w[code-reviewer code-reviewer-lite].all? { |name| tasks[name] == 'allow' }
+  ['never dispatch lite and full together', 'wait for its escalation handoff',
+   'selected tier for re-review', 'specialist reviews remain independent'].each do |rule|
+    raise "Missing exclusive reviewer routing: #{path}: #{rule}" unless text.include?(rule)
+  end
+end
 sections = ['Review method', 'Go and financial systems', 'Database and migrations',
             'Infrastructure', 'Rust systems', 'Security', 'Completion gate', 'Sources']
 sections.each { |section| raise "Missing domain: #{section}" unless guide.include?("## #{section}\n") }

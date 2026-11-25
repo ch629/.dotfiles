@@ -32,6 +32,12 @@ raise 'Redundant directory overrides' if permission.key?('external_directory')
   raise "Missing playbook file: #{book}" unless File.file?(File.join(root, "newagents/playbooks/#{book}.md"))
 end
 review = File.read(File.join(root, 'newagents/prompts/code-review.md'))
+brief = File.read(File.join(root, 'policies/delivery-brief.md'))
+raise 'Missing conditional brief loading' unless text.include?('For a supplied delivery brief or brief-based resumption, read `~/.config/opencode/policies/delivery-brief.md` before acting')
+['## Quick-dev continuation', 'exact revision and content digest/blob',
+ 'only `ticket-orchestrator` publishes', 'never delegate through reviewers',
+ 'full brief path'].each { |rule| raise "Missing extracted brief rule: #{rule}" unless brief.include?(rule) }
+raise 'Missing concise response contract' unless text.include?('Omit empty sections, repeated summaries')
 ['scoped working-tree patch/snapshot', 'new/untracked files',
  'Bind the verdict to that snapshot', 'mark the affected criteria Unknown'].each do |rule|
   raise "Missing shared review rule: #{rule}" unless review.include?(rule)

@@ -1,7 +1,7 @@
 ---
 description: Designs UX/UI flows and frontend interaction patterns with accessibility, usability, and implementation-ready specs.
 mode: subagent
-model: openai/gpt-6.1-luna
+model: openai/gpt-6.1-terra
 temperature: 0.2
 permission:
   edit: deny

@@ -11,11 +11,11 @@ Use this when the user asks to inspect or manage repository-level information wi
 
 ## Workflow
 
-1. Confirm host and auth state with `gh auth status`.
+1. Resolve host from available context; diagnose authentication only if it fails.
 2. Resolve repo target explicitly:
    - Current repo: `gh repo view`
    - Explicit repo: `gh repo view <owner>/<repo>`
-3. Discover fields/options via help before selecting output.
+3. Consult specific help for fields/options only when uncertain or rejected.
 4. Use machine-readable output when available (`--json`/`--jq`) and request only needed fields.
 5. Report only relevant fields for the request (for example default branch, visibility, topics, description, URL).
 

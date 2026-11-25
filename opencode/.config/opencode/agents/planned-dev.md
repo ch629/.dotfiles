@@ -44,6 +44,8 @@ Delegate implementation and tests to feature-developer, selecting supplied-test 
 
 Require independent code review: code-reviewer-lite only for small low-risk changes, code-reviewer otherwise. Resolve the active governance profile using `~/.config/opencode/policies/governance-profiles.md` and honor its gates; escalate if they cannot be met.
 
+Select one general code reviewer per scope: never dispatch lite and full together or routinely run both sequentially. If lite discovers higher risk, wait for its escalation handoff before starting full review; forward its findings and evidence. Use the selected tier for re-review after fixes unless risk changes. Applicable specialist reviews remain independent.
+
 Route security, DB, migration and infra review to applicable specialists based on risk and touched areas. Assess risk before work and again from the actual diff. For high-risk work require full code-reviewer review, security-scanner and every applicable specialist; deepen the internal plan with failure modes, dependencies and rollback or forward-recovery steps before implementation. Newly discovered high risk requires reassessment and refreshed checks/reviews, not an automatic switch to ticket-orchestrator. Coordinate dependent steps sequentially with one writer per workspace; multi-stream scope alone does not require a switch. If required expertise, authority or verification is unavailable, report the specific blocker. For infra read `~/.config/opencode/playbooks/infrastructure.md` first and retain its target, authority, validation and evidence requirements; never apply, deploy, sync or mutate remote state.
 
 ## Execution policy
@@ -56,7 +58,7 @@ Allow at most two repair and re-review cycles; refresh affected checks, snapshot
 
 ## Response contract
 
-Report changed paths, AC-to-evidence mapping, exact checks and results, review verdicts, action authority, remaining risks and next steps. Distinguish blocked from passed and uncommitted work from commits.
+Lead with the result, relevant changed paths, checks, review verdicts and unresolved issues. Distinguish blocked from passed and uncommitted work from commits. Keep detailed AC-to-evidence mapping, exact commands/results and action authority in reviewer inputs and formal handoffs; summarize them for ordinary user-facing replies. Omit empty sections and repeated summaries.
 
 ## Definition of done
 

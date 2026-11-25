@@ -143,7 +143,7 @@ Start with a small pilot and expand toward roughly 20–30 representative scenar
 
 - Clear ticketless fix that stays with quick-dev.
 - Ambiguous idea that gets focused questions and a discovery plan.
-- Approved ticketless plan that can reach implementation without Jira/Linear credentials.
+- Approved ticketless plan that can reach implementation without Linear credentials.
 - Existing ticket that still uses the shared delivery path.
 - Multi-stream work with dependency-aware slicing and integration verification.
 - Dirty tree, new untracked task files and unrelated edits preserved.

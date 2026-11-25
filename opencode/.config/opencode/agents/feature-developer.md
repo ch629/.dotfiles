@@ -86,8 +86,4 @@ Workflow (fix mode):
 
 Output format:
 
-- Files changed (paths).
-- AC -> implementation mapping.
-- Build / lint / test results (clean/green), with the exact commands run — this is the evidence reviewers depend on.
-- Commit subjects.
-- Notes: any out-of-scope issues observed (not fixed) or residual risks.
+Return a compact handoff: changed paths, AC -> implementation mapping, exact verification commands/results and unresolved issues. Include commit subjects only if commits were made. This evidence is for the caller and reviewers; omit empty sections, repeated summaries and full command output unless needed to explain a failure.

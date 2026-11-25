@@ -4,7 +4,7 @@ require 'digest'
 
 # Static prompt-contract checks, NOT evidence of model execution. Authority:
 # policies/delivery-brief.md. Run: ruby opencode/.config/opencode/evals/check_delivery_workflow.rb
-# Inspect active bodies only: a passive policy link cannot satisfy these checks.
+# Inspect active bodies and explicitly required conditional reads; passive links cannot satisfy checks.
 # Match concepts within a paragraph/list block, not exact sentences or whole-file
 # keyword bags. Live routing/permission behavior still needs model eval evidence.
 root = File.expand_path('..', __dir__)
@@ -21,7 +21,8 @@ end
 permissions = {
   'product-planner-personal' => 'b5dddeacd52a8ee8b7b396aa193d5110b372b43919176ff5f03b97b151d3c4a0',
   'ticket-orchestrator' => '2a2270f374798493091f626b8988d3f79c162f6d4459a97cc78a9fff5b13d5e3',
-  'developer-personal' => 'd99de819f15cb36f1014502753ed0b7575f18ce6f98c28fdeb8886d1c3c40248',
+  # Linear-only migration removes the three obsolete ticket-system task grants.
+  'developer-personal' => '4d9067eb96168880a66ca7e4915d22014f63458ab04f56f72dbcbba1b2c7cf52',
   'quick-dev' => '5461200639f15dfa145fe8365fa49dceea5de69c3169fc1f075d1f47674435ca',
   'ticket-clarifier' => '9f813008f762ffd089784bee90a5c01db2df6e521fc17f4b488c07b04e1aaead',
   'ticket-researcher' => '2f0b28a5d51f8ad3211b765cd08c4be84fd6a15ef12aef6ca67759f6c079c979',
@@ -37,6 +38,12 @@ permissions.each do |agent, digest|
   config = YAML.safe_load(frontmatter)
   check.call("#{agent}: permissions unchanged", Digest::SHA256.hexdigest(JSON.generate(config.fetch('permission'))) == digest)
   bodies[agent] = body
+end
+
+brief_load = 'For a supplied delivery brief or brief-based resumption, read `~/.config/opencode/policies/delivery-brief.md` before acting and follow its gates and quick-dev continuation rules.'
+check.call('quick-dev: explicitly loads conditional brief rules', bodies.fetch('quick-dev').include?(brief_load))
+if bodies.fetch('quick-dev').include?(brief_load)
+  bodies['quick-dev'] += "\n\n" + File.read(File.join(root, 'policies/delivery-brief.md'))
 end
 
 has = lambda do |agent, *patterns|

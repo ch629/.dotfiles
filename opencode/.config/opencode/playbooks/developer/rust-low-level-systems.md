@@ -14,7 +14,7 @@ Use this playbook when the user request is primarily Rust implementation/review 
 ## Rust planning and review rules
 
 - For implementation planning on medium/high-complexity Rust low-level systems work (architecture, sequencing, risk decomposition), delegate to `rust-systems-implementation-planner`.
-- For non-ticketed Rust low-level systems tasks, skip Jira research and delegate planning directly to `rust-systems-implementation-planner`.
+- For non-ticketed Rust low-level systems tasks, skip ticket research and delegate planning directly to `rust-systems-implementation-planner`.
 - Default planning mode: for non-trivial Rust low-level systems requests (roughly 3+ implementation steps, concurrency/persistence impact, or unclear sequencing), run `rust-systems-implementation-planner` before coding unless the user explicitly asks to implement directly.
 - For strict Rust low-level systems reviews (memory safety, concurrency, correctness, and performance-risk tradeoffs), delegate to `rust-systems-code-reviewer`.
 - For high-risk Rust low-level systems changes (message queue internals, storage engines, custom persistence/concurrency paths), run `rust-systems-code-reviewer` before final sign-off unless explicitly asked to skip.

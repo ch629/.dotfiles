@@ -26,4 +26,4 @@ ctx7 docs <libraryId> <query> # Step 2: fetch docs
 ## Notes
 
 - Library IDs require a leading `/` (for example, `/facebook/react`).
-- Run `ctx7 library` before `ctx7 docs` unless the user already supplied a valid Context7 library ID.
+- Reuse a valid ID supplied by the user or already resolved in this session only if it matches the library and requested version; otherwise run `ctx7 library` before `ctx7 docs`. Resolve again if the library or version changes, or the ID is rejected.

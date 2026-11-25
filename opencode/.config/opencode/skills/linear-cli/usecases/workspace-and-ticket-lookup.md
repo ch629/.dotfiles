@@ -40,32 +40,6 @@ If the prefix matches a known workspace/team pair, skip broad discovery and quer
 7. If the user wants it completed, mark it completed:
    - `linear issue update <issueId> --state completed`
 
-## Lookup examples
-
-- Inspect a known ticket:
-  - `linear issue view MQ-123 --workspace messageq`
-- Inspect a known ticket in the other workspace:
-  - `linear issue view REC-123 --workspace airecipes`
-- Search the workspace for a subject:
-  - `linear issue query --workspace messageq --search "login" --json`
-- Search the main team only:
-  - `linear issue query --workspace messageq --team MQ --search "login" --json`
-- Search the REC team only:
-  - `linear issue query --workspace airecipes --team REC --search "recipe" --json`
-- Get issues assigned to you in the default workspace:
-  - `linear issue list --workspace messageq`
-
-## Action examples
-
-- Start `MQ-123`:
-  - `linear issue start MQ-123`
-- Start `REC-123`:
-  - `linear issue start REC-123`
-- Complete `MQ-123`:
-  - `linear issue update MQ-123 --state completed`
-- Complete `REC-123`:
-  - `linear issue update REC-123 --state completed`
-
 ## Safety checks
 
 - If the identifier is ambiguous, search first and confirm before mutating.

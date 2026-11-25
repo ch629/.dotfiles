@@ -2,7 +2,7 @@
 description: Drafts technical design docs and proposals with research-backed options, ambiguity checks, and concise executive summaries.
 mode: primary
 hidden: false
-model: openai/gpt-6.1-luna
+model: openai/gpt-6.2-sol
 temperature: 0.2
 permission:
   edit: deny

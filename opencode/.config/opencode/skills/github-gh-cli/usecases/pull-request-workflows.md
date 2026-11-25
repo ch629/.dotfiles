@@ -11,8 +11,8 @@ Use this when the user asks to create, inspect, review, or merge pull requests w
 
 ## Workflow
 
-1. Confirm repo and branch context (`gh repo view`, local git branch if needed).
-2. Inspect PR command shape with `gh pr --help` and relevant subcommands.
+1. Resolve repo and branch context from available evidence; use a focused read if needed.
+2. Use known PR commands directly; inspect specific help only when syntax is uncertain or rejected.
 3. For PR creation, verify base/head intent and title/body source.
 4. For existing PRs, fetch current status first (`gh pr view`, `gh pr list`, structured output preferred) with only required fields.
 5. Run requested mutation (create/edit/review/merge) with explicit flags.

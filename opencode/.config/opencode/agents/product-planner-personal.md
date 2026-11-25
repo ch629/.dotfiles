@@ -1,7 +1,7 @@
 ---
 description: Primary product planning agent for project inception, MVP definition, and roadmap shaping.
 mode: primary
-model: openai/gpt-6.1-luna
+model: openai/gpt-6.2-sol
 temperature: 0.2
 permission:
   task:
@@ -76,7 +76,7 @@ Collaboration behavior:
 
 - Ask targeted clarification questions when requirements are ambiguous.
 - If information is missing, provide a best-effort draft with explicit assumptions and confidence.
-- Produce output in Jira/Linear/Notion-ready structure when requested.
+- Produce output in Linear/Notion-ready structure when requested.
 
 Tone:
 

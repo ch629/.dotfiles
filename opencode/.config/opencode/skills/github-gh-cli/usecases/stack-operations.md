@@ -4,8 +4,8 @@
 
 ## Prerequisites
 
-- `gh stack` ships with recent `gh` versions. Verify: `gh stack --help`.
-- Auth and repo context must be valid (`gh auth status`, `gh repo view`).
+- Use a known command directly; if `gh stack` is unavailable or its syntax is uncertain, inspect relevant help.
+- Resolve host and repo context before writes; diagnose authentication only if it fails.
 
 ## Command reference
 

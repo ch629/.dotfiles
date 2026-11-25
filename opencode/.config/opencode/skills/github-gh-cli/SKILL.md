@@ -10,7 +10,7 @@ Use this skill when the user asks to work with GitHub via the `gh` CLI.
 ## What this skill does
 
 - Uses `gh` to inspect and update repositories, pull requests, and workflow runs.
-- Applies discovery-first command execution so syntax stays accurate across `gh` versions.
+- Uses known commands directly and checks help when syntax is uncertain.
 - Reports concise, decision-ready results after each action.
 
 ## When to use
@@ -28,17 +28,14 @@ Use this skill for requests like:
 
 ## When not to use
 
-- Do not use this skill for non-GitHub systems (GitLab, Bitbucket, Jira, Linear).
+- Do not use this skill for non-GitHub systems (GitLab, Bitbucket, Linear).
 - Do not use this skill for requests that do not involve CLI execution.
 
 ## Runtime discovery policy
 
 - Do not assume flags or command shape from memory when uncertain.
-- Discover commands top-down before execution:
-  - `gh --help`
-  - `gh <group> --help`
-  - `gh <group> <command> --help`
-- If a command fails due to arguments, re-check `--help` and retry.
+- Run a known, appropriately scoped command directly; otherwise consult the most specific relevant `--help`.
+- If arguments are rejected, consult relevant help; before retrying a mutation, ensure it did not already take effect.
 - Prefer structured output (`--json`, `--jq`, or `gh api`) for deterministic summaries.
 
 ## Data minimization policy
@@ -54,15 +51,13 @@ Use this skill for requests like:
 
 ## Auth and context policy
 
-- Validate auth and host context before mutating state:
-  - `gh auth status`
-- Confirm target repo context before write actions:
-  - `gh repo view`
+- Assume authentication is configured; on an auth failure, stop mutations and ask the user to fix it.
+- Resolve the host and target repository before write actions, using existing evidence or a focused read when needed.
 - Do not attempt login/logout/token repair automatically unless the user asks.
 
 ## Execution playbook
 
-1. Validate auth and repo context.
+1. Resolve host and repo context as needed, especially before writes.
 2. Resolve the target entities (repo, PR, run, workflow) using read commands first.
 3. Preview scope before broad or repeated mutations.
 4. Execute requested action with non-interactive flags when intent is explicit.
@@ -72,8 +67,8 @@ Use this skill for requests like:
 
 Load these only when the request matches the scenario:
 
-- Jira-linked branch/commit/PR traceability conventions:
-  - [Jira traceability](usecases/jira-traceability.md)
+- Linear-linked branch/commit/PR traceability conventions:
+  - [Linear traceability](usecases/linear-traceability.md)
 - Repository discovery and settings inspection:
   - [Repository operations](usecases/repository-operations.md)
 - Pull request creation, review checks, and status workflows:
@@ -87,7 +82,7 @@ Load these only when the request matches the scenario:
 
 Selection guidance:
 
-- User asks for branch naming, commit conventions, or PR templates tied to Jira keys -> jira traceability.
+- User asks for branch naming, commit conventions, or PR templates tied to Linear issue keys -> Linear traceability.
 - User asks about branches, visibility, metadata, remotes, or repo configuration -> repository operations.
 - User asks to open, review, merge, or inspect PRs -> pull request workflows.
 - User asks to summarize or inspect PR review comments at scale -> PR review comments.
@@ -101,7 +96,7 @@ Selection guidance:
 - For potentially high-impact actions (merge, close, rerun across many runs), show what will change first.
 - Require explicit user confirmation before bulk mutations affecting more than 10 items.
 - Apply data minimization on every read/query; do not request full records when targeted fields are sufficient.
-- For Jira-linked delivery, keep Jira key in branch names, commit subjects, and PR titles/bodies where team conventions allow.
+- For Linear-linked delivery, keep the issue key in branch names and PR titles/bodies; follow repository commit conventions and the active governance profile.
 - Never expose tokens, secrets, or sensitive config values.
 - If repo ownership or host is ambiguous, resolve and state it before mutating.
 

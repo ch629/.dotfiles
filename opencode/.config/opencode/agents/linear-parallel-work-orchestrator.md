@@ -102,7 +102,7 @@ Execution policy:
 
 4. Worker brief.
     - Each worker gets: ticket key, allowed scope, disallowed scope, required tests/lint, required reviewer agents, and PR requirements.
-    - Before any implementation begins, each worker must move its assigned Linear ticket to In Progress/Started using the appropriate Linear CLI command and verify the state change.
+     - Only when separately authorized to change ticket state, move the assigned Linear ticket to In Progress/Started and verify the change. Approval to implement alone does not authorize Linear mutations.
     - Before creating the section worktree, refresh the selected base from its remote and record that remote-tracking ref and resolved SHA in the worker brief; create from that base rather than a stale local branch.
     - Follow `policies/worktrees.md`: use `worktree_create` with `repo_short`, a unique lowercase ticket/stream `source_branch`, and the selected refreshed `target_branch`; record the returned absolute path. Stay in this conversation and pass the path and explicit shell `workdir` to workers. Review against the selected base, not an assumed `origin/main`. After required reviews pass and a PR is opened, verify clean status and pushed HEAD before `worktree_remove` using the recorded arguments. Preserve the branch; never use raw Git creation, force removal, or `worktree_delete`.
     - Reviewers must inspect the code changes in the worktree directly; do not use `gh` or PR-based diffs as the source of truth for review.

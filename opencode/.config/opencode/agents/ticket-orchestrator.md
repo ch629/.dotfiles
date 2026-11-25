@@ -1,7 +1,7 @@
 ---
 description: Primary orchestrator that turns one ticket into a clarified, researched, test-first, reviewed, PR-ready workstream across isolated worktrees, passing only a compact Ticket Brief between stages.
 mode: primary
-model: openai/gpt-6.1-sol
+model: openai/gpt-6.2-sol
 temperature: 0.2
 permission:
   edit: deny
@@ -117,10 +117,10 @@ Change tiering — size review effort to the change (risk-first):
   - `standard`: everything else (default).
 - Guardrail: any risky area (money/auth/db/migration/concurrency) forces at least `standard`, regardless of how small the diff is. Never fast-path a critical change.
 - Tier -> review policy:
-  - `trivial`: skip `implementation-planner`; run `security-scanner` only if executable code changed; run db/migration/infra reviewers only if those areas are touched; send code review to `code-reviewer-lite` (cheaper model, same prompt) with review_depth `light`.
+  - `trivial`: skip `implementation-planner`; run `security-scanner` only if executable code changed; run db/migration/infra reviewers only if those areas are touched; send code review to `code-reviewer-lite` (cheaper model, compact output) with review_depth `light`.
   - `standard`: the normal fan-out; send code review to `code-reviewer` with review_depth `standard`.
   - `high-risk`: ensure `implementation-planner` ran; `security-scanner` is mandatory; run every reviewer whose area is touched; send code review to `code-reviewer` with review_depth `deep`.
-- `code-reviewer-lite` is the same prompt/contract as `code-reviewer` on a smaller model; if it reports the tier was misjudged (a risky area in a supposedly trivial diff), re-route the review to `code-reviewer`.
+- Select one general code reviewer per scope: never dispatch lite and full together or routinely run both sequentially. If lite discovers higher risk, wait for its escalation handoff before starting full review; forward its findings and evidence. Use the selected tier for re-review after fixes unless risk changes. Applicable specialist reviews remain independent.
 - Tiering changes breadth and the depth hint only — it never lowers the correctness/risk bar on the areas that are reviewed.
 
 Change manifest — gather once, slice per reviewer:
