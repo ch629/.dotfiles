@@ -15,6 +15,14 @@ This repository includes a lightweight regression harness so you can track wheth
 
 ## Quick start
 
+Run `ruby opencode/.config/opencode/evals/check_reviewers.rb` for all reviewer agents'
+shared guidance/base-prompt loading, reference resolution, read-only/delegation boundaries,
+and absence of auto-allowed build/provider execution. This is a static configuration check,
+not evidence that a model detects bugs or that tool permissions form a sandbox. Research
+and domain checks live in [`../playbooks/code-review.md`](../playbooks/code-review.md).
+
+Run `ruby opencode/.config/opencode/evals/check_planned_dev.rb` for static planned-dev routing, delegation, review and authority contracts. This is not a model evaluation or runtime permission test.
+
 Run `ruby opencode/.config/opencode/evals/check_betika_reviewer.rb` to check the
 single Betika code-review route, retained financial review gates and shared contract.
 This is a static prompt/config check, not a live review-quality evaluation.
@@ -52,10 +60,14 @@ python3 opencode/.config/opencode/evals/run_evals.py --set-baseline
 python3 opencode/.config/opencode/evals/run_evals.py --compare-baseline
 ```
 
+Run `ruby evals/check_linear_migration.rb` from the OpenCode config directory to
+check Linear routing, Betika provider isolation, and the retained Confluence reference.
+Saved results are historical evidence and may still mention retired integrations.
+
 ## Useful flags
 
-- `--suite offline` - run deterministic, no external Jira dependency prompts.
-- `--suite live` - run prompts that expect real Jira access.
+- `--suite offline` - run deterministic prompts without external ticket access.
+- `--suite live` - run prompts that expect real Linear access; supply a real issue key instead of the example in `cases.json`.
 - `--only <pattern1,pattern2>` - run only matching case IDs (regex, comma-separated).
 - `--jobs <n>` - run up to `n` cases in parallel.
 - `--agent developer-personal` - override target primary agent.
@@ -147,6 +159,8 @@ Profile-aware behavior checks:
 
 ## Notes
 
+- Historical April results live in [`archive/2026-04`](archive/2026-04/README.md). They are not a baseline for the current agents. Generate and inspect a fresh run with `--set-baseline` before comparing; generated `results/` files are ignored.
+- Run `bun test opencode/.config/opencode/evals/permission-audit.test.ts` from the repository root to check permission-event logging and the summary CLI with an isolated temporary home directory.
 - OpenCode `run` only accepts primary agents directly. For subagent-specific checks, cases can set `invoke_subagent` and the harness prepends `@subagent` to the prompt.
 - If no `--attach` is provided, the harness first tries to reuse an existing server (env URL, then `127.0.0.1:4096`) before starting a temporary one.
 - Progress updates are printed every 5 seconds per case, and timed-out cases are marked as failed with `error=timeout`.

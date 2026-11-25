@@ -13,10 +13,8 @@ Use this when the user asks to inspect, summarize, triage, reply to, or resolve 
 
 ## Workflow
 
-1. Confirm repo/auth context (`gh auth status`, `gh repo view`).
-2. Ensure extension availability and discover syntax:
-   - `gh extension list`
-   - `gh pr-review --help` (or extension-specific help path)
+1. Resolve repo context from available evidence; diagnose authentication only if it fails.
+2. Use known extension commands directly; check availability or specific help only if needed.
 3. Resolve target repo and PR number:
    - Use `scripts/get-current-repo.sh` and `scripts/get-current-pr-number.sh` when context is current repo/branch.
    - If no PR is associated with current branch, ask for explicit PR number.

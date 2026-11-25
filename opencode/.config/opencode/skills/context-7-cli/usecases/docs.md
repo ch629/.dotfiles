@@ -2,7 +2,7 @@
 
 Retrieves and queries up-to-date documentation and code examples from Context7 for any programming library or framework. Two-step workflow: resolve the library name to get its ID, then query docs using that ID.
 
-If the user already provided a library ID in `/org/project` or `/org/project/version` format, pass it directly to `ctx7 docs`.
+Pass a valid user-supplied or session-resolved ID in `/org/project` or `/org/project/version` format directly to `ctx7 docs` only if it matches the library and requested version. Resolve again if the library or version changes, or the ID is rejected.
 
 ## Step 1: Resolve a Library
 
@@ -66,7 +66,7 @@ ctx7 library react "How to use hooks for state management" --json | jq '.[0].id'
 
 Retrieves up-to-date documentation and code examples for the resolved library.
 
-You must call `ctx7 library` first to obtain the exact Context7-compatible library ID required to use this command, UNLESS the user explicitly provides a library ID in the format `/org/project` or `/org/project/version`.
+Use the supplied or session-resolved ID as described above; otherwise call `ctx7 library` first to obtain the exact Context7-compatible library ID.
 
 ```bash
 ctx7 docs /facebook/react "How to clean up useEffect with async operations"

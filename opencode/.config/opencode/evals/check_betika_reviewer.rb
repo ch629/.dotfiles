@@ -14,8 +14,9 @@ developer = File.read(File.join(agents, 'developer-betika.md'))
 config = YAML.safe_load(developer.split('---', 3)[1])
 tasks = config.fetch('permission').fetch('task')
 raise 'Default delegation denial missing' unless tasks['*'] == 'deny'
-raise 'Single code reviewer not allowed' unless tasks[reviewer] == 'allow'
-raise 'Multiple code reviewer routes' unless tasks.keys.grep(/code-reviewer/) == [reviewer]
+routes = ['code-reviewer-betika', reviewer]
+raise 'Unexpected code reviewer routes' unless tasks.keys.grep(/code-reviewer/).sort == routes.sort
+routes.each { |route| raise "Reviewer not allowed: #{route}" unless tasks[route] == 'allow' }
 
 [
   'payments, settlement, ledger posting, reconciliation, rounding/precision, idempotency, or monetary calculations',
@@ -33,4 +34,4 @@ raise 'Reviewer model changed' unless config['model'] == 'gateframe/gateframe/qw
 raise 'Reviewer must remain a subagent' unless config['mode'] == 'subagent'
 raise 'Reviewer must remain read-only' unless config.fetch('permission')['edit'] == 'deny'
 raise 'Shared review contract missing' unless text.include?('exact same behavior and output contract as `go-financial-code-reviewer`')
-puts 'Betika reviewer checks passed (single route, financial gates, shared contract).'
+puts 'Betika reviewer checks passed (Betika-only routes, financial gates, shared contract).'

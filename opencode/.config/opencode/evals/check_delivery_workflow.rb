@@ -4,7 +4,7 @@ require 'digest'
 
 # Static prompt-contract checks, NOT evidence of model execution. Authority:
 # policies/delivery-brief.md. Run: ruby opencode/.config/opencode/evals/check_delivery_workflow.rb
-# Inspect active bodies only: a passive policy link cannot satisfy these checks.
+# Inspect active bodies and explicitly required conditional reads; passive links cannot satisfy checks.
 # Match concepts within a paragraph/list block, not exact sentences or whole-file
 # keyword bags. Live routing/permission behavior still needs model eval evidence.
 root = File.expand_path('..', __dir__)
@@ -20,13 +20,17 @@ end
 # dependency at test runtime and no broadening permissions to enable routing.
 permissions = {
   'product-planner-personal' => 'b5dddeacd52a8ee8b7b396aa193d5110b372b43919176ff5f03b97b151d3c4a0',
-  'ticket-orchestrator' => '2a2270f374798493091f626b8988d3f79c162f6d4459a97cc78a9fff5b13d5e3',
-  'developer-personal' => 'd99de819f15cb36f1014502753ed0b7575f18ce6f98c28fdeb8886d1c3c40248',
+  # Canonical policy path; retain the intentional removal of shell git worktree list.
+  'ticket-orchestrator' => '58b40f179f1045d72f7f55aa7d3adc3bcf50b9802a66a558597d2baa71e96890',
+  # Linear-only migration removes the three obsolete ticket-system task grants.
+  'developer-personal' => '4d9067eb96168880a66ca7e4915d22014f63458ab04f56f72dbcbba1b2c7cf52',
   'quick-dev' => '5461200639f15dfa145fe8365fa49dceea5de69c3169fc1f075d1f47674435ca',
   'ticket-clarifier' => '9f813008f762ffd089784bee90a5c01db2df6e521fc17f4b488c07b04e1aaead',
   'ticket-researcher' => '2f0b28a5d51f8ad3211b765cd08c4be84fd6a15ef12aef6ca67759f6c079c979',
-  'implementation-planner' => '76b1ad17c1dadb5dc1d1978ce37b268606d870326107ee3af96a1cb23b7d816d',
-  'completion-reviewer' => '58c03c92c8fb81586e618759936c72f090a8f3ad33776af5922972b85534e227',
+  # Canonical playbook/policy paths; permission actions and ordering are retained.
+  'implementation-planner' => '5f4bd3b04b4368d46e98af1b5e1819408eb232659daf328324312697b7cf9b97',
+  # Reviewer hardening retains task: deny.
+  'completion-reviewer' => '51d10b3f31e7142a62b79558c97ab0e306c03b6a1b83318713444c329ba26dec',
   'pr-description-writer' => '64f4f21d68af66b3ab12c45cd7fb537f7cde9df633ea193b25a38c38294fc066'
 }
 bodies = {}
@@ -36,6 +40,12 @@ permissions.each do |agent, digest|
   config = YAML.safe_load(frontmatter)
   check.call("#{agent}: permissions unchanged", Digest::SHA256.hexdigest(JSON.generate(config.fetch('permission'))) == digest)
   bodies[agent] = body
+end
+
+brief_load = 'For a supplied delivery brief or brief-based resumption, read `~/.config/opencode/policies/delivery-brief.md` before acting and follow its gates and quick-dev continuation rules.'
+check.call('quick-dev: explicitly loads conditional brief rules', bodies.fetch('quick-dev').include?(brief_load))
+if bodies.fetch('quick-dev').include?(brief_load)
+  bodies['quick-dev'] += "\n\n" + File.read(File.join(root, 'policies/delivery-brief.md'))
 end
 
 has = lambda do |agent, *patterns|
@@ -131,8 +141,8 @@ rule.call('pr-description-writer', 'description does not authorize publication',
 # AC5: bounded quick-dev remains a fast path, not mandatory orchestration.
 rule.call('quick-dev', 'direct bounded work remains supported', /direct|yourself/i, /bounded|contained|small/i)
 rule.call('quick-dev', 'no mandatory ticket lookup or planning pipeline', /no mandatory|not require/i, /ticket/i, /planning|pipeline/i)
-rule.call('quick-dev', 'uncertain or multi-stream work escalates', /uncertain|multi.stream|independent workstreams/i,
-          /stop|escalat/i, /ticket-orchestrator/)
+rule.call('quick-dev', 'uncertain or multi-stream work routes to delegated delivery', /uncertain|multi.stream|independent workstreams/i,
+          /stop|switch/i, /planned-dev/)
 rule.call('quick-dev', 'escalation cannot bypass task denial', /not.*delegate|never.*delegate/i, /reviewers|task targets|permission/i)
 rule.call('developer-personal', 'ticketed Linear specialist routing retained', /Linear ticket/i, /delegate/i, /linear-ticket-researcher/)
 

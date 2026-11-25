@@ -20,7 +20,7 @@ Use this when one action must be applied to many Linear issues.
 - Never run broad, unbounded bulk updates without preview.
 - If command lacks true bulk mode, iterate deterministically and track per-issue outcomes.
 - Stop and surface partial-failure details instead of silently continuing.
-- If a bulk update includes descriptions or other formatted text, draft the content in a markdown file first.
+- Draft long or structured bulk-update content in a markdown file; short plain text may be inline.
 
 ## Report format
 

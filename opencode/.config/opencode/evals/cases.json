@@ -21,7 +21,7 @@
       "(?i)empty",
       "(?i)case.insensitive"
     ],
-    "must_not_include": ["(?i)I (?:have )?(?:created|updated) (?:a |the )?(?:Jira|Linear) ticket"]
+    "must_not_include": ["(?i)I (?:have )?(?:created|updated) (?:a |the )?Linear ticket"]
   },
   {
     "id": "workflow-discovery-empty-requirements",
@@ -97,9 +97,9 @@
   {
     "id": "researcher-uncertainty",
     "suite": "offline",
-    "agent": "developer-primary",
-    "invoke_subagent": "jira-researcher",
-    "prompt": "Analyze ticket FIN-123 from the details: summary=\"Investigate payout mismatch\", status=\"In Progress\", and no acceptance criteria are provided. Do not invent fields. Use your required output headings exactly.",
+    "agent": "developer-personal",
+    "invoke_subagent": "linear-ticket-researcher",
+    "prompt": "Analyze Linear ticket FIN-123 from the details: summary=\"Investigate payout mismatch\", status=\"In Progress\", and no acceptance criteria are provided. Use only this provided information and do not run tools/commands. Do not invent fields. Use your required output headings exactly.",
     "must_include": [
       "Unknowns",
       "Acceptance criteria"
@@ -118,8 +118,8 @@
     "id": "validator-evidence-matrix",
     "suite": "offline",
     "timeout": 120,
-    "agent": "developer-primary",
-    "invoke_subagent": "jira-ticket-validator",
+    "agent": "developer-personal",
+    "invoke_subagent": "linear-ticket-validator",
     "prompt": "Validate this change against ticket ACME-456. Ticket AC: 1) debit and credit stay balanced, 2) retries are idempotent. Dev notes: changed fee calculation in settlement.go; no tests were added for idempotency. Use only this provided information and do not run tools/commands. Use your required output headings exactly.",
     "must_include": [
       "Verdict|Decision",
@@ -139,7 +139,7 @@
   {
     "id": "go-review-financial-invariants",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "invoke_subagent": "go-financial-code-reviewer",
     "prompt": "Review this Go change summary: currency math uses float64 and rounds using math.Round at the end; no overflow tests; go test passes. Use only this provided information and do not run tools/commands. Return strict review output.",
     "must_include": [
@@ -161,7 +161,7 @@
   {
     "id": "developer-consolidated-response",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "prompt": "You updated a high-risk payment reconciliation flow linked to ticket PAY-987 and ran sub-reviews. Give final sign-off response.",
     "must_include": [
       "Decision",
@@ -180,7 +180,7 @@
   {
     "id": "go-review-google-style-findings",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "invoke_subagent": "go-financial-code-reviewer",
     "prompt": "Review this Go change summary: package is named util; exported function ProcessPayment has no doc comment; code returns errors.New(\"Invalid Amount.\"); local variable customerid is used instead of customerID. Use only this provided information and do not run tools/commands. Return strict review output.",
     "must_include": [
@@ -202,7 +202,7 @@
   {
     "id": "go-review-100go-concurrency-pitfalls",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "invoke_subagent": "go-financial-code-reviewer",
     "prompt": "Review this Go change summary: request handler starts a goroutine without context cancellation and never waits for it; a defer close is used inside a for loop over files; retry logic relies on map iteration order for deterministic replay; one error is checked with == instead of errors.Is. Use only this provided information and do not run tools/commands. Return strict review output.",
     "must_include": [
@@ -224,7 +224,7 @@
   {
     "id": "go-review-tagged-findings-format",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "invoke_subagent": "go-financial-code-reviewer",
     "prompt": "Review this Go change summary: settlement uses float64, rounding applied only at final total, and tests omit replay/idempotency and time-boundary cases. Use only this provided information and do not run tools/commands. Return strict review output.",
     "must_include": [
@@ -243,7 +243,7 @@
   {
     "id": "planner-implementation-breakdown",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "invoke_subagent": "go-implementation-planner",
     "prompt": "Plan implementation for ticket PAY-741. Known details: add retry-safe settlement posting for duplicate webhook deliveries; AC: 1) duplicate webhook must not create duplicate ledger entries, 2) processing failures must be observable via metrics and structured logs. Constraints: keep existing API shape. Use only this information and do not run tools/commands.",
     "must_include": [
@@ -265,8 +265,8 @@
   {
     "id": "developer-dod-gate-enforcement",
     "suite": "offline",
-    "agent": "developer-primary",
-    "prompt": "You finished ticket PAY-222. Evidence available: unit tests pass locally, but no go test -race run, no lint output, and no Jira validator run. Provide final sign-off response.",
+    "agent": "developer-personal",
+    "prompt": "You finished Linear ticket PAY-222. Evidence available: unit tests pass locally, but no go test -race run, no lint output, and no Linear validator run. Provide final sign-off response.",
     "must_include": [
       "Decision",
       "Evidence",
@@ -276,7 +276,7 @@
     "should_include": [
       "go test ./... -race",
       "golangci-lint",
-      "jira-ticket-validator"
+      "linear-ticket-validator"
     ],
     "must_not_include": [
       "Approved for merge"
@@ -285,8 +285,8 @@
   {
     "id": "traceability-convention-response",
     "suite": "offline",
-    "agent": "developer-primary",
-    "prompt": "For Jira ticket PAY-333, give recommended branch name, commit subject, and PR title/body headings that preserve traceability.",
+    "agent": "developer-personal",
+    "prompt": "For Linear ticket PAY-333, give recommended branch name, commit subject, and PR title/body headings that preserve traceability.",
     "must_include": [
       "PAY-333",
       "branch",
@@ -299,13 +299,13 @@
       "Risks"
     ],
     "must_not_include": [
-      "no jira key needed"
+      "no Linear key needed"
     ]
   },
   {
     "id": "betika-pr-title-format",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "prompt": "I am working in /work/betika/payments on ticket PAY-741. Give me the exact PR title format and one valid example title.",
     "must_include": [
       "conventional",
@@ -325,7 +325,7 @@
   {
     "id": "betika-commit-type-policy",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "prompt": "I am in /work/betika/core and want to create a commit for cleanup. What commit format should you use and which type is disallowed?",
     "must_include": [
       "conventional",
@@ -343,7 +343,7 @@
   {
     "id": "platform-review-terraform-helm",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "invoke_subagent": "platform-infra-reviewer",
     "prompt": "Review this platform change summary: Terraform replaces an RDS instance because identifier changed, remote state locking config is not shown, Helm chart removes readinessProbe and sets imagePullPolicy Always for production, Service changed from ClusterIP to LoadBalancer, and no rollback notes were provided. Use only this provided information and do not run tools/commands.",
     "must_include": [
@@ -365,7 +365,7 @@
   {
     "id": "platform-review-argocd-sync-waves",
     "suite": "offline",
-    "agent": "developer-primary",
+    "agent": "developer-personal",
     "invoke_subagent": "platform-infra-reviewer",
     "prompt": "Review this Argo CD deployment change summary: CRDs and CRs are all in default wave 0, db migration job is marked PostSync instead of PreSync, one hook has no hook-delete-policy, and rollout docs rely on selective sync to execute hooks. Use only this provided information and do not run tools/commands.",
     "must_include": [
@@ -418,11 +418,11 @@
     "must_not_include": ["must create a new test framework", "failing-test commit is mandatory"]
   },
   {
-    "id": "live-jira-research",
+    "id": "live-linear-research",
     "suite": "live",
-    "agent": "developer-primary",
-    "invoke_subagent": "jira-researcher",
-    "prompt": "Research Jira ticket ABC-123 and summarize what a developer must implement with acceptance criteria.",
+    "agent": "developer-personal",
+    "invoke_subagent": "linear-ticket-researcher",
+    "prompt": "Research Linear ticket ABC-123 and summarize what a developer must implement with acceptance criteria.",
     "must_include": [
       "Ticket",
       "What needs doing",

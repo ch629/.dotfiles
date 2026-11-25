@@ -12,7 +12,7 @@ Use this when an agent must meet stricter quality or compliance controls.
 
 ## Failure-handling policy
 
-- If required key data is missing (e.g., Jira key in strict profile), ask user before continuing.
+- If required key data is missing (e.g., Linear issue key in strict profile), ask user before continuing.
 - If validation loops fail repeatedly, stop and return unresolved findings plus prioritized recommendations.
 
 ## Acceptance criteria

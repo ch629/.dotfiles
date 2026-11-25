@@ -2,7 +2,7 @@
 description: Validates developer changes against a Linear ticket, acceptance criteria, and stated requirements.
 mode: subagent
 hidden: true
-model: openai/gpt-6.1-luna
+model: openai/gpt-6-luna
 temperature: 0.1
 permission:
   edit: deny
@@ -26,7 +26,6 @@ permission:
     "git log*": allow
     "git fetch*": allow
     "git branch --show-current": allow
-    "git worktree list*": allow
     "gh pr view*": allow
     "gh pr status*": allow
     "gh pr checks*": allow

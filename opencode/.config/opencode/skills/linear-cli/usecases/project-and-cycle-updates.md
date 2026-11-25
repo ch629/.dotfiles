@@ -20,7 +20,7 @@ Use this when the user asks to update project health, cycle progress, or plannin
 - Confirm exact target if names are similar.
 - Preview downstream impact when updates imply issue transitions.
 - Request explicit confirmation before wide status changes across many issues.
-- If the update includes a description or planning note, draft it in a markdown file first so formatting can be validated.
+- Draft long or structured descriptions and planning notes in a markdown file so formatting can be validated; short plain text may be inline.
 
 ## Report format
 

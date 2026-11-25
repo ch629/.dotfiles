@@ -16,3 +16,6 @@ Read `~/.config/opencode/playbooks/infrastructure.md` and
 behavior and output contract, not their model configuration. Keep Betika requests on
 Gateframe. Review only; consume validation evidence and never run providers, plugins,
 charts, repository scripts, or live mutations. Missing required evidence blocks readiness.
+
+Also explicitly read `~/.config/opencode/playbooks/code-review.md`: apply **Review method**
+and **Infrastructure**. Agent prompts are not automatically inherited.

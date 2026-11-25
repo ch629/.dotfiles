@@ -1,10 +1,18 @@
 # Delivery brief contract v1
 
-Use one repository-local brief as the planning and resumption contract for ticketed
-and ticketless work. A ticket is optional linkage, not a prerequisite or substitute
+For ticket-orchestrator, use one repository-local brief as the planning and resumption contract for ticketed
+and ticketless work, including its full approval gates. A ticket is optional linkage, not a prerequisite or substitute
 for the contract. This policy does not change agent routing, tool permissions or
 publication authority. Phase 1 defines the contract; automatic agent loading and
 behavioral enforcement are not claimed.
+
+Ordinary planned-dev work does not require a saved delivery brief or its approval ceremonies. A supplied brief retains this contract's exact-content approval and resumption requirements; do not use the exemption to bypass its gates.
+
+## Quick-dev continuation
+
+Accept ticketless requests and supplied briefs without Linear lookup or mutation. On resumption, read the brief's README/index and revision, reconcile repository status and evidence, and check approval of the exact revision and content digest/blob. Missing authority or required gates is Blocked; material changes need a new revision and renewed explicit approval. Preserve dirty work and revision history.
+
+For delivery-brief pipeline work only `ticket-orchestrator` publishes, with separate publication authorization. If task permissions deny a handoff, give a copyable continuation and request a manual primary switch; never delegate through reviewers or other tools to bypass denial. Use the handoff fields below, including the full brief path and whether it was saved. These rules do not impose a brief or ticket requirement on ordinary bounded work.
 
 ## Required fields
 

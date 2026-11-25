@@ -13,7 +13,7 @@ Use this skill when the user asks to manage Linear work using the CLI.
 - Prioritizes one-command ticket lookup for inspection/search before any discovery flow.
 - Applies runtime command discovery so guidance remains version-safe.
 - Provides concise verification and result summaries after actions.
-- When authoring Linear descriptions or long-form issue bodies, draft them in a markdown file first so formatting can be checked before submission.
+- Draft long or structured Linear content in a markdown file so formatting can be checked before submission.
 
 ## When to use
 
@@ -27,23 +27,20 @@ Use this skill for requests like:
 
 ## When not to use
 
-- Do not use this skill for non-Linear systems (for example Jira, GitHub Issues, Asana, Trello).
+- Do not use this skill for non-Linear systems (for example GitHub Issues, Asana, Trello).
 - Do not use this skill for planning-only requests that do not require CLI execution.
 
 ## Runtime discovery policy
 
 - For ticket lookup and inspection, use the direct command immediately; do not run help first.
 - Do not rely on hardcoded flags or command shapes when uncertain about mutations.
-- Discover syntax top-down only when you need an unfamiliar command or a command fails:
-  - `linear --help`
-  - `linear <group> --help`
-  - `linear <group> <command> --help`
-- If a command fails due to argument mismatch, re-check help and retry with corrected flags.
+- Use the most specific relevant help only when syntax is uncertain or arguments are rejected.
+- Before retrying a failed mutation, ensure it did not already take effect.
 - Prefer machine-readable output modes when available.
 
 ## Description drafting policy
 
-- For issue descriptions, comments, and other rich-text content, draft the content in a markdown file before sending it to Linear.
+- Short plain-text descriptions, comments, and other body content may be sent inline. Draft long or structured content in a markdown file before sending it to Linear.
 - Use the markdown file to sanity-check headings, lists, links, and code blocks before submission.
 - Keep plain scalar updates inline; reserve markdown drafting for body content where formatting matters.
 - For dependency relationships, use Linear's dependency fields/links rather than adding a `Dependencies` heading in the description body.

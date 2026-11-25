@@ -52,7 +52,7 @@ scanner = YAML.safe_load(File.read(File.join(agents, "security-scanner.md")).spl
 check(!scanner.fetch("permission").fetch("bash").key?("sed *"), "Scanner permits sed -i")
 %w[base_sha head_sha].each { |field| check(orchestrator.include?(field), "Missing #{field}") }
 check(orchestrator.include?("not the generic size thresholds"), "Infra tiering must override generic size thresholds")
-review = File.read(File.join(root, "newagents/prompts/code-review.md"))
+review = File.read(File.join(root, "prompts/code-review.md"))
 check(review.include?("<base_sha>...<head_sha>") && !review.include?("origin/main...HEAD") &&
       !review.include?("exactly one scoped diff"), "Code review has a stale diff contract")
 ["**high-risk**", "**Blocked**", "-detailed-exitcode", "including previously passing",

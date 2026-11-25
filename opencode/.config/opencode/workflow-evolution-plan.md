@@ -26,7 +26,7 @@ Read the current files, not only this summary:
 
 - `agents/quick-dev.md`: bounded implementation, dirty-tree ownership, conditional review, verification reporting and explicit publication authority.
 - `agents/ticket-orchestrator.md`, `ticket-clarifier.md`, `ticket-researcher.md`, `implementation-planner.md`, `test-writer.md`, `feature-developer.md`, `completion-reviewer.md`: present intake and delivery contracts.
-- `newagents/prompts/code-review.md`: review of immutable commit ranges or scoped uncommitted snapshots, including new files and provenance.
+- `prompts/code-review.md`: review of immutable commit ranges or scoped uncommitted snapshots, including new files and provenance.
 - `policies/governance-profiles.md`, `policies/worktrees.md`, `playbooks/infrastructure.md`: shared governance, plugin lifecycle and infrastructure authority/evidence rules.
 - `opencode.json`: global instructions, plugin configuration, shared-reference access and permissions.
 - `evals/README.md`, `evals/cases.json`, and the existing evaluation runner: determine which checks are static, model-backed or runtime integration checks before extending them.
@@ -143,7 +143,7 @@ Start with a small pilot and expand toward roughly 20–30 representative scenar
 
 - Clear ticketless fix that stays with quick-dev.
 - Ambiguous idea that gets focused questions and a discovery plan.
-- Approved ticketless plan that can reach implementation without Jira/Linear credentials.
+- Approved ticketless plan that can reach implementation without Linear credentials.
 - Existing ticket that still uses the shared delivery path.
 - Multi-stream work with dependency-aware slicing and integration verification.
 - Dirty tree, new untracked task files and unrelated edits preserved.

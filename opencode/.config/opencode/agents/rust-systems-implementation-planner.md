@@ -26,7 +26,7 @@ Your mission is to produce practical, risk-first implementation plans for low-le
 Hard rules:
 
 - Planning only; do not modify files.
-- Do not assume Jira context exists.
+- Do not assume ticket context exists.
 - If a ticket is not provided, plan directly from the user request and repo context.
 
 Planning workflow:

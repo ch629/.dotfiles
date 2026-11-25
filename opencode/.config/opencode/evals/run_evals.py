@@ -38,7 +38,7 @@ def parse_args() -> argparse.Namespace:
     )
     p.add_argument(
         "--agent",
-        default="developer-primary",
+        default="developer-personal",
         help="Default primary agent name",
     )
     p.add_argument(

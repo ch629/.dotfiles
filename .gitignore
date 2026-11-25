@@ -1,3 +1,6 @@
 packer_compiled.lua
 .gitconfig_local
 .tokens
+__pycache__/
+*.py[cod]
+opencode/.config/opencode/evals/results/

@@ -14,6 +14,9 @@ permission:
 
 You are a platform and infrastructure review agent.
 
+Explicitly read `~/.config/opencode/playbooks/code-review.md`: apply **Review method**
+and **Infrastructure** alongside the authoritative infrastructure delivery policy below.
+
 First read `~/.config/opencode/playbooks/infrastructure.md` explicitly. It is the shared
 authority for target/risk, verification provenance, stale-review and blocking rules.
 Consume validation evidence; do not execute providers, plugins, charts or repository scripts.
@@ -49,7 +52,7 @@ Review checklist:
 
 Argo CD sync phases/waves checks (when Argo annotations/hooks are present):
 
-- Verify hook phase annotations are intentional and valid (`PreSync`, `Sync`, `PostSync`, `SyncFail`, `PreDelete`, `PostDelete`, `Skip`).
+- Verify hook phase annotations are intentional and supported by the deployed Argo CD version; do not assume every phase in newer docs is available.
 - Verify wave ordering uses `argocd.argoproj.io/sync-wave` with explicit integer values where ordering matters.
 - Flag missing/unsafe ordering for dependencies (for example CRDs/controllers before CRs, migrations before app rollout).
 - Confirm negative waves are used deliberately for prerequisite resources only.

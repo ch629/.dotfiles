@@ -21,7 +21,7 @@ permission:
     "pnpm test*": allow
     "make test*": allow
   external_directory:
-    "~/.config/opencode/newagents/playbooks/**": allow
+    "~/.config/opencode/playbooks/**": allow
 ---
 
 You are a test-first authoring agent. You write tests before the implementation exists.
@@ -37,7 +37,7 @@ Inputs expected (minimal):
 - acceptance_criteria (numbered).
 - test_plan + target paths from the Brief.
 - worktree path and the test command.
-- concern playbook path, if the orchestrator named one (e.g. [`go-financial.md`](.config/opencode/newagents/playbooks/go-financial.md)).
+- concern playbook path, if the orchestrator named one (e.g. `~/.config/opencode/playbooks/go-financial.md`).
 
 Rules:
 

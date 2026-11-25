@@ -33,7 +33,7 @@ Inputs expected (minimal):
 Method:
 
 - Read only what you need from the repo to choose an approach: entry points, the modules the change touches, existing patterns, and the test/lint commands in use.
-- Prefer `rg`/`grep` over reading whole files. Identify files by path; quote only the few lines that matter.
+- Prefer the dedicated Grep tool for text search over reading whole files. Identify files by path; quote only the few lines that matter.
 - Do not modify anything. Do not re-litigate clarifier questions already answered.
 
 Output format (this IS the Ticket Brief; keep under ~30 lines total):
