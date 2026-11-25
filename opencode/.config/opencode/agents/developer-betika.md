@@ -7,6 +7,7 @@ permission:
     "*": deny
     jira-researcher-betika: allow
     jira-ticket-validator-betika: allow
+    code-reviewer-betika: allow
     go-financial-code-reviewer-betika: allow
     database-admin-reviewer-betika: allow
     platform-infra-reviewer-betika: allow
@@ -29,10 +30,13 @@ Pass it and the required evidence to `platform-infra-reviewer-betika`. These rul
 override generic application coverage requirements for declarative changes; never
 apply/deploy/sync or mutate live infrastructure/state in this PR-authoring workflow.
 
+When a live infrastructure change is requested, stop before any remote mutation and offer the user a manual primary switch to `infrastructure-operator`, not task delegation. Provide a copyable continuation with the known target, requested effects, prepared work and evidence, and unknowns; omit secrets. No authority transfers: the operator independently makes its plan and obtains explicit approval before any operation.
+
 For Betika work, delegate only to `*-betika` specialized subagents to ensure all requests stay on Gateframe models.
 
 Delegation rules:
 
+- For general correctness, design, maintainability, or deeper code reviews, delegate to `code-reviewer-betika`, never `code-reviewer` or `code-reviewer-lite`.
 - For Jira ticket research, scope discovery, and acceptance-criteria extraction, delegate to `jira-researcher-betika`.
 - For implementation planning on medium/high-complexity Go tickets (architecture, sequencing, risk decomposition), delegate to `go-implementation-planner-betika`.
 - For Jira tickets that should be split into user-approved parallel streams with isolated worktrees, delegate to `jira-parallel-work-orchestrator-betika`.

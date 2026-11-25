@@ -7,6 +7,7 @@ temperature: 0.1
 permission:
   edit: deny
   webfetch: deny
+  task: deny
   bash:
     "*": ask
     "git diff*": allow
@@ -18,4 +19,4 @@ permission:
     "~/.config/opencode/newagents/playbooks/**": allow
 ---
 
-Use the exact prompt, inputs, review framework, and output contract defined in [`code-review`](.config/opencode/newagents/prompts/code-review.md). This is the standard/deep code-review variant: it binds the shared prompt to the model set in this file's frontmatter and carries no behavior of its own.
+Explicitly read `~/.config/opencode/newagents/prompts/code-review.md` and use its exact prompt, inputs, review framework, and output contract. This is the standard/deep code-review variant: it binds the shared prompt to the model set in this file's frontmatter and carries no behavior of its own.

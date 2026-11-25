@@ -11,7 +11,7 @@ Implementers and `test-writer` read **Engineering** + **Testing**; `code-reviewe
 - Money: use safe representations (integer minor units or a decimal type) — never float math for currency unless strongly justified. Keep precision/scale explicit and deterministic.
 - Make side effects at-most-once where required: idempotency keys, replay safety, dedupe.
 - Wrap errors with `%w` when callers may need to inspect causes; never drop errors.
-- Honor `context` cancellation/deadline; never leak goroutines or resources (`Body`, `Rows`, files, timers).
+- Honor `context` cancellation/deadline; never leak goroutines or resources (`Body`, `Rows`, files, active background work). Timer GC/reset rules depend on Go version and overrides.
 
 ### Modern Go (use what the module's `go.mod` version supports — never exceed it)
 
@@ -27,23 +27,24 @@ Implementers and `test-writer` read **Engineering** + **Testing**; `code-reviewe
 
 ## Testing (test-first + DoD)
 
-- Cover all new/changed code; target ≥80% for changed areas; go deeper on high-risk/money paths.
+- Cover changed behavior and important failure paths; ≥80% for changed areas follows the active governance profile (required for Betika, recommended for default). Go deeper on high-risk/money paths.
 - Required cases: zero, negative, large values, overflow/underflow, rounding boundaries, fee/rate edges, and idempotency/replay where applicable.
 - Run Go tests with `-race`. Prefer table-driven tests for branch-heavy rules.
-- If `github.com/stretchr/testify` is already in the repo, use `require`/`assert` consistently with existing style; don't mix stdlib-only and testify in one package without reason.
+- Follow the package's existing assertion style; do not add or mandate an assertion library solely for consistency.
 - Deterministic tests only — no timing/scheduler assumptions; inject a clock where time matters.
 
 ## Review checklist (review)
 
-Order: financial risk → correctness → Google Go style → lint/test evidence. When money is touched, also emit a **financial-invariants summary** (Pass/Fail/Unknown) for: balance conservation, rounding/precision/scale, idempotency/replay, overflow/underflow, and time/cutoff boundary correctness.
+Explicitly read `~/.config/opencode/playbooks/code-review.md`, **Review method** and
+**Go and financial systems** (plus **Database and migrations** when relevant).
+Order: financial risk → correctness → maintainability → lint/test evidence.
 
-- Financial: balance conservation and debit/credit invariants, rounding/precision/scale, overflow/underflow, reconciliation, settlement/period time & timezone cutoffs, and ordering/race-driven inconsistency.
-- Correctness: error/partial-failure paths, retries/compensating actions, at-most-once side effects (idempotency keys, replay safety, dedupe), nil/zero/typed-nil pitfalls, deterministic behavior where ordering matters (map iteration, goroutine scheduling).
-- Naming: function/method names must accurately describe behavior and side effects — flag names that imply different semantics than the implementation.
-- `100go` sweep: `err` shadowing, unnecessary nesting, `init` misuse, interface pollution / producer-side interface forcing / returning interfaces where a concrete type is cleaner, overuse of `any`, slice/map aliasing & shared backing-array mutation, range-copy pitfalls, map-iteration nondeterminism, `defer`-in-loop resource pressure, dropped/double-handled errors, missing `errors.Is`/`errors.As`, context propagation/cancellation leaks, resource leaks (`Body`/`Rows`/files/timers/tickers).
-- Go 1.22+ loop-variable capture: do not flag missing defensive shadowing in 1.22+ code by default; still verify closure capture in mixed-version repos and when taking the address of the loop variable.
-- Modernization: for the module's declared Go version, flag hand-rolled helpers that a current stdlib feature replaces (`slices`/`maps`/`cmp`, `min`/`max`/`clear`, range-over-int/func, `errors.Join`, `log/slog`) — but do not demand features newer than `go.mod` declares.
-- `GoogleStyle`: clear naming with preserved initialisms (`ID`/`URL`/`HTTP`/`JSON`), exported doc comments starting with the identifier, lowercase error strings without trailing punctuation, short package names (no `util`/`common`/`shared`).
-- Tests: monetary edge/rounding boundaries and idempotency/replay/duplicate-message cases covered; table-driven for branch-heavy rules; `testify` used consistently if already present (flag mixed stdlib/testify styles); race-detector evidence when concurrency changed.
-- Lint: `golangci-lint` primary, then `go vet`; fix valid findings, de-prioritize likely false positives with justification, prefer scoped config exclusions over broad suppression, allow `//nolint:<linter>` only narrowly with inline justification. If lint/test results weren't provided, state what to run (golangci-lint first).
-- DoD evidence: `go test ./... -race` green, lint clean for the touched scope; tag findings `Financial` / `GoogleStyle` / `100go` / `Concurrency` / `Testing` / `Lint`.
+- When money is touched, emit a **financial-invariants summary**: Pass/Fail/Unknown,
+  or N/A with reason, for balance conservation, rounding/precision/scale,
+  idempotency/replay, overflow/underflow, and time/cutoff boundary correctness.
+- Apply repository style and supported Go semantics. Modernization or assertion-library
+  choice alone is not a defect. Flag misleading names when they cause a concrete misunderstanding.
+- Consume revision-bound race/test/lint evidence; request missing required checks from
+  the developer. Do not execute repository code during review.
+- Tag findings `Financial` / `GoogleStyle` / `100go` / `Concurrency` / `Testing` / `Lint`
+  as relevant; tags identify the concern, not proof of a bug.

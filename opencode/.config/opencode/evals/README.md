@@ -15,6 +15,12 @@ This repository includes a lightweight regression harness so you can track wheth
 
 ## Quick start
 
+Run `ruby opencode/.config/opencode/evals/check_reviewers.rb` for all reviewer agents'
+shared guidance/base-prompt loading, reference resolution, read-only/delegation boundaries,
+and absence of auto-allowed build/provider execution. This is a static configuration check,
+not evidence that a model detects bugs or that tool permissions form a sandbox. Research
+and domain checks live in [`../playbooks/code-review.md`](../playbooks/code-review.md).
+
 Run `ruby opencode/.config/opencode/evals/check_planned_dev.rb` for static planned-dev routing, delegation, review and authority contracts. This is not a model evaluation or runtime permission test.
 
 Run `ruby opencode/.config/opencode/evals/check_betika_reviewer.rb` to check the

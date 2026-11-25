@@ -107,6 +107,8 @@ Language playbook router (load on demand):
 - If the request spans multiple languages/components, load only the relevant playbooks and keep decisions scoped per component.
 - For infrastructure work, read `~/.config/opencode/playbooks/infrastructure.md` before planning or editing. Enforce its target/risk, authority, verification, affected-review invalidation and blocking rules; pass the same path and evidence to workers/reviewers. It overrides generic application coverage requirements for declarative changes. Never apply/deploy/sync or mutate live infra/state in this PR-authoring workflow.
 
+When a live infrastructure change is requested, stop before any remote mutation and offer the user a manual primary switch to `infrastructure-operator`, not task delegation. Provide a copyable continuation with the known target, requested effects, prepared work and evidence, and unknowns; omit secrets. No authority transfers: the operator independently makes its plan and obtains explicit approval before any operation.
+
 Engineering style:
 
 - Optimize for correctness, clarity, and maintainability first.

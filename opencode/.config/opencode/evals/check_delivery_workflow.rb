@@ -26,7 +26,8 @@ permissions = {
   'ticket-clarifier' => '9f813008f762ffd089784bee90a5c01db2df6e521fc17f4b488c07b04e1aaead',
   'ticket-researcher' => '2f0b28a5d51f8ad3211b765cd08c4be84fd6a15ef12aef6ca67759f6c079c979',
   'implementation-planner' => '76b1ad17c1dadb5dc1d1978ce37b268606d870326107ee3af96a1cb23b7d816d',
-  'completion-reviewer' => '58c03c92c8fb81586e618759936c72f090a8f3ad33776af5922972b85534e227',
+  # Reviewer hardening adds task: deny; all other completion permissions are retained.
+  'completion-reviewer' => 'ac131fcc100a7d802d7e7a52d62505df6471e213634ff812645613f048dc655d',
   'pr-description-writer' => '64f4f21d68af66b3ab12c45cd7fb537f7cde9df633ea193b25a38c38294fc066'
 }
 bodies = {}
@@ -131,8 +132,8 @@ rule.call('pr-description-writer', 'description does not authorize publication',
 # AC5: bounded quick-dev remains a fast path, not mandatory orchestration.
 rule.call('quick-dev', 'direct bounded work remains supported', /direct|yourself/i, /bounded|contained|small/i)
 rule.call('quick-dev', 'no mandatory ticket lookup or planning pipeline', /no mandatory|not require/i, /ticket/i, /planning|pipeline/i)
-rule.call('quick-dev', 'uncertain or multi-stream work escalates', /uncertain|multi.stream|independent workstreams/i,
-          /stop|escalat/i, /ticket-orchestrator/)
+rule.call('quick-dev', 'uncertain or multi-stream work routes to delegated delivery', /uncertain|multi.stream|independent workstreams/i,
+          /stop|switch/i, /planned-dev/)
 rule.call('quick-dev', 'escalation cannot bypass task denial', /not.*delegate|never.*delegate/i, /reviewers|task targets|permission/i)
 rule.call('developer-personal', 'ticketed Linear specialist routing retained', /Linear ticket/i, /delegate/i, /linear-ticket-researcher/)
 
